@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{4E467BFC-FE9D-4A9E-835A-DE7F513974CD}" SchemaVersion="119">
+	<Metadatas>
+		<WorkUnit Name="Default Work Unit" ID="{4E467BFC-FE9D-4A9E-835A-DE7F513974CD}" PersistMode="Standalone">
+			<ChildrenList>
+				<Metadata Name="Passthrough" ID="{302DE5AF-CF2D-4F1B-9504-2845A032AD65}" PluginName="Wwise System Output Settings" CompanyID="0" PluginID="900" PluginType="9">
+					<PropertyList>
+						<Property Name="Mix" Type="int32" Value="2"/>
+					</PropertyList>
+				</Metadata>
+			</ChildrenList>
+		</WorkUnit>
+	</Metadatas>
+</WwiseDocument>

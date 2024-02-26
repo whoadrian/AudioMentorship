@@ -1,0 +1,849 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "RootPaths": {
+   "ProjectRoot": "../..",
+   "SourceFilesRoot": "../../.cache/Windows",
+   "SoundBanksRoot": ".",
+   "ExternalSourcesInputFile": "",
+   "ExternalSourcesOutputRoot": "."
+  },
+  "DialogueEvents": [],
+  "SoundBanks": [
+   {
+    "Id": "1355168291",
+    "Type": "User",
+    "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
+    "Language": "SFX",
+    "Hash": "{C01FAD81-F22C-8F7C-BAE7-F5B44DB4837E}",
+    "ObjectPath": "Init",
+    "ShortName": "Init",
+    "Path": "Init.bnk",
+    "Media": [
+     {
+      "Id": "535089750",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "MilBase_Exterior_Long.wav",
+      "Path": "Media/535089750.wem",
+      "CachePath": "Plugins/Wwise Convolution Reverb/MilBase_Exterior_Long_08CFDF22.wem"
+     },
+     {
+      "Id": "928203694",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "MilBase_Exterior_Medium.wav",
+      "Path": "Media/928203694.wem",
+      "CachePath": "Plugins/Wwise Convolution Reverb/MilBase_Exterior_Medium_259E92B3.wem"
+     }
+    ],
+    "Plugins": {
+     "ShareSets": [
+      {
+       "Id": "1323005165",
+       "Name": "ScifiBase_LargeRoom",
+       "ObjectPath": "\\Effects\\Default Work Unit\\ScifiBase_LargeRoom",
+       "GUID": "{5A44CD75-DE49-443B-9A30-E53687341D8B}",
+       "LibName": "Wwise Convolution Reverb",
+       "LibId": "8323075",
+       "MediaRefs": [
+        {
+         "Id": "928203694"
+        }
+       ]
+      },
+      {
+       "Id": "1615735465",
+       "Name": "ScifiBase_Exterior",
+       "ObjectPath": "\\Effects\\ScifiBase\\ScifiBase_Exterior",
+       "GUID": "{8D4002E1-324C-448E-B3F2-0B0AC213C129}",
+       "LibName": "Wwise Convolution Reverb",
+       "LibId": "8323075",
+       "MediaRefs": [
+        {
+         "Id": "535089750"
+        }
+       ]
+      }
+     ],
+     "AudioDevices": [
+      {
+       "Id": "2317455096",
+       "Name": "No_Output",
+       "ObjectPath": "\\Audio Devices\\Default Work Unit\\No_Output",
+       "GUID": "{C6A7CE15-D361-4C65-A6D3-AE4C92B1A0FC}",
+       "LibName": "No Output",
+       "LibId": "11862023"
+      },
+      {
+       "Id": "3859886410",
+       "Name": "System",
+       "ObjectPath": "\\Audio Devices\\Default Work Unit\\System",
+       "GUID": "{C1DEEBB7-38AE-4EAB-BE54-21F60DC9B44B}",
+       "LibName": "System",
+       "LibId": "11403271"
+      }
+     ]
+    },
+    "Busses": [
+     {
+      "Id": "85412153",
+      "Name": "Ambience",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Ambience",
+      "GUID": "{8CE22564-2664-4355-818A-4E0063C876AD}"
+     },
+     {
+      "Id": "247557814",
+      "Name": "Foley",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Foley",
+      "GUID": "{8984B218-39E0-490A-B2A8-CF6BC75FE85F}"
+     },
+     {
+      "Id": "393239870",
+      "Name": "SFX",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX",
+      "GUID": "{A2944A7A-33A7-452C-BF24-8650BE202C44}"
+     },
+     {
+      "Id": "612957004",
+      "Name": "emitters",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Ambience\\emitters",
+      "GUID": "{E7C2B957-CDB8-4ADD-B665-5E125D9C28C9}"
+     },
+     {
+      "Id": "860902532",
+      "Name": "firing",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Weapon\\firing",
+      "GUID": "{DDB19612-F541-4B88-A60E-4F9F5BC778B6}"
+     },
+     {
+      "Id": "968010305",
+      "Name": "props",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Ambience\\props",
+      "GUID": "{8E59068E-C058-4A5C-9E07-7295DF758E81}"
+     },
+     {
+      "Id": "1106291253",
+      "Name": "beds",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Ambience\\beds",
+      "GUID": "{B32DC92A-AB5E-4641-86C4-19F6C604FBA4}"
+     },
+     {
+      "Id": "1172844112",
+      "Name": "gear",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Foley\\gear",
+      "GUID": "{025035BB-B68B-42A6-8FDE-159A9B55FC10}"
+     },
+     {
+      "Id": "1534528548",
+      "Name": "VO",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\VO",
+      "GUID": "{61FE6949-D42F-4C03-90A0-07B257479139}"
+     },
+     {
+      "Id": "1551306167",
+      "Name": "UI",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\UI",
+      "GUID": "{7C5FFAF3-5B05-4946-86A5-42A5A1DF2F58}"
+     },
+     {
+      "Id": "2385628198",
+      "Name": "footsteps",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Foley\\footsteps",
+      "GUID": "{1486B68F-7CEF-4809-8D83-A26652EA3EF6}"
+     },
+     {
+      "Id": "3545700988",
+      "Name": "REVERBS",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\REVERBS",
+      "GUID": "{FEBE5916-5210-4B07-B41D-639A1AC5950B}"
+     },
+     {
+      "Id": "3721010766",
+      "Name": "CINE",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\CINE",
+      "GUID": "{E324315A-AB72-458A-B25B-CA1E428AC09E}"
+     },
+     {
+      "Id": "3803692087",
+      "Name": "Master Audio Bus",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus",
+      "GUID": "{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"
+     },
+     {
+      "Id": "3893417221",
+      "Name": "Weapon",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Weapon",
+      "GUID": "{8BBBE95A-10A7-447C-A631-98BE8D9D977A}"
+     },
+     {
+      "Id": "3992555905",
+      "Name": "gun_foley",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX\\Weapon\\gun_foley",
+      "GUID": "{5B22761B-F4EA-452C-B6AB-C7D153965E62}"
+     }
+    ],
+    "AuxBusses": [
+     {
+      "Id": "2213992659",
+      "Name": "Exterior",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\REVERBS\\Exterior",
+      "GUID": "{790B621A-AD9D-4ABE-BEF2-2D35F632FF72}",
+      "MaxAttenuation": "1500",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "1615735465"
+        }
+       ]
+      }
+     },
+     {
+      "Id": "3205342581",
+      "Name": "RoomSmall",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\REVERBS\\RoomSmall",
+      "GUID": "{7A564B30-81A7-4002-8BB5-8925C20AA907}",
+      "MaxAttenuation": "1500",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "1323005165"
+        }
+       ]
+      }
+     },
+     {
+      "Id": "3553615197",
+      "Name": "RoomLarge",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\REVERBS\\RoomLarge",
+      "GUID": "{516F26D9-E56A-4B15-932C-0A47517CD265}",
+      "MaxAttenuation": "1500",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "1323005165"
+        }
+       ]
+      }
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "705739452",
+      "Name": "CharacterFootstep",
+      "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep",
+      "GUID": "{1E6F66BD-5F0F-43EE-9636-0117D6ED548E}",
+      "Switches": [
+       {
+        "Id": "841620460",
+        "Name": "concrete",
+        "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep\\concrete",
+        "GUID": "{F11B74BA-F7C0-4EC6-AA08-136739C968A7}"
+       },
+       {
+        "Id": "1162469934",
+        "Name": "foliage",
+        "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep\\foliage",
+        "GUID": "{3D408B13-898B-4449-A07A-793D5B387F30}"
+       },
+       {
+        "Id": "4169408098",
+        "Name": "asphalt",
+        "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep\\asphalt",
+        "GUID": "{97116B2D-DD9B-41BD-93EF-E42A520B671F}"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "1706120837",
+    "Type": "Event",
+    "GUID": "{6654F1B8-32AA-4A18-AC3E-6B8DE7BD67A9}",
+    "Language": "SFX",
+    "Hash": "{92FD6F17-6FF8-3B16-9B6B-E1444FC7EECB}",
+    "ObjectPath": "Play_CharacterFootstep",
+    "ShortName": "Play_CharacterFootstep",
+    "Path": "Event/Play_CharacterFootstep.bnk",
+    "Media": [
+     {
+      "Id": "76024997",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_05.wav",
+      "Path": "Media/76024997.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_05_818F3B66.wem"
+     },
+     {
+      "Id": "85709527",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_08.wav",
+      "Path": "Media/85709527.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_08_818F3B66.wem"
+     },
+     {
+      "Id": "102001675",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_09.wav",
+      "Path": "Media/102001675.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_09_818F3B66.wem"
+     },
+     {
+      "Id": "161013616",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_04.wav",
+      "Path": "Media/161013616.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_04_818F3B66.wem"
+     },
+     {
+      "Id": "190277830",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_04.wav",
+      "Path": "Media/190277830.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_04_818F3B66.wem"
+     },
+     {
+      "Id": "215605728",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_03.wav",
+      "Path": "Media/215605728.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_03_818F3B66.wem"
+     },
+     {
+      "Id": "234151114",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_10.wav",
+      "Path": "Media/234151114.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_10_818F3B66.wem"
+     },
+     {
+      "Id": "324319506",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_02.wav",
+      "Path": "Media/324319506.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_02_818F3B66.wem"
+     },
+     {
+      "Id": "355904820",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_05.wav",
+      "Path": "Media/355904820.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_05_818F3B66.wem"
+     },
+     {
+      "Id": "367505142",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_02.wav",
+      "Path": "Media/367505142.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_02_818F3B66.wem"
+     },
+     {
+      "Id": "386796644",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_07.wav",
+      "Path": "Media/386796644.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_07_818F3B66.wem"
+     },
+     {
+      "Id": "403516786",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_03.wav",
+      "Path": "Media/403516786.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_03_818F3B66.wem"
+     },
+     {
+      "Id": "466116251",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_08.wav",
+      "Path": "Media/466116251.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_08_818F3B66.wem"
+     },
+     {
+      "Id": "514693245",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_07.wav",
+      "Path": "Media/514693245.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_07_818F3B66.wem"
+     },
+     {
+      "Id": "523126940",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_01.wav",
+      "Path": "Media/523126940.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_01_818F3B66.wem"
+     },
+     {
+      "Id": "561452758",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_02.wav",
+      "Path": "Media/561452758.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_02_818F3B66.wem"
+     },
+     {
+      "Id": "572568664",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_05.wav",
+      "Path": "Media/572568664.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_05_818F3B66.wem"
+     },
+     {
+      "Id": "579189112",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_09.wav",
+      "Path": "Media/579189112.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_09_818F3B66.wem"
+     },
+     {
+      "Id": "593777958",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_10.wav",
+      "Path": "Media/593777958.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_10_818F3B66.wem"
+     },
+     {
+      "Id": "598987559",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_06.wav",
+      "Path": "Media/598987559.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_06_818F3B66.wem"
+     },
+     {
+      "Id": "605125388",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_06.wav",
+      "Path": "Media/605125388.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_06_818F3B66.wem"
+     },
+     {
+      "Id": "617965151",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_06.wav",
+      "Path": "Media/617965151.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_06_818F3B66.wem"
+     },
+     {
+      "Id": "785197518",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_04.wav",
+      "Path": "Media/785197518.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_04_818F3B66.wem"
+     },
+     {
+      "Id": "794173300",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_01.wav",
+      "Path": "Media/794173300.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_01_818F3B66.wem"
+     },
+     {
+      "Id": "818779540",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_07.wav",
+      "Path": "Media/818779540.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_07_818F3B66.wem"
+     },
+     {
+      "Id": "943138636",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_08.wav",
+      "Path": "Media/943138636.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_08_818F3B66.wem"
+     },
+     {
+      "Id": "958929113",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_01.wav",
+      "Path": "Media/958929113.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_01_818F3B66.wem"
+     },
+     {
+      "Id": "1022764280",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_03.wav",
+      "Path": "Media/1022764280.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_03_818F3B66.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1706120837",
+      "Name": "Play_CharacterFootstep",
+      "ObjectPath": "\\Events\\Default Work Unit\\Footsteps\\Play_CharacterFootstep",
+      "GUID": "{6654F1B8-32AA-4A18-AC3E-6B8DE7BD67A9}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.6",
+      "DurationMax": "1.0979224",
+      "SwitchContainers": [
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "705739452",
+         "Id": "1162469934",
+         "GUID": "{3D408B13-898B-4449-A07A-793D5B387F30}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "215605728"
+         },
+         {
+          "Id": "367505142"
+         },
+         {
+          "Id": "466116251"
+         },
+         {
+          "Id": "514693245"
+         },
+         {
+          "Id": "523126940"
+         },
+         {
+          "Id": "572568664"
+         },
+         {
+          "Id": "598987559"
+         },
+         {
+          "Id": "785197518"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "705739452",
+         "Id": "4169408098",
+         "GUID": "{97116B2D-DD9B-41BD-93EF-E42A520B671F}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "76024997"
+         },
+         {
+          "Id": "190277830"
+         },
+         {
+          "Id": "324319506"
+         },
+         {
+          "Id": "403516786"
+         },
+         {
+          "Id": "579189112"
+         },
+         {
+          "Id": "593777958"
+         },
+         {
+          "Id": "605125388"
+         },
+         {
+          "Id": "794173300"
+         },
+         {
+          "Id": "818779540"
+         },
+         {
+          "Id": "943138636"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "705739452",
+         "Id": "841620460",
+         "GUID": "{F11B74BA-F7C0-4EC6-AA08-136739C968A7}",
+         "Default": "true"
+        },
+        "MediaRefs": [
+         {
+          "Id": "85709527"
+         },
+         {
+          "Id": "102001675"
+         },
+         {
+          "Id": "161013616"
+         },
+         {
+          "Id": "234151114"
+         },
+         {
+          "Id": "355904820"
+         },
+         {
+          "Id": "386796644"
+         },
+         {
+          "Id": "561452758"
+         },
+         {
+          "Id": "617965151"
+         },
+         {
+          "Id": "958929113"
+         },
+         {
+          "Id": "1022764280"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "705739452",
+      "Name": "CharacterFootstep",
+      "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep",
+      "GUID": "{1E6F66BD-5F0F-43EE-9636-0117D6ED548E}",
+      "Switches": [
+       {
+        "Id": "841620460",
+        "Name": "concrete",
+        "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep\\concrete",
+        "GUID": "{F11B74BA-F7C0-4EC6-AA08-136739C968A7}"
+       },
+       {
+        "Id": "1162469934",
+        "Name": "foliage",
+        "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep\\foliage",
+        "GUID": "{3D408B13-898B-4449-A07A-793D5B387F30}"
+       },
+       {
+        "Id": "4169408098",
+        "Name": "asphalt",
+        "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep\\asphalt",
+        "GUID": "{97116B2D-DD9B-41BD-93EF-E42A520B671F}"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "2213992659",
+    "Type": "Bus",
+    "GUID": "{790B621A-AD9D-4ABE-BEF2-2D35F632FF72}",
+    "Language": "SFX",
+    "Hash": "{A3FA2FCB-C81D-FB69-6DA1-C64EFB06BA91}",
+    "ObjectPath": "Exterior",
+    "ShortName": "Exterior",
+    "Path": "Bus/Exterior.bnk",
+    "Media": [
+     {
+      "Id": "535089750",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "MilBase_Exterior_Long.wav",
+      "Path": "Media/535089750.wem",
+      "CachePath": "Plugins/Wwise Convolution Reverb/MilBase_Exterior_Long_08CFDF22.wem"
+     }
+    ],
+    "Plugins": {
+     "ShareSets": [
+      {
+       "Id": "1615735465",
+       "Name": "ScifiBase_Exterior",
+       "ObjectPath": "\\Effects\\ScifiBase\\ScifiBase_Exterior",
+       "GUID": "{8D4002E1-324C-448E-B3F2-0B0AC213C129}",
+       "LibName": "Wwise Convolution Reverb",
+       "LibId": "8323075",
+       "MediaRefs": [
+        {
+         "Id": "535089750"
+        }
+       ]
+      }
+     ]
+    },
+    "AuxBusses": [
+     {
+      "Id": "2213992659",
+      "Name": "Exterior",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\REVERBS\\Exterior",
+      "GUID": "{790B621A-AD9D-4ABE-BEF2-2D35F632FF72}",
+      "MaxAttenuation": "1500",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "1615735465"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "Id": "3205342581",
+    "Type": "Bus",
+    "GUID": "{7A564B30-81A7-4002-8BB5-8925C20AA907}",
+    "Language": "SFX",
+    "Hash": "{2EE847B7-4896-478D-CC48-63BE1E97EA81}",
+    "ObjectPath": "RoomSmall",
+    "ShortName": "RoomSmall",
+    "Path": "Bus/RoomSmall.bnk",
+    "Media": [
+     {
+      "Id": "928203694",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "MilBase_Exterior_Medium.wav",
+      "Path": "Media/928203694.wem",
+      "CachePath": "Plugins/Wwise Convolution Reverb/MilBase_Exterior_Medium_259E92B3.wem"
+     }
+    ],
+    "Plugins": {
+     "ShareSets": [
+      {
+       "Id": "1323005165",
+       "Name": "ScifiBase_LargeRoom",
+       "ObjectPath": "\\Effects\\Default Work Unit\\ScifiBase_LargeRoom",
+       "GUID": "{5A44CD75-DE49-443B-9A30-E53687341D8B}",
+       "LibName": "Wwise Convolution Reverb",
+       "LibId": "8323075",
+       "MediaRefs": [
+        {
+         "Id": "928203694"
+        }
+       ]
+      }
+     ]
+    },
+    "AuxBusses": [
+     {
+      "Id": "3205342581",
+      "Name": "RoomSmall",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\REVERBS\\RoomSmall",
+      "GUID": "{7A564B30-81A7-4002-8BB5-8925C20AA907}",
+      "MaxAttenuation": "1500",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "1323005165"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "Id": "3553615197",
+    "Type": "Bus",
+    "GUID": "{516F26D9-E56A-4B15-932C-0A47517CD265}",
+    "Language": "SFX",
+    "Hash": "{53DFDCC6-B857-A924-3704-BFF74F508F54}",
+    "ObjectPath": "RoomLarge",
+    "ShortName": "RoomLarge",
+    "Path": "Bus/RoomLarge.bnk",
+    "Media": [
+     {
+      "Id": "928203694",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "MilBase_Exterior_Medium.wav",
+      "Path": "Media/928203694.wem",
+      "CachePath": "Plugins/Wwise Convolution Reverb/MilBase_Exterior_Medium_259E92B3.wem"
+     }
+    ],
+    "Plugins": {
+     "ShareSets": [
+      {
+       "Id": "1323005165",
+       "Name": "ScifiBase_LargeRoom",
+       "ObjectPath": "\\Effects\\Default Work Unit\\ScifiBase_LargeRoom",
+       "GUID": "{5A44CD75-DE49-443B-9A30-E53687341D8B}",
+       "LibName": "Wwise Convolution Reverb",
+       "LibId": "8323075",
+       "MediaRefs": [
+        {
+         "Id": "928203694"
+        }
+       ]
+      }
+     ]
+    },
+    "AuxBusses": [
+     {
+      "Id": "3553615197",
+      "Name": "RoomLarge",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\REVERBS\\RoomLarge",
+      "GUID": "{516F26D9-E56A-4B15-932C-0A47517CD265}",
+      "MaxAttenuation": "1500",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "1323005165"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "FileHash": "{473705DD-64D4-9BF4-F8DD-945F983D9238}"
+ }
+}

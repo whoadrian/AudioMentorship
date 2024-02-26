@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PluginInfo Platform="Windows" BasePlatform="Windows">
+	<PluginLibs>
+		<PluginLib LibName="Wwise Convolution Reverb" LibId="8323075" Type="Effect" DLL="AkConvolutionReverb" StaticLib="AkConvolutionReverbFX"/>
+		<PluginLib LibName="System" LibId="11403271" Type="AudioDevice"/>
+		<PluginLib LibName="No Output" LibId="11862023" Type="AudioDevice"/>
+	</PluginLibs>
+	<FileHash>{A9B38C99-AF58-7F06-AEF7-6ED0E0C790A4}</FileHash>
+</PluginInfo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{0766E64D-ECC6-4E4E-84CF-9E79F45CF6CB}" SchemaVersion="119">
+	<Switches>
+		<WorkUnit Name="Default Work Unit" ID="{0766E64D-ECC6-4E4E-84CF-9E79F45CF6CB}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="CharacterFootstep" ID="{1E6F66BD-5F0F-43EE-9636-0117D6ED548E}">
+					<ChildrenList>
+						<Switch Name="asphalt" ID="{97116B2D-DD9B-41BD-93EF-E42A520B671F}"/>
+						<Switch Name="concrete" ID="{F11B74BA-F7C0-4EC6-AA08-136739C968A7}"/>
+						<Switch Name="foliage" ID="{3D408B13-898B-4449-A07A-793D5B387F30}"/>
+					</ChildrenList>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</Switches>
+</WwiseDocument>

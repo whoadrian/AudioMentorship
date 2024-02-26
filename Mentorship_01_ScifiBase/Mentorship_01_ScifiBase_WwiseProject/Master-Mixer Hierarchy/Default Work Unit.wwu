@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{66A8B640-1354-4BCF-A38B-F320532D2756}" SchemaVersion="119">
+	<Busses>
+		<WorkUnit Name="Default Work Unit" ID="{66A8B640-1354-4BCF-A38B-F320532D2756}" PersistMode="Standalone">
+			<ChildrenList>
+				<Bus Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}">
+					<ReferenceList>
+						<Reference Name="AudioDevice" PluginName="System" CompanyID="0" PluginID="174" PluginType="7">
+							<ObjectRef Name="System" ID="{C1DEEBB7-38AE-4EAB-BE54-21F60DC9B44B}" WorkUnitID="{F579BA3B-AB94-4697-9732-078725D10392}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Bus Name="SFX" ID="{A2944A7A-33A7-452C-BF24-8650BE202C44}">
+							<ChildrenList>
+								<Bus Name="UI" ID="{7C5FFAF3-5B05-4946-86A5-42A5A1DF2F58}">
+									<PropertyList>
+										<Property Name="BusChannelConfig" Type="int32">
+											<ValueList>
+												<Value>3840</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+								</Bus>
+								<Bus Name="Foley" ID="{8984B218-39E0-490A-B2A8-CF6BC75FE85F}">
+									<ChildrenList>
+										<Bus Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}"/>
+										<Bus Name="gear" ID="{025035BB-B68B-42A6-8FDE-159A9B55FC10}"/>
+									</ChildrenList>
+								</Bus>
+								<Bus Name="Weapon" ID="{8BBBE95A-10A7-447C-A631-98BE8D9D977A}">
+									<ChildrenList>
+										<Bus Name="firing" ID="{DDB19612-F541-4B88-A60E-4F9F5BC778B6}"/>
+										<Bus Name="gun_foley" ID="{5B22761B-F4EA-452C-B6AB-C7D153965E62}"/>
+									</ChildrenList>
+								</Bus>
+								<Bus Name="Ambience" ID="{8CE22564-2664-4355-818A-4E0063C876AD}">
+									<ChildrenList>
+										<Bus Name="beds" ID="{B32DC92A-AB5E-4641-86C4-19F6C604FBA4}"/>
+										<Bus Name="emitters" ID="{E7C2B957-CDB8-4ADD-B665-5E125D9C28C9}"/>
+										<Bus Name="props" ID="{8E59068E-C058-4A5C-9E07-7295DF758E81}"/>
+									</ChildrenList>
+								</Bus>
+							</ChildrenList>
+						</Bus>
+						<Bus Name="CINE" ID="{E324315A-AB72-458A-B25B-CA1E428AC09E}"/>
+						<Bus Name="VO" ID="{61FE6949-D42F-4C03-90A0-07B257479139}"/>
+						<Bus Name="REVERBS" ID="{FEBE5916-5210-4B07-B41D-639A1AC5950B}">
+							<PropertyList>
+								<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<AuxBus Name="RoomLarge" ID="{516F26D9-E56A-4B15-932C-0A47517CD265}">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="BusVolume" Type="Real64">
+											<ValueList>
+												<Value>-10</Value>
+											</ValueList>
+										</Property>
+										<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+										<Property Name="ListenerRelativeRouting" Type="bool" Value="True"/>
+										<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="Env_Volume_1250_Spread85" ID="{757D2E65-CA02-4EBB-9ED5-79A1566F7652}" WorkUnitID="{AED71D1A-7CA6-4E8F-A03C-B29B65813C4B}"/>
+										</Reference>
+									</ReferenceList>
+									<ObjectLists>
+										<ObjectList Name="Effects">
+											<Reference>
+												<Local>
+													<EffectSlot Name="" ID="{5417DC43-5717-45FC-9E8F-3DFFF640BB16}" ShortID="658385055">
+														<ReferenceList>
+															<Reference Name="Effect" PluginName="Wwise Convolution Reverb" CompanyID="0" PluginID="127" PluginType="3">
+																<ObjectRef Name="ScifiBase_LargeRoom" ID="{5A44CD75-DE49-443B-9A30-E53687341D8B}" WorkUnitID="{F5B99CB6-840B-4130-AC27-78C1167F5538}"/>
+															</Reference>
+														</ReferenceList>
+													</EffectSlot>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</AuxBus>
+								<AuxBus Name="RoomSmall" ID="{7A564B30-81A7-4002-8BB5-8925C20AA907}">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+										<Property Name="ListenerRelativeRouting" Type="bool" Value="True"/>
+										<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="Env_Volume_1250_Spread85" ID="{757D2E65-CA02-4EBB-9ED5-79A1566F7652}" WorkUnitID="{AED71D1A-7CA6-4E8F-A03C-B29B65813C4B}"/>
+										</Reference>
+									</ReferenceList>
+									<ObjectLists>
+										<ObjectList Name="Effects">
+											<Reference>
+												<Local>
+													<EffectSlot Name="" ID="{43DAB504-F528-488E-BB8E-87C1AC74448D}" ShortID="593462226">
+														<ReferenceList>
+															<Reference Name="Effect" PluginName="Wwise Convolution Reverb" CompanyID="0" PluginID="127" PluginType="3">
+																<ObjectRef Name="ScifiBase_LargeRoom" ID="{5A44CD75-DE49-443B-9A30-E53687341D8B}" WorkUnitID="{F5B99CB6-840B-4130-AC27-78C1167F5538}"/>
+															</Reference>
+														</ReferenceList>
+													</EffectSlot>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</AuxBus>
+								<AuxBus Name="Exterior" ID="{790B621A-AD9D-4ABE-BEF2-2D35F632FF72}">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="BusVolume" Type="Real64">
+											<ValueList>
+												<Value>-7</Value>
+											</ValueList>
+										</Property>
+										<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+										<Property Name="ListenerRelativeRouting" Type="bool" Value="True"/>
+										<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="Env_Volume_1250_Spread85" ID="{757D2E65-CA02-4EBB-9ED5-79A1566F7652}" WorkUnitID="{AED71D1A-7CA6-4E8F-A03C-B29B65813C4B}"/>
+										</Reference>
+									</ReferenceList>
+									<ObjectLists>
+										<ObjectList Name="Effects">
+											<Reference>
+												<Local>
+													<EffectSlot Name="" ID="{824C959E-00BC-479B-9B5B-5AF3734A6323}" ShortID="645248806">
+														<ReferenceList>
+															<Reference Name="Effect" PluginName="Wwise Convolution Reverb" CompanyID="0" PluginID="127" PluginType="3">
+																<ObjectRef Name="ScifiBase_Exterior" ID="{8D4002E1-324C-448E-B3F2-0B0AC213C129}" WorkUnitID="{6C6D71AE-A144-4642-91B3-3CFD44EFF243}"/>
+															</Reference>
+														</ReferenceList>
+													</EffectSlot>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</AuxBus>
+							</ChildrenList>
+						</Bus>
+					</ChildrenList>
+				</Bus>
+			</ChildrenList>
+		</WorkUnit>
+	</Busses>
+</WwiseDocument>
