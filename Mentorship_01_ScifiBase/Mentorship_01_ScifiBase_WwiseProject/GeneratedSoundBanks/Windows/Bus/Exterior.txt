@@ -1,0 +1,6 @@
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	2213992659	Exterior			\Default Work Unit\Master Audio Bus\REVERBS\Exterior	
+
+Effect plug-ins	ID	Name	Type				Notes
+	1615735465	ScifiBase_Exterior	Wwise Convolution Reverb			
+

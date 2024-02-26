@@ -1,0 +1,6 @@
+.cache/*
+.backup/*
+*.prof
+*.wsettings
+*.validationcache
+*.log

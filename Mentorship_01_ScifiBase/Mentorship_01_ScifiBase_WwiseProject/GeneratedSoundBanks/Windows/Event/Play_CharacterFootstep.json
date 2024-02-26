@@ -1,0 +1,431 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "1706120837",
+    "Type": "Event",
+    "GUID": "{6654F1B8-32AA-4A18-AC3E-6B8DE7BD67A9}",
+    "Language": "SFX",
+    "Hash": "{92FD6F17-6FF8-3B16-9B6B-E1444FC7EECB}",
+    "ObjectPath": "Play_CharacterFootstep",
+    "ShortName": "Play_CharacterFootstep",
+    "Path": "Event/Play_CharacterFootstep.bnk",
+    "Media": [
+     {
+      "Id": "76024997",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_05.wav",
+      "Path": "Media/76024997.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_05_818F3B66.wem"
+     },
+     {
+      "Id": "85709527",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_08.wav",
+      "Path": "Media/85709527.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_08_818F3B66.wem"
+     },
+     {
+      "Id": "102001675",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_09.wav",
+      "Path": "Media/102001675.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_09_818F3B66.wem"
+     },
+     {
+      "Id": "161013616",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_04.wav",
+      "Path": "Media/161013616.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_04_818F3B66.wem"
+     },
+     {
+      "Id": "190277830",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_04.wav",
+      "Path": "Media/190277830.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_04_818F3B66.wem"
+     },
+     {
+      "Id": "215605728",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_03.wav",
+      "Path": "Media/215605728.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_03_818F3B66.wem"
+     },
+     {
+      "Id": "234151114",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_10.wav",
+      "Path": "Media/234151114.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_10_818F3B66.wem"
+     },
+     {
+      "Id": "324319506",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_02.wav",
+      "Path": "Media/324319506.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_02_818F3B66.wem"
+     },
+     {
+      "Id": "355904820",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_05.wav",
+      "Path": "Media/355904820.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_05_818F3B66.wem"
+     },
+     {
+      "Id": "367505142",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_02.wav",
+      "Path": "Media/367505142.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_02_818F3B66.wem"
+     },
+     {
+      "Id": "386796644",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_07.wav",
+      "Path": "Media/386796644.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_07_818F3B66.wem"
+     },
+     {
+      "Id": "403516786",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_03.wav",
+      "Path": "Media/403516786.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_03_818F3B66.wem"
+     },
+     {
+      "Id": "466116251",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_08.wav",
+      "Path": "Media/466116251.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_08_818F3B66.wem"
+     },
+     {
+      "Id": "514693245",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_07.wav",
+      "Path": "Media/514693245.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_07_818F3B66.wem"
+     },
+     {
+      "Id": "523126940",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_01.wav",
+      "Path": "Media/523126940.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_01_818F3B66.wem"
+     },
+     {
+      "Id": "561452758",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_02.wav",
+      "Path": "Media/561452758.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_02_818F3B66.wem"
+     },
+     {
+      "Id": "572568664",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_05.wav",
+      "Path": "Media/572568664.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_05_818F3B66.wem"
+     },
+     {
+      "Id": "579189112",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_09.wav",
+      "Path": "Media/579189112.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_09_818F3B66.wem"
+     },
+     {
+      "Id": "593777958",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_10.wav",
+      "Path": "Media/593777958.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_10_818F3B66.wem"
+     },
+     {
+      "Id": "598987559",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_06.wav",
+      "Path": "Media/598987559.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_06_818F3B66.wem"
+     },
+     {
+      "Id": "605125388",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_06.wav",
+      "Path": "Media/605125388.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_06_818F3B66.wem"
+     },
+     {
+      "Id": "617965151",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_06.wav",
+      "Path": "Media/617965151.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_06_818F3B66.wem"
+     },
+     {
+      "Id": "785197518",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\Char_FS_Foliage_04.wav",
+      "Path": "Media/785197518.wem",
+      "CachePath": "SFX/Foley/Char_FS_Foliage_04_818F3B66.wem"
+     },
+     {
+      "Id": "794173300",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_01.wav",
+      "Path": "Media/794173300.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_01_818F3B66.wem"
+     },
+     {
+      "Id": "818779540",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_07.wav",
+      "Path": "Media/818779540.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_07_818F3B66.wem"
+     },
+     {
+      "Id": "943138636",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Asphalt_08.wav",
+      "Path": "Media/943138636.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Asphalt_08_818F3B66.wem"
+     },
+     {
+      "Id": "958929113",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_01.wav",
+      "Path": "Media/958929113.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_01_818F3B66.wem"
+     },
+     {
+      "Id": "1022764280",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Foley\\MilBase_Character_Footstep_Concrete_03.wav",
+      "Path": "Media/1022764280.wem",
+      "CachePath": "SFX/Foley/MilBase_Character_Footstep_Concrete_03_818F3B66.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1706120837",
+      "Name": "Play_CharacterFootstep",
+      "ObjectPath": "\\Events\\Default Work Unit\\Footsteps\\Play_CharacterFootstep",
+      "GUID": "{6654F1B8-32AA-4A18-AC3E-6B8DE7BD67A9}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.6",
+      "DurationMax": "1.0979224",
+      "SwitchContainers": [
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "705739452",
+         "Id": "1162469934",
+         "GUID": "{3D408B13-898B-4449-A07A-793D5B387F30}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "215605728"
+         },
+         {
+          "Id": "367505142"
+         },
+         {
+          "Id": "466116251"
+         },
+         {
+          "Id": "514693245"
+         },
+         {
+          "Id": "523126940"
+         },
+         {
+          "Id": "572568664"
+         },
+         {
+          "Id": "598987559"
+         },
+         {
+          "Id": "785197518"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "705739452",
+         "Id": "4169408098",
+         "GUID": "{97116B2D-DD9B-41BD-93EF-E42A520B671F}"
+        },
+        "MediaRefs": [
+         {
+          "Id": "76024997"
+         },
+         {
+          "Id": "190277830"
+         },
+         {
+          "Id": "324319506"
+         },
+         {
+          "Id": "403516786"
+         },
+         {
+          "Id": "579189112"
+         },
+         {
+          "Id": "593777958"
+         },
+         {
+          "Id": "605125388"
+         },
+         {
+          "Id": "794173300"
+         },
+         {
+          "Id": "818779540"
+         },
+         {
+          "Id": "943138636"
+         }
+        ]
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "705739452",
+         "Id": "841620460",
+         "GUID": "{F11B74BA-F7C0-4EC6-AA08-136739C968A7}",
+         "Default": "true"
+        },
+        "MediaRefs": [
+         {
+          "Id": "85709527"
+         },
+         {
+          "Id": "102001675"
+         },
+         {
+          "Id": "161013616"
+         },
+         {
+          "Id": "234151114"
+         },
+         {
+          "Id": "355904820"
+         },
+         {
+          "Id": "386796644"
+         },
+         {
+          "Id": "561452758"
+         },
+         {
+          "Id": "617965151"
+         },
+         {
+          "Id": "958929113"
+         },
+         {
+          "Id": "1022764280"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "705739452",
+      "Name": "CharacterFootstep",
+      "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep",
+      "GUID": "{1E6F66BD-5F0F-43EE-9636-0117D6ED548E}",
+      "Switches": [
+       {
+        "Id": "841620460",
+        "Name": "concrete",
+        "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep\\concrete",
+        "GUID": "{F11B74BA-F7C0-4EC6-AA08-136739C968A7}"
+       },
+       {
+        "Id": "1162469934",
+        "Name": "foliage",
+        "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep\\foliage",
+        "GUID": "{3D408B13-898B-4449-A07A-793D5B387F30}"
+       },
+       {
+        "Id": "4169408098",
+        "Name": "asphalt",
+        "ObjectPath": "\\Switches\\Default Work Unit\\CharacterFootstep\\asphalt",
+        "GUID": "{97116B2D-DD9B-41BD-93EF-E42A520B671F}"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{0D7E267C-C16F-D3F8-2D2B-A9DD632AD9A3}"
+ }
+}

@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}" SchemaVersion="119">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}" PersistMode="Standalone">
+			<ChildrenList>
+				<ActorMixer Name="UI" ID="{29D7A218-EA77-4D52-934A-EFE2C618033F}" ShortID="807136812">
+					<PropertyList>
+						<Property Name="UserAuxSendVolume0" Type="Real64">
+							<ValueList>
+								<Value>-35</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="UI" ID="{7C5FFAF3-5B05-4946-86A5-42A5A1DF2F58}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+						</Reference>
+						<Reference Name="UserAuxSend0">
+							<ObjectRef Name="Exterior" ID="{790B621A-AD9D-4ABE-BEF2-2D35F632FF72}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<ActorMixer Name="MainMenu" ID="{9AC77CC5-449B-4024-8FAF-B6920D537616}" ShortID="682834268">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+								</Reference>
+							</ReferenceList>
+						</ActorMixer>
+						<ActorMixer Name="HUD" ID="{57665018-3F76-4B3C-AF76-BC4A0836323C}" ShortID="826553638">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+								</Reference>
+							</ReferenceList>
+						</ActorMixer>
+					</ChildrenList>
+				</ActorMixer>
+				<ActorMixer Name="Foley" ID="{8075DB6C-C3A6-445B-82B5-DDCD0B63C902}" ShortID="303263069">
+					<PropertyList>
+						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+						<Property Name="GameAuxSendVolume" Type="Real64">
+							<ValueList>
+								<Value>-14</Value>
+							</ValueList>
+						</Property>
+						<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-5</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Foley" ID="{8984B218-39E0-490A-B2A8-CF6BC75FE85F}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<ActorMixer Name="Footsteps" ID="{704C36F1-9C01-4825-B535-B3858287348A}" ShortID="129210269">
+							<PropertyList>
+								<Property Name="OverrideOutput" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<SwitchContainer Name="CharacterFootstep" ID="{22779017-90F2-42A5-9C38-0BD1EED2E9D8}" ShortID="536986929">
+									<PropertyList>
+										<Property Name="Highpass" Type="int16">
+											<ValueList>
+												<Value>8</Value>
+											</ValueList>
+										</Property>
+										<Property Name="MakeUpGain" Type="Real64">
+											<ValueList>
+												<Value>-10</Value>
+											</ValueList>
+										</Property>
+										<Property Name="OverrideUserAuxSends" Type="bool" Value="True"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-13</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="DefaultSwitchOrState">
+											<ObjectRef Name="concrete" ID="{F11B74BA-F7C0-4EC6-AA08-136739C968A7}" WorkUnitID="{0766E64D-ECC6-4E4E-84CF-9E79F45CF6CB}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+										<Reference Name="SwitchGroupOrStateGroup">
+											<ObjectRef Name="CharacterFootstep" ID="{1E6F66BD-5F0F-43EE-9636-0117D6ED548E}" WorkUnitID="{0766E64D-ECC6-4E4E-84CF-9E79F45CF6CB}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<RandomSequenceContainer Name="Footstep_Concrete" ID="{28070E92-8546-44CA-A2DD-89868C6B0A49}" ShortID="725628112">
+											<PropertyList>
+												<Property Name="Highpass" Type="int16">
+													<ValueList>
+														<Value>17</Value>
+													</ValueList>
+												</Property>
+												<Property Name="Pitch" Type="int32">
+													<ModifierList>
+														<ModifierInfo>
+															<Modifier Name="" ID="{DB5EB773-08D8-4B3A-8E2F-F96B8B1050D4}">
+																<PropertyList>
+																	<Property Name="Enabled" Type="bool" Value="True"/>
+																	<Property Name="Max" Type="Real64" Value="50"/>
+																	<Property Name="Min" Type="Real64" Value="-50"/>
+																</PropertyList>
+															</Modifier>
+														</ModifierInfo>
+													</ModifierList>
+												</Property>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-5</Value>
+													</ValueList>
+													<ModifierList>
+														<ModifierInfo>
+															<Modifier Name="" ID="{FE0D007E-D68E-4548-87AA-F68240681386}">
+																<PropertyList>
+																	<Property Name="Enabled" Type="bool" Value="True"/>
+																	<Property Name="Min" Type="Real64" Value="-3"/>
+																</PropertyList>
+															</Modifier>
+														</ModifierInfo>
+													</ModifierList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<Sound Name="MilBase_Character_Footstep_Concrete_01" ID="{77734482-C244-49ED-ACE2-E9AAE0CF6336}" ShortID="821690103">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_01" ID="{8E4F92D4-646F-462F-A108-357B486420BC}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_01.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="958929113"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_01" ID="{8E4F92D4-646F-462F-A108-357B486420BC}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Concrete_02" ID="{6B81E266-19AA-45A3-9ABE-B8F9A690CB04}" ShortID="801800692">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_02" ID="{A83CB4DD-8750-4BE9-94B8-737E7D54E953}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_02.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="561452758"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_02" ID="{A83CB4DD-8750-4BE9-94B8-737E7D54E953}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Concrete_03" ID="{A650381D-8B44-4102-A10C-375FEC9577B2}" ShortID="284219210">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_03" ID="{78196984-D478-4193-8D26-23FA99FF7D05}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_03.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="1022764280"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_03" ID="{78196984-D478-4193-8D26-23FA99FF7D05}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Concrete_04" ID="{650E3669-3938-4776-8490-5AA6233C7550}" ShortID="415611183">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_04" ID="{6974BB39-D2D5-4016-9F3B-B259215C66E2}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_04.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="161013616"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_04" ID="{6974BB39-D2D5-4016-9F3B-B259215C66E2}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Concrete_05" ID="{2B6409D8-501B-458B-8471-8E99CD5E76CA}" ShortID="283146001">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_05" ID="{7392B047-7777-42E9-BB4B-70EEB895CD99}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_05.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="355904820"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_05" ID="{7392B047-7777-42E9-BB4B-70EEB895CD99}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Concrete_06" ID="{B4C9D646-A929-44C1-8B3F-4E1B8CD05D22}" ShortID="810154043">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_06" ID="{3E59C896-54F3-44DB-8859-0AD237180BD7}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_06.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="617965151"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_06" ID="{3E59C896-54F3-44DB-8859-0AD237180BD7}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Concrete_07" ID="{C644610D-47C9-4DD2-A80F-534D5CB1E7C3}" ShortID="357188233">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_07" ID="{B61366C2-160F-47BB-8B4B-B6E5E87D1E06}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_07.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="386796644"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_07" ID="{B61366C2-160F-47BB-8B4B-B6E5E87D1E06}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Concrete_08" ID="{FCB554CC-D178-4B38-9A90-6301A04387E2}" ShortID="220358316">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_08" ID="{78BFB0DE-4F62-479C-ACF1-696DB4736887}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_08.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="85709527"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_08" ID="{78BFB0DE-4F62-479C-ACF1-696DB4736887}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Concrete_09" ID="{86E13544-F32B-4B1F-A22B-4F9AC02A5248}" ShortID="473166020">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_09" ID="{4EC6F8A6-E104-49AF-9250-867855144AAF}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_09.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="102001675"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_09" ID="{4EC6F8A6-E104-49AF-9250-867855144AAF}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Concrete_10" ID="{C3634259-85DA-44EC-857B-9F1C80E01948}" ShortID="440739459">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Concrete_10" ID="{5757B18F-D943-4AFE-AE59-FACFA51D4182}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Concrete_10.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="234151114"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Concrete_10" ID="{5757B18F-D943-4AFE-AE59-FACFA51D4182}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+											</ChildrenList>
+										</RandomSequenceContainer>
+										<RandomSequenceContainer Name="Footstep_Foliage" ID="{F6E68F91-D368-4A5F-80F3-683822726379}" ShortID="327479311">
+											<PropertyList>
+												<Property Name="Highpass" Type="int16">
+													<ValueList>
+														<Value>15</Value>
+													</ValueList>
+												</Property>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-7</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<Sound Name="Char_FS_Foliage_01" ID="{A0DE5EDF-D01C-4359-BF9D-668A43AADB17}" ShortID="112506603">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="Char_FS_Foliage_01" ID="{30AD33CA-5214-4ED7-8499-803054F8E635}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\Char_FS_Foliage_01.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="523126940"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="Char_FS_Foliage_01" ID="{30AD33CA-5214-4ED7-8499-803054F8E635}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="Char_FS_Foliage_02" ID="{5CC043E2-2C4B-463B-AE12-5436316A8E5D}" ShortID="627641555">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="Char_FS_Foliage_02" ID="{FB9E71CB-5B5B-4452-937B-6FB147EFC0C1}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\Char_FS_Foliage_02.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="367505142"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="Char_FS_Foliage_02" ID="{FB9E71CB-5B5B-4452-937B-6FB147EFC0C1}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="Char_FS_Foliage_03" ID="{3E85467C-9282-4D9E-AB5D-46F5D5F9357F}" ShortID="504123482">
+													<PropertyList>
+														<Property Name="MakeUpGain" Type="Real64">
+															<ValueList>
+																<Value>-5</Value>
+															</ValueList>
+														</Property>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="Char_FS_Foliage_03" ID="{99A6D71A-26B9-4A6B-8B79-00FC59627254}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\Char_FS_Foliage_03.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="215605728"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="Char_FS_Foliage_03" ID="{99A6D71A-26B9-4A6B-8B79-00FC59627254}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="Char_FS_Foliage_04" ID="{C595A94C-E2C7-4A1F-B65D-10ACBF7ABF34}" ShortID="197865780">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="Char_FS_Foliage_04" ID="{1915F808-A26C-43BB-8E76-C9D434F7DE8E}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\Char_FS_Foliage_04.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="785197518"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="Char_FS_Foliage_04" ID="{1915F808-A26C-43BB-8E76-C9D434F7DE8E}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="Char_FS_Foliage_05" ID="{5861A227-329F-409C-869F-CBF2EFA349C7}" ShortID="78145993">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="Char_FS_Foliage_05" ID="{C07D3811-3DFC-4A5A-BF43-8A4D7C9C947D}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\Char_FS_Foliage_05.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="572568664"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="Char_FS_Foliage_05" ID="{C07D3811-3DFC-4A5A-BF43-8A4D7C9C947D}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="Char_FS_Foliage_06" ID="{98514F73-5BF5-45F0-8D25-93B4B456FE77}" ShortID="629210624">
+													<PropertyList>
+														<Property Name="MakeUpGain" Type="Real64">
+															<ValueList>
+																<Value>-2</Value>
+															</ValueList>
+														</Property>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="Char_FS_Foliage_06" ID="{14C1FA18-11BF-4F25-9383-111C162C31B9}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\Char_FS_Foliage_06.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="598987559"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="Char_FS_Foliage_06" ID="{14C1FA18-11BF-4F25-9383-111C162C31B9}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="Char_FS_Foliage_07" ID="{4FBC6F8A-F4A1-4822-A6EB-8A27ABD11D8D}" ShortID="416714759">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="Char_FS_Foliage_07" ID="{E43376E9-E1FD-4565-B240-CB0B8530FE78}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\Char_FS_Foliage_07.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="514693245"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="Char_FS_Foliage_07" ID="{E43376E9-E1FD-4565-B240-CB0B8530FE78}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="Char_FS_Foliage_08" ID="{A2F80138-8D85-4CC8-B6CF-BDFDBC4B7146}" ShortID="337651733">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="Char_FS_Foliage_08" ID="{407E9DC2-0920-4E7C-B3C8-63968ED10D43}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\Char_FS_Foliage_08.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="466116251"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="Char_FS_Foliage_08" ID="{407E9DC2-0920-4E7C-B3C8-63968ED10D43}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+											</ChildrenList>
+										</RandomSequenceContainer>
+										<RandomSequenceContainer Name="Footstep_Asphalt" ID="{2484DB55-D094-494B-9613-26D8754C8288}" ShortID="650405048">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_01" ID="{99A7CE7D-2F72-4857-B852-19F6AA7B1C00}" ShortID="395445646">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_01" ID="{9D769578-2300-456B-A7D3-7B752C1C6B27}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_01.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="794173300"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_01" ID="{9D769578-2300-456B-A7D3-7B752C1C6B27}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_02" ID="{45267D58-C862-4562-B56A-94EFE55A5A16}" ShortID="688215297">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_02" ID="{BA8C7AA1-D871-4C3A-A64F-9A9C4B58D748}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_02.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="324319506"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_02" ID="{BA8C7AA1-D871-4C3A-A64F-9A9C4B58D748}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_03" ID="{9563A2EE-204D-4089-B652-08D57CD719A3}" ShortID="179624459">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_03" ID="{58B92193-2D5A-4F51-905E-FEA891CC74CF}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_03.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="403516786"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_03" ID="{58B92193-2D5A-4F51-905E-FEA891CC74CF}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_04" ID="{F357FFBF-59AA-4EE1-992E-31B1F868BB21}" ShortID="178671126">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_04" ID="{28604CBC-9ECA-4F90-9533-5B3A62664381}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_04.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="190277830"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_04" ID="{28604CBC-9ECA-4F90-9533-5B3A62664381}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_05" ID="{242A5EF5-1A7F-4CC5-B259-A7EB1058358E}" ShortID="632971508">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_05" ID="{F17FDE95-3FFB-4124-9463-DED1D2189C5B}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_05.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="76024997"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_05" ID="{F17FDE95-3FFB-4124-9463-DED1D2189C5B}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_06" ID="{6E36D852-A98D-450C-95B2-D6F336DCE85D}" ShortID="77028283">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_06" ID="{50D7145C-10F1-489C-979C-C76D7182F905}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_06.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="605125388"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_06" ID="{50D7145C-10F1-489C-979C-C76D7182F905}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_07" ID="{E59110FE-963A-40B4-B3B4-8EB14A5C12AA}" ShortID="731986166">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_07" ID="{2ACA9E33-C933-4954-BFCE-6E49BE41D61A}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_07.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="818779540"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_07" ID="{2ACA9E33-C933-4954-BFCE-6E49BE41D61A}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_08" ID="{BB0D0A71-6507-4024-9F1C-5B70B86D5DB6}" ShortID="917223083">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_08" ID="{C62D683E-E8D4-4B31-A89A-A5C2C06A8C67}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_08.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="943138636"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_08" ID="{C62D683E-E8D4-4B31-A89A-A5C2C06A8C67}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_09" ID="{16498D7E-29DE-49CA-AE4E-5B2F7DEAF404}" ShortID="886164589">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_09" ID="{9A6CC154-FF25-4B39-8416-6D12CDF02186}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_09.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="579189112"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_09" ID="{9A6CC154-FF25-4B39-8416-6D12CDF02186}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="MilBase_Character_Footstep_Asphalt_10" ID="{6E094856-ACD3-4991-AC76-A23FFC4B159F}" ShortID="555151379">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="footsteps" ID="{1486B68F-7CEF-4809-8D83-A26652EA3EF6}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="MilBase_Character_Footstep_Asphalt_10" ID="{D3D2610C-BE8C-4A04-9D42-89FA4E24121F}">
+															<Language>SFX</Language>
+															<AudioFile>Foley\MilBase_Character_Footstep_Asphalt_10.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="593777958"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="MilBase_Character_Footstep_Asphalt_10" ID="{D3D2610C-BE8C-4A04-9D42-89FA4E24121F}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+											</ChildrenList>
+										</RandomSequenceContainer>
+									</ChildrenList>
+									<GroupingInfo>
+										<GroupingBehaviorList>
+											<GroupingBehavior>
+												<ItemRef Name="Footstep_Asphalt" ID="{2484DB55-D094-494B-9613-26D8754C8288}"/>
+											</GroupingBehavior>
+											<GroupingBehavior>
+												<ItemRef Name="Footstep_Foliage" ID="{F6E68F91-D368-4A5F-80F3-683822726379}"/>
+											</GroupingBehavior>
+											<GroupingBehavior>
+												<ItemRef Name="Footstep_Concrete" ID="{28070E92-8546-44CA-A2DD-89868C6B0A49}"/>
+											</GroupingBehavior>
+										</GroupingBehaviorList>
+										<GroupingList>
+											<Grouping>
+												<SwitchRef Name="foliage" ID="{3D408B13-898B-4449-A07A-793D5B387F30}"/>
+												<ItemList>
+													<ItemRef Name="Footstep_Foliage" ID="{F6E68F91-D368-4A5F-80F3-683822726379}"/>
+												</ItemList>
+											</Grouping>
+											<Grouping>
+												<SwitchRef Name="asphalt" ID="{97116B2D-DD9B-41BD-93EF-E42A520B671F}"/>
+												<ItemList>
+													<ItemRef Name="Footstep_Asphalt" ID="{2484DB55-D094-494B-9613-26D8754C8288}"/>
+												</ItemList>
+											</Grouping>
+											<Grouping>
+												<SwitchRef Name="concrete" ID="{F11B74BA-F7C0-4EC6-AA08-136739C968A7}"/>
+												<ItemList>
+													<ItemRef Name="Footstep_Concrete" ID="{28070E92-8546-44CA-A2DD-89868C6B0A49}"/>
+												</ItemList>
+											</Grouping>
+										</GroupingList>
+									</GroupingInfo>
+								</SwitchContainer>
+							</ChildrenList>
+						</ActorMixer>
+					</ChildrenList>
+				</ActorMixer>
+				<ActorMixer Name="Ambiences" ID="{BAC11D17-D7EA-4E05-B845-FE985E507995}" ShortID="451269850">
+					<PropertyList>
+						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+						<Property Name="GameAuxSendVolume" Type="Real64">
+							<ValueList>
+								<Value>-23</Value>
+							</ValueList>
+						</Property>
+						<Property Name="MakeUpGain" Type="Real64">
+							<ValueList>
+								<Value>-6</Value>
+							</ValueList>
+						</Property>
+						<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Ambience" ID="{8CE22564-2664-4355-818A-4E0063C876AD}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<ActorMixer Name="Amb_Beds" ID="{D79B9659-0D7B-40C3-9DDF-0F156ED20FE4}" ShortID="539187121">
+							<PropertyList>
+								<Property Name="3DSpatialization" Type="int16" Value="1"/>
+								<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+								<Property Name="OverrideOutput" Type="bool" Value="True"/>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="Env_Volume_1250_Spread85" ID="{757D2E65-CA02-4EBB-9ED5-79A1566F7652}" WorkUnitID="{AED71D1A-7CA6-4E8F-A03C-B29B65813C4B}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="beds" ID="{B32DC92A-AB5E-4641-86C4-19F6C604FBA4}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+								</Reference>
+							</ReferenceList>
+						</ActorMixer>
+						<ActorMixer Name="Amb_Emitters" ID="{FEFE5E97-F4A0-43EE-85B1-F28825AE9807}" ShortID="751272309">
+							<PropertyList>
+								<Property Name="3DSpatialization" Type="int16" Value="1"/>
+								<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+								<Property Name="OverrideOutput" Type="bool" Value="True"/>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="emitters" ID="{E7C2B957-CDB8-4ADD-B665-5E125D9C28C9}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+								</Reference>
+							</ReferenceList>
+						</ActorMixer>
+						<ActorMixer Name="Amb_Props" ID="{36D145F0-F166-4607-8357-9CAD283FF763}" ShortID="1003178776">
+							<PropertyList>
+								<Property Name="3DSpatialization" Type="int16" Value="1"/>
+								<Property Name="EnableDiffraction" Type="bool" Value="True"/>
+								<Property Name="GameAuxSendVolume" Type="Real64">
+									<ValueList>
+										<Value>-19</Value>
+									</ValueList>
+								</Property>
+								<Property Name="OverrideGameAuxSends" Type="bool" Value="True"/>
+								<Property Name="OverrideOutput" Type="bool" Value="True"/>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="Env_Prop_2500_Spread50" ID="{D4FE52A6-A9B7-4383-BC2D-24CC909D585E}" WorkUnitID="{AED71D1A-7CA6-4E8F-A03C-B29B65813C4B}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="props" ID="{8E59068E-C058-4A5C-9E07-7295DF758E81}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+								</Reference>
+							</ReferenceList>
+						</ActorMixer>
+					</ChildrenList>
+				</ActorMixer>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

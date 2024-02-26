@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{B124D76C-D4E0-454B-9FF8-D3E5417BF0AE}" SchemaVersion="119">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{B124D76C-D4E0-454B-9FF8-D3E5417BF0AE}" PersistMode="Standalone">
+			<ChildrenList>
+				<WorkUnit Name="UI" ID="{FF574BBE-B3FB-4E59-BB74-69FE9E8E66D2}" PersistMode="Reference"/>
+				<WorkUnit Name="Footsteps" ID="{1DE1EE47-89B3-491E-8F4D-E902CC18C451}" PersistMode="Reference"/>
+				<WorkUnit Name="Ambience" ID="{15CF1AB4-8766-4FA9-BF12-53F52469882E}" PersistMode="Reference"/>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

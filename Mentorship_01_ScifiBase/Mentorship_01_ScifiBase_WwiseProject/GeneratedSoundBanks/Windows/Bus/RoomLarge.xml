@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="3553615197" Type="Bus" GUID="{516F26D9-E56A-4B15-932C-0A47517CD265}" Language="SFX" Hash="{53DFDCC6-B857-A924-3704-BFF74F508F54}">
+			<ObjectPath>RoomLarge</ObjectPath>
+			<ShortName>RoomLarge</ShortName>
+			<Path>Bus/RoomLarge.bnk</Path>
+			<Media>
+				<File Id="928203694" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>MilBase_Exterior_Medium.wav</ShortName>
+					<Path>Media/928203694.wem</Path>
+					<CachePath>Plugins/Wwise Convolution Reverb/MilBase_Exterior_Medium_259E92B3.wem</CachePath>
+				</File>
+			</Media>
+			<Plugins>
+				<ShareSets>
+					<Plugin Id="1323005165" Name="ScifiBase_LargeRoom" ObjectPath="\Effects\Default Work Unit\ScifiBase_LargeRoom" GUID="{5A44CD75-DE49-443B-9A30-E53687341D8B}" LibName="Wwise Convolution Reverb" LibId="8323075">
+						<MediaRefs>
+							<MediaRef Id="928203694"/>
+						</MediaRefs>
+					</Plugin>
+				</ShareSets>
+			</Plugins>
+			<AuxBusses>
+				<AuxBus Id="3553615197" Name="RoomLarge" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\REVERBS\RoomLarge" GUID="{516F26D9-E56A-4B15-932C-0A47517CD265}" MaxAttenuation="1500">
+					<PluginRefs>
+						<ShareSets>
+							<PluginRef Id="1323005165"/>
+						</ShareSets>
+					</PluginRefs>
+				</AuxBus>
+			</AuxBusses>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{7AF9D2CB-1CCC-9844-010D-ACEE0DA898AC}</FileHash>
+</SoundBanksInfo>

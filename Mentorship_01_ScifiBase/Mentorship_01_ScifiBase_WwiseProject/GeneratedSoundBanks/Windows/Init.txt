@@ -1,0 +1,31 @@
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	85412153	Ambience			\Default Work Unit\Master Audio Bus\SFX\Ambience	
+	247557814	Foley			\Default Work Unit\Master Audio Bus\SFX\Foley	
+	393239870	SFX			\Default Work Unit\Master Audio Bus\SFX	
+	612957004	emitters			\Default Work Unit\Master Audio Bus\SFX\Ambience\emitters	
+	860902532	firing			\Default Work Unit\Master Audio Bus\SFX\Weapon\firing	
+	968010305	props			\Default Work Unit\Master Audio Bus\SFX\Ambience\props	
+	1106291253	beds			\Default Work Unit\Master Audio Bus\SFX\Ambience\beds	
+	1172844112	gear			\Default Work Unit\Master Audio Bus\SFX\Foley\gear	
+	1534528548	VO			\Default Work Unit\Master Audio Bus\VO	
+	1551306167	UI			\Default Work Unit\Master Audio Bus\SFX\UI	
+	2385628198	footsteps			\Default Work Unit\Master Audio Bus\SFX\Foley\footsteps	
+	3545700988	REVERBS			\Default Work Unit\Master Audio Bus\REVERBS	
+	3721010766	CINE			\Default Work Unit\Master Audio Bus\CINE	
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+	3893417221	Weapon			\Default Work Unit\Master Audio Bus\SFX\Weapon	
+	3992555905	gun_foley			\Default Work Unit\Master Audio Bus\SFX\Weapon\gun_foley	
+
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	2213992659	Exterior			\Default Work Unit\Master Audio Bus\REVERBS\Exterior	
+	3205342581	RoomSmall			\Default Work Unit\Master Audio Bus\REVERBS\RoomSmall	
+	3553615197	RoomLarge			\Default Work Unit\Master Audio Bus\REVERBS\RoomLarge	
+
+Effect plug-ins	ID	Name	Type				Notes
+	1323005165	ScifiBase_LargeRoom	Wwise Convolution Reverb			
+	1615735465	ScifiBase_Exterior	Wwise Convolution Reverb			
+
+Audio Devices	ID	Name	Type				Notes
+	2317455096	No_Output	No Output			
+	3859886410	System	System			
+

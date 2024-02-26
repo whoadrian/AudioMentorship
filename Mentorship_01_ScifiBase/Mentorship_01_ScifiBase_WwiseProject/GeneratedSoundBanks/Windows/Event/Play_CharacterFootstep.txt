@@ -1,0 +1,11 @@
+Event	ID	Name			Wwise Object Path	Notes
+	1706120837	Play_CharacterFootstep			\Default Work Unit\Footsteps\Play_CharacterFootstep	
+
+Switch Group	ID	Name			Wwise Object Path	Notes
+	705739452	CharacterFootstep			\Default Work Unit\CharacterFootstep	
+
+Switch	ID	Name	Switch Group			Notes
+	841620460	concrete	CharacterFootstep			
+	1162469934	foliage	CharacterFootstep			
+	4169408098	asphalt	CharacterFootstep			
+

@@ -1,0 +1,6 @@
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	3553615197	RoomLarge			\Default Work Unit\Master Audio Bus\REVERBS\RoomLarge	
+
+Effect plug-ins	ID	Name	Type				Notes
+	1323005165	ScifiBase_LargeRoom	Wwise Convolution Reverb			
+

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="1706120837" Type="Event" GUID="{6654F1B8-32AA-4A18-AC3E-6B8DE7BD67A9}" Language="SFX" Hash="{92FD6F17-6FF8-3B16-9B6B-E1444FC7EECB}">
+			<ObjectPath>Play_CharacterFootstep</ObjectPath>
+			<ShortName>Play_CharacterFootstep</ShortName>
+			<Path>Event/Play_CharacterFootstep.bnk</Path>
+			<Media>
+				<File Id="76024997" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_05.wav</ShortName>
+					<Path>Media/76024997.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_05_818F3B66.wem</CachePath>
+				</File>
+				<File Id="85709527" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_08.wav</ShortName>
+					<Path>Media/85709527.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_08_818F3B66.wem</CachePath>
+				</File>
+				<File Id="102001675" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_09.wav</ShortName>
+					<Path>Media/102001675.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_09_818F3B66.wem</CachePath>
+				</File>
+				<File Id="161013616" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_04.wav</ShortName>
+					<Path>Media/161013616.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_04_818F3B66.wem</CachePath>
+				</File>
+				<File Id="190277830" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_04.wav</ShortName>
+					<Path>Media/190277830.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_04_818F3B66.wem</CachePath>
+				</File>
+				<File Id="215605728" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\Char_FS_Foliage_03.wav</ShortName>
+					<Path>Media/215605728.wem</Path>
+					<CachePath>SFX/Foley/Char_FS_Foliage_03_818F3B66.wem</CachePath>
+				</File>
+				<File Id="234151114" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_10.wav</ShortName>
+					<Path>Media/234151114.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_10_818F3B66.wem</CachePath>
+				</File>
+				<File Id="324319506" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_02.wav</ShortName>
+					<Path>Media/324319506.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="355904820" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_05.wav</ShortName>
+					<Path>Media/355904820.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_05_818F3B66.wem</CachePath>
+				</File>
+				<File Id="367505142" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\Char_FS_Foliage_02.wav</ShortName>
+					<Path>Media/367505142.wem</Path>
+					<CachePath>SFX/Foley/Char_FS_Foliage_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="386796644" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_07.wav</ShortName>
+					<Path>Media/386796644.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_07_818F3B66.wem</CachePath>
+				</File>
+				<File Id="403516786" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_03.wav</ShortName>
+					<Path>Media/403516786.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_03_818F3B66.wem</CachePath>
+				</File>
+				<File Id="466116251" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\Char_FS_Foliage_08.wav</ShortName>
+					<Path>Media/466116251.wem</Path>
+					<CachePath>SFX/Foley/Char_FS_Foliage_08_818F3B66.wem</CachePath>
+				</File>
+				<File Id="514693245" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\Char_FS_Foliage_07.wav</ShortName>
+					<Path>Media/514693245.wem</Path>
+					<CachePath>SFX/Foley/Char_FS_Foliage_07_818F3B66.wem</CachePath>
+				</File>
+				<File Id="523126940" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\Char_FS_Foliage_01.wav</ShortName>
+					<Path>Media/523126940.wem</Path>
+					<CachePath>SFX/Foley/Char_FS_Foliage_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="561452758" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_02.wav</ShortName>
+					<Path>Media/561452758.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_02_818F3B66.wem</CachePath>
+				</File>
+				<File Id="572568664" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\Char_FS_Foliage_05.wav</ShortName>
+					<Path>Media/572568664.wem</Path>
+					<CachePath>SFX/Foley/Char_FS_Foliage_05_818F3B66.wem</CachePath>
+				</File>
+				<File Id="579189112" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_09.wav</ShortName>
+					<Path>Media/579189112.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_09_818F3B66.wem</CachePath>
+				</File>
+				<File Id="593777958" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_10.wav</ShortName>
+					<Path>Media/593777958.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_10_818F3B66.wem</CachePath>
+				</File>
+				<File Id="598987559" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\Char_FS_Foliage_06.wav</ShortName>
+					<Path>Media/598987559.wem</Path>
+					<CachePath>SFX/Foley/Char_FS_Foliage_06_818F3B66.wem</CachePath>
+				</File>
+				<File Id="605125388" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_06.wav</ShortName>
+					<Path>Media/605125388.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_06_818F3B66.wem</CachePath>
+				</File>
+				<File Id="617965151" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_06.wav</ShortName>
+					<Path>Media/617965151.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_06_818F3B66.wem</CachePath>
+				</File>
+				<File Id="785197518" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\Char_FS_Foliage_04.wav</ShortName>
+					<Path>Media/785197518.wem</Path>
+					<CachePath>SFX/Foley/Char_FS_Foliage_04_818F3B66.wem</CachePath>
+				</File>
+				<File Id="794173300" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_01.wav</ShortName>
+					<Path>Media/794173300.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="818779540" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_07.wav</ShortName>
+					<Path>Media/818779540.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_07_818F3B66.wem</CachePath>
+				</File>
+				<File Id="943138636" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Asphalt_08.wav</ShortName>
+					<Path>Media/943138636.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Asphalt_08_818F3B66.wem</CachePath>
+				</File>
+				<File Id="958929113" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_01.wav</ShortName>
+					<Path>Media/958929113.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_01_818F3B66.wem</CachePath>
+				</File>
+				<File Id="1022764280" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>Foley\MilBase_Character_Footstep_Concrete_03.wav</ShortName>
+					<Path>Media/1022764280.wem</Path>
+					<CachePath>SFX/Foley/MilBase_Character_Footstep_Concrete_03_818F3B66.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1706120837" Name="Play_CharacterFootstep" ObjectPath="\Events\Default Work Unit\Footsteps\Play_CharacterFootstep" GUID="{6654F1B8-32AA-4A18-AC3E-6B8DE7BD67A9}" DurationType="OneShot" DurationMin="0.6" DurationMax="1.0979224">
+					<SwitchContainers>
+						<SwitchContainer>
+							<SwitchValue GroupType="Switch" GroupId="705739452" Id="1162469934" GUID="{3D408B13-898B-4449-A07A-793D5B387F30}"/>
+							<MediaRefs>
+								<MediaRef Id="215605728"/>
+								<MediaRef Id="367505142"/>
+								<MediaRef Id="466116251"/>
+								<MediaRef Id="514693245"/>
+								<MediaRef Id="523126940"/>
+								<MediaRef Id="572568664"/>
+								<MediaRef Id="598987559"/>
+								<MediaRef Id="785197518"/>
+							</MediaRefs>
+						</SwitchContainer>
+						<SwitchContainer>
+							<SwitchValue GroupType="Switch" GroupId="705739452" Id="4169408098" GUID="{97116B2D-DD9B-41BD-93EF-E42A520B671F}"/>
+							<MediaRefs>
+								<MediaRef Id="76024997"/>
+								<MediaRef Id="190277830"/>
+								<MediaRef Id="324319506"/>
+								<MediaRef Id="403516786"/>
+								<MediaRef Id="579189112"/>
+								<MediaRef Id="593777958"/>
+								<MediaRef Id="605125388"/>
+								<MediaRef Id="794173300"/>
+								<MediaRef Id="818779540"/>
+								<MediaRef Id="943138636"/>
+							</MediaRefs>
+						</SwitchContainer>
+						<SwitchContainer>
+							<SwitchValue GroupType="Switch" GroupId="705739452" Id="841620460" GUID="{F11B74BA-F7C0-4EC6-AA08-136739C968A7}" Default="true"/>
+							<MediaRefs>
+								<MediaRef Id="85709527"/>
+								<MediaRef Id="102001675"/>
+								<MediaRef Id="161013616"/>
+								<MediaRef Id="234151114"/>
+								<MediaRef Id="355904820"/>
+								<MediaRef Id="386796644"/>
+								<MediaRef Id="561452758"/>
+								<MediaRef Id="617965151"/>
+								<MediaRef Id="958929113"/>
+								<MediaRef Id="1022764280"/>
+							</MediaRefs>
+						</SwitchContainer>
+					</SwitchContainers>
+				</Event>
+			</Events>
+			<SwitchGroups>
+				<SwitchGroup Id="705739452" Name="CharacterFootstep" ObjectPath="\Switches\Default Work Unit\CharacterFootstep" GUID="{1E6F66BD-5F0F-43EE-9636-0117D6ED548E}">
+					<Switches>
+						<Switch Id="841620460" Name="concrete" ObjectPath="\Switches\Default Work Unit\CharacterFootstep\concrete" GUID="{F11B74BA-F7C0-4EC6-AA08-136739C968A7}"/>
+						<Switch Id="1162469934" Name="foliage" ObjectPath="\Switches\Default Work Unit\CharacterFootstep\foliage" GUID="{3D408B13-898B-4449-A07A-793D5B387F30}"/>
+						<Switch Id="4169408098" Name="asphalt" ObjectPath="\Switches\Default Work Unit\CharacterFootstep\asphalt" GUID="{97116B2D-DD9B-41BD-93EF-E42A520B671F}"/>
+					</Switches>
+				</SwitchGroup>
+			</SwitchGroups>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{8E82E28F-EE68-FD19-AAC6-403182CA2AFE}</FileHash>
+</SoundBanksInfo>

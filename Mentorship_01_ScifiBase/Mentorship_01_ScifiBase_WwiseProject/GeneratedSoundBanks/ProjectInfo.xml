@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo>
+	<Project Name="Mento01_ScifiBase 5.2_WwiseProject" GUID="{A2904ABD-1068-47A9-AE1A-B3D96B81F0C8}" Generator="2022.1.5.8242"/>
+	<CacheRoot>../.cache</CacheRoot>
+	<Platforms>
+		<Platform Name="Windows" GUID="{2F2921B2-E6FE-4397-A4C5-D81752A160B8}" BasePlatform="Windows" BasePlatformGUID="{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}" Path="Windows"/>
+	</Platforms>
+	<Languages>
+		<Language Name="English(US)" Id="684519430" GUID="{A4522712-8BDB-481C-ADD2-0D080FE88DAF}" Default="true" UseAsStandIn="true"/>
+	</Languages>
+	<FileHash>{B774DB18-1A85-E9FB-7966-153C2C5FEA8A}</FileHash>
+</ProjectInfo>

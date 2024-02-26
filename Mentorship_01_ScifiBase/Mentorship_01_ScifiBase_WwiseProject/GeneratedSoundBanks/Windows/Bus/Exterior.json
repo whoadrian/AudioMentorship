@@ -1,0 +1,65 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "2213992659",
+    "Type": "Bus",
+    "GUID": "{790B621A-AD9D-4ABE-BEF2-2D35F632FF72}",
+    "Language": "SFX",
+    "Hash": "{A3FA2FCB-C81D-FB69-6DA1-C64EFB06BA91}",
+    "ObjectPath": "Exterior",
+    "ShortName": "Exterior",
+    "Path": "Bus/Exterior.bnk",
+    "Media": [
+     {
+      "Id": "535089750",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "MilBase_Exterior_Long.wav",
+      "Path": "Media/535089750.wem",
+      "CachePath": "Plugins/Wwise Convolution Reverb/MilBase_Exterior_Long_08CFDF22.wem"
+     }
+    ],
+    "Plugins": {
+     "ShareSets": [
+      {
+       "Id": "1615735465",
+       "Name": "ScifiBase_Exterior",
+       "ObjectPath": "\\Effects\\ScifiBase\\ScifiBase_Exterior",
+       "GUID": "{8D4002E1-324C-448E-B3F2-0B0AC213C129}",
+       "LibName": "Wwise Convolution Reverb",
+       "LibId": "8323075",
+       "MediaRefs": [
+        {
+         "Id": "535089750"
+        }
+       ]
+      }
+     ]
+    },
+    "AuxBusses": [
+     {
+      "Id": "2213992659",
+      "Name": "Exterior",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\REVERBS\\Exterior",
+      "GUID": "{790B621A-AD9D-4ABE-BEF2-2D35F632FF72}",
+      "MaxAttenuation": "1500",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "1615735465"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "FileHash": "{0A22B6D7-AF78-0F6E-7578-F2A3A6117C29}"
+ }
+}

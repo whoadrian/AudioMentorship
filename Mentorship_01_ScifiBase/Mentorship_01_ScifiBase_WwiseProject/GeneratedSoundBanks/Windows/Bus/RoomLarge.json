@@ -1,0 +1,65 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "3553615197",
+    "Type": "Bus",
+    "GUID": "{516F26D9-E56A-4B15-932C-0A47517CD265}",
+    "Language": "SFX",
+    "Hash": "{53DFDCC6-B857-A924-3704-BFF74F508F54}",
+    "ObjectPath": "RoomLarge",
+    "ShortName": "RoomLarge",
+    "Path": "Bus/RoomLarge.bnk",
+    "Media": [
+     {
+      "Id": "928203694",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "MilBase_Exterior_Medium.wav",
+      "Path": "Media/928203694.wem",
+      "CachePath": "Plugins/Wwise Convolution Reverb/MilBase_Exterior_Medium_259E92B3.wem"
+     }
+    ],
+    "Plugins": {
+     "ShareSets": [
+      {
+       "Id": "1323005165",
+       "Name": "ScifiBase_LargeRoom",
+       "ObjectPath": "\\Effects\\Default Work Unit\\ScifiBase_LargeRoom",
+       "GUID": "{5A44CD75-DE49-443B-9A30-E53687341D8B}",
+       "LibName": "Wwise Convolution Reverb",
+       "LibId": "8323075",
+       "MediaRefs": [
+        {
+         "Id": "928203694"
+        }
+       ]
+      }
+     ]
+    },
+    "AuxBusses": [
+     {
+      "Id": "3553615197",
+      "Name": "RoomLarge",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\REVERBS\\RoomLarge",
+      "GUID": "{516F26D9-E56A-4B15-932C-0A47517CD265}",
+      "MaxAttenuation": "1500",
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "1323005165"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "FileHash": "{BF2A2DD0-D27B-BCA4-D7BF-ACC53FAA8B88}"
+ }
+}
