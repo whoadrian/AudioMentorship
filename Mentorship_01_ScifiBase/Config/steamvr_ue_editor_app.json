@@ -1,0 +1,18 @@
+{
+	"source": "UE",
+	"applications": [
+		{
+			"app_key": "application.generated.ue.machine-gun-ak4-13594126.ue4editor.exe",
+			"launch_type": "url",
+			"url": "steam://launch/",
+			"action_manifest_path": "F:/3d Jobs/CGPitbull/Ships/GUNS/Machinegun AK4/UE4/MachineGunAK4 4.25/Config/SteamVRBindings/steamvr_manifest.json",
+			"strings":
+			{
+				"en_us":
+				{
+					"name": "Machine Gun AK4-13594126 [UE Editor]"
+				}
+			}
+		}
+	]
+}
