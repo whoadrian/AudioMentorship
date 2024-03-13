@@ -20,6 +20,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "Wwise/WwiseProjectDatabaseImpl.h"
 #include "WaapiPicker/WwiseTreeItem.h"
 #include "Wwise/Ref/WwiseAnyRef.h"
+#include "Wwise/WwiseReconcileModule.h"
 
 struct FScopedSlowTask;
 
@@ -60,8 +61,9 @@ struct FWwiseReconcileItem
 	}
 };
 
-class WWISERECONCILE_API FWwiseReconcile
+class WWISERECONCILE_API IWwiseReconcile
 {
+protected:
 	TMap<FGuid, FWwiseNewAsset> GuidToWwiseRef;
 
 	TArray<FAssetData> AssetsToUpdate;
@@ -69,26 +71,40 @@ class WWISERECONCILE_API FWwiseReconcile
 	TArray<FAssetData> AssetsToDelete;
 	TArray<FWwiseNewAsset> AssetsToCreate;
 
-	static FWwiseReconcile* Instance;
-
-	FWwiseReconcile() {};
-
-	bool IsAssetOutOfDate(const FAssetData& AssetData, const FWwiseAnyRef& WwiseRef);
-	void GetAllWwiseRefs();
+	virtual bool IsAssetOutOfDate(const FAssetData& AssetData, const FWwiseAnyRef& WwiseRef) = 0;
+	virtual void GetAllWwiseRefs() = 0;
 	friend class FWwiseReconcileModule;
-	static void Init();
-	static void Terminate();
 public:
-	static FWwiseReconcile* Get();
-	void GetAllAssets(TArray<FWwiseReconcileItem>& ReconcileItems);
-	TArray<FAssetData> CreateAssets(FScopedSlowTask& SlowTask);
-	TArray<FAssetData> UpdateExistingAssets(FScopedSlowTask& SlowTask);
-	void ConvertWwiseItemTypeToReconcileItem(const TArray<TSharedPtr<FWwiseTreeItem>>& InWwiseItems, TArray<FWwiseReconcileItem>& OutReconcileItems, EWwiseReconcileOperationFlags OperationFlags = EWwiseReconcileOperationFlags::All, bool bFirstLevel = true);
-	bool RenameExistingAssets(FScopedSlowTask& SlowTask);
-	int GetNumberOfAssets();
-	int32 DeleteAssets(FScopedSlowTask& SlowTask);
-	UClass* GetUClassFromWwiseRefType(EWwiseRefType RefType);
-	void GetAssetChanges(TArray<FWwiseReconcileItem>& ReconcileItems, EWwiseReconcileOperationFlags OperationFlags = EWwiseReconcileOperationFlags::All);
+	IWwiseReconcile() {};
+	virtual ~IWwiseReconcile(){};
+
+	inline static IWwiseReconcile* Get()
+	{
+		if (auto* Module = IWwiseReconcileModule::GetModule())
+		{
+			return Module->GetReconcile();
+		}
+		return nullptr;
+	}
+	static IWwiseReconcile* Instantiate()
+	{
+		if (auto* Module = IWwiseReconcileModule::GetModule())
+		{
+			return Module->InstantiateReconcile();
+		}
+		return nullptr;
+	}
+	
+	virtual FString GetAssetPackagePath(const FWwiseAnyRef& WwiseRef) = 0;
+	virtual void GetAllAssets(TArray<FWwiseReconcileItem>& ReconcileItems) = 0;
+	virtual TArray<FAssetData> CreateAssets(FScopedSlowTask& SlowTask) = 0;
+	virtual TArray<FAssetData> UpdateExistingAssets(FScopedSlowTask& SlowTask) = 0;
+	virtual void ConvertWwiseItemTypeToReconcileItem(const TArray<TSharedPtr<FWwiseTreeItem>>& InWwiseItems, TArray<FWwiseReconcileItem>& OutReconcileItems, EWwiseReconcileOperationFlags OperationFlags = EWwiseReconcileOperationFlags::All, bool bFirstLevel = true) = 0;
+	virtual bool RenameExistingAssets(FScopedSlowTask& SlowTask) = 0;
+	virtual int GetNumberOfAssets() = 0;
+	virtual int32 DeleteAssets(FScopedSlowTask& SlowTask) = 0;
+	virtual UClass* GetUClassFromWwiseRefType(EWwiseRefType RefType) = 0;
+	virtual void GetAssetChanges(TArray<FWwiseReconcileItem>& ReconcileItems, EWwiseReconcileOperationFlags OperationFlags = EWwiseReconcileOperationFlags::All) = 0;
 	
 	bool ReconcileAssets(EWwiseReconcileOperationFlags OperationFlags = EWwiseReconcileOperationFlags::All);
 

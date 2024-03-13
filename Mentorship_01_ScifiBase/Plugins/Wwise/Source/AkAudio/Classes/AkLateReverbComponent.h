@@ -66,8 +66,12 @@ public:
 	 * When enabled, the aux bus for this reverb component will be assigned automatically. This is done by estimating the decay time of the reverb produced by the parent Primitive Component, given its volume and surface area.
 	 * This decay value is used to select an aux bus from the reverb aux bus assignment map in the integration settings.
 	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Late Reverb")
+	UPROPERTY(EditAnywhere, BlueprintSetter = SetAutoAssignAuxBus, BlueprintReadWrite, Category = "Late Reverb")
 	bool AutoAssignAuxBus = true;
+
+	UFUNCTION(BlueprintSetter, Category = "Late Reverb")
+	void SetAutoAssignAuxBus(bool bInEnable);
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (EditCondition = "!AutoAssignAuxBus"), Category = "Late Reverb")
 	class UAkAuxBus* AuxBus = nullptr;

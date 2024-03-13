@@ -53,18 +53,23 @@ float UAkLateReverbComponent::TextVisualizerHeightOffset = 80.0f;
 UAkLateReverbComponent::UAkLateReverbComponent(const class FObjectInitializer& ObjectInitializer) :
 	Super(ObjectInitializer)
 {
-	Parent = TWeakObjectPtr<UPrimitiveComponent>();
+	// SceneComponent property initialization
 	bUseAttachParentBound = true;
+	bWantsOnUpdateTransform = true;
+	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bStartWithTickEnabled = true;
 
-	// Property initialization
+	// LateReverbComponent property initialization
 	SendLevel = 1.0f;
 	FadeRate = 0.5f;
 	Priority = 1.0f;
-
+	Parent = TWeakObjectPtr<UPrimitiveComponent>();
 	bEnable = true;
-	bWantsOnUpdateTransform = true;
 
 #if WITH_EDITOR
+	// In editor we always want to tick in case the global RTPCs become active, or aux bus assignment is enabled.
+	bTickInEditor = true;
+
 	if (AkSpatialAudioHelper::GetObjectReplacedEvent())
 	{
 		AkSpatialAudioHelper::GetObjectReplacedEvent()->AddUObject(this, &UAkLateReverbComponent::HandleObjectsReplaced);
@@ -100,6 +105,29 @@ bool UAkLateReverbComponent::HasEffectOnLocation(const FVector& Location) const
 	// Location is exactly equal to the Volume's location
 	static float RADIUS = 0.01f;
 	return LateReverbIsActive() && EncompassesPoint(Location, RADIUS);
+}
+
+void UAkLateReverbComponent::SetAutoAssignAuxBus(bool bInEnable)
+{
+	if (bInEnable == AutoAssignAuxBus)
+	{
+		return;
+	}
+	AutoAssignAuxBus = bInEnable;
+	if (AutoAssignAuxBus)
+	{
+		AuxBusManual = AuxBus ;
+		DecayEstimationNeedsUpdate = true;
+	}
+	else
+	{
+		AuxBus = AuxBusManual;
+		ReverbParamsChanged = true;
+	}
+
+#if WITH_EDITOR
+	bTextStatusNeedsUpdate = true;
+#endif //WITH_EDITOR
 }
 
 uint32 UAkLateReverbComponent::GetAuxBusId() const
@@ -190,16 +218,6 @@ void UAkLateReverbComponent::OnRegister()
 	SetRelativeTransform(FTransform::Identity);
 	InitializeParent();
 	ParentChanged();
-
-	// During runtime (non editor), we only want to tick if we'll ever need to update the reverb parameters.
-	PrimaryComponentTick.bCanEverTick = ReverbDescriptor.RequiresUpdates();
-	PrimaryComponentTick.bStartWithTickEnabled = ReverbDescriptor.RequiresUpdates();
-#if WITH_EDITOR
-	// In editor builds we always want to tick in case the global RTPCs become active, or aux bus assignment is enabled.
-	bTickInEditor = true;
-	PrimaryComponentTick.bCanEverTick = true;
-	PrimaryComponentTick.bStartWithTickEnabled = true;
-#endif
 }
 
 void UAkLateReverbComponent::ParentChanged()
@@ -314,35 +332,38 @@ void UAkLateReverbComponent::TickComponent(float DeltaTime, enum ELevelTick Tick
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// Update decay and time to first reflection estimations when the size is changed, every PARAM_ESTIMATION_UPDATE_PERIOD seconds.
-	if (SecondsSinceDecayUpdate < PARAM_ESTIMATION_UPDATE_PERIOD)
+	if (ReverbDescriptor.RequiresUpdates())
 	{
-		SecondsSinceDecayUpdate += DeltaTime;
-	}
-	if ((TextureSetHasChanged || DecayEstimationNeedsUpdate) && SecondsSinceDecayUpdate >= PARAM_ESTIMATION_UPDATE_PERIOD)
-	{
-		RecalculateDecay();
-		DecayEstimationNeedsUpdate = false;
-		TextureSetHasChanged = false;
-	}
-	if (SecondsSincePredelayUpdate < PARAM_ESTIMATION_UPDATE_PERIOD)
-	{
-		SecondsSincePredelayUpdate += DeltaTime;
-	}
-	if (PredelayEstimationNeedsUpdate && SecondsSincePredelayUpdate >= PARAM_ESTIMATION_UPDATE_PERIOD)
-	{
-		RecalculatePredelay();
-		PredelayEstimationNeedsUpdate = false;
-	}
-	if (ReverbAssignmentNeedsUpdate)
-	{
-		UpdateDecayEstimation(ReverbDescriptor.T60Decay, ReverbDescriptor.PrimitiveVolume, ReverbDescriptor.PrimitiveSurfaceArea);
-		ReverbAssignmentNeedsUpdate = false;
-	}
-	if (ReverbParamsChanged)
-	{
-		OnReverbParamsChanged();
-		ReverbParamsChanged = false;
+		// Update decay and time to first reflection estimations when the size is changed, every PARAM_ESTIMATION_UPDATE_PERIOD seconds.
+		if (SecondsSinceDecayUpdate < PARAM_ESTIMATION_UPDATE_PERIOD)
+		{
+			SecondsSinceDecayUpdate += DeltaTime;
+		}
+		if ((TextureSetHasChanged || DecayEstimationNeedsUpdate) && SecondsSinceDecayUpdate >= PARAM_ESTIMATION_UPDATE_PERIOD)
+		{
+			RecalculateDecay();
+			DecayEstimationNeedsUpdate = false;
+			TextureSetHasChanged = false;
+		}
+		if (SecondsSincePredelayUpdate < PARAM_ESTIMATION_UPDATE_PERIOD)
+		{
+			SecondsSincePredelayUpdate += DeltaTime;
+		}
+		if (PredelayEstimationNeedsUpdate && SecondsSincePredelayUpdate >= PARAM_ESTIMATION_UPDATE_PERIOD)
+		{
+			RecalculatePredelay();
+			PredelayEstimationNeedsUpdate = false;
+		}
+		if (ReverbAssignmentNeedsUpdate)
+		{
+			UpdateDecayEstimation(ReverbDescriptor.T60Decay, ReverbDescriptor.PrimitiveVolume, ReverbDescriptor.PrimitiveSurfaceArea);
+			ReverbAssignmentNeedsUpdate = false;
+		}
+		if (ReverbParamsChanged)
+		{
+			OnReverbParamsChanged();
+			ReverbParamsChanged = false;
+		}
 	}
 
 #if WITH_EDITOR
@@ -757,9 +778,6 @@ void UAkLateReverbComponent::PostEditChangeProperty(FPropertyChangedEvent& Prope
 	const FName MemberPropertyName = (PropertyChangedEvent.MemberProperty != nullptr) ? PropertyChangedEvent.MemberProperty->GetFName() : NAME_None;
 	if (MemberPropertyName == GET_MEMBER_NAME_CHECKED(UAkLateReverbComponent, AutoAssignAuxBus))
 	{
-		PrimaryComponentTick.bCanEverTick = AutoAssignAuxBus;
-		PrimaryComponentTick.bStartWithTickEnabled = AutoAssignAuxBus;
-		bTickInEditor = AutoAssignAuxBus;
 		DecayEstimationNeedsUpdate = true;
 		bTextStatusNeedsUpdate = true;
 

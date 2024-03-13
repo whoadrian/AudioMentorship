@@ -12,6 +12,7 @@
 #pragma once
 
 #include <AK/SoundEngine/Common/AkHashTableTypes.h>
+#include <AK/Tools/Common/AkBitFuncs.h>
 
 // Inline-able functions for AK::HashTable 
 // Exposing enough functionality to be use by plug-in services and other things in non-header files

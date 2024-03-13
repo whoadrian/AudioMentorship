@@ -85,15 +85,9 @@ void UAkRoomComponent::SetEnable(bool bInEnable)
 	if (bEnable)
 	{
 		AddSpatialAudioRoom();
-		if (bEnableReverbZone)
-		{
-			UpdateParentRoom();
-			bReverbZoneNeedsUpdate = true;
-		}
 	}
 	else
 	{
-		RemoveReverbZone();
 		RemoveSpatialAudioRoom();
 	}
 }
@@ -112,6 +106,24 @@ void UAkRoomComponent::SetDynamic(bool bInDynamic)
 #else
 	bWantsOnUpdateTransform = bDynamic;
 #endif
+}
+
+void UAkRoomComponent::SetTransmissionLoss(float InTransmissionLoss)
+{
+	if (InTransmissionLoss != WallOcclusion)
+	{
+		WallOcclusion = InTransmissionLoss;
+		if (IsRegisteredWithWwise) UpdateSpatialAudioRoom();
+	}
+}
+
+void UAkRoomComponent::SetAuxSendLevel(float InAuxSendLevel)
+{
+	if (InAuxSendLevel != AuxSendLevel)
+	{
+		AuxSendLevel = InAuxSendLevel;
+		if (IsRegisteredWithWwise) UpdateSpatialAudioRoom();
+	}
 }
 
 FName UAkRoomComponent::GetName() const
@@ -228,16 +240,28 @@ void UAkRoomComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, 
 				{
 					AkAudioDevice->ReindexRoom(this);
 					AkAudioDevice->PortalsNeedRoomUpdate(GetWorld());
+					//Update room facing in sound engine
+					UpdateSpatialAudioRoom();
 				}
 				Moving = false;
 			}
 		}
 	}
 
-	if (bEnableReverbZone && bReverbZoneNeedsUpdate && GeometryComponent)
+	if (ShouldSetReverbZone())
 	{
- 		SetReverbZone();
-		bReverbZoneNeedsUpdate = false;
+		if (!bIsAReverbZoneInWwise)
+		{
+			// make sure the parent is still valid before setting the reverb zone
+			UpdateParentRoom();
+			bReverbZoneNeedsUpdate = true;
+		}
+
+		if (bReverbZoneNeedsUpdate)
+		{
+			SetReverbZone();
+			bReverbZoneNeedsUpdate = false;
+		}
 	}
 }
 
@@ -438,15 +462,26 @@ UPrimitiveComponent* UAkRoomComponent::GetPrimitiveParent() const
 
 void UAkRoomComponent::SetReverbZone(const UAkRoomComponent* InParentRoom, float InTransitionRegionWidth)
 {
+	AActor* ParentActor = InParentRoom ? InParentRoom->GetOwner() : nullptr;
+	UpdateParentRoomActor(ParentActor);
+	UpdateTransitionRegionWidth(InTransitionRegionWidth);
 	bEnableReverbZone = true;
-	SetParentRoom(InParentRoom);
-	TransitionRegionWidth = InTransitionRegionWidth;
 
-	SetReverbZone();
+	if (!bIsAReverbZoneInWwise)
+	{
+		bReverbZoneNeedsUpdate = true;
+	}
+
+	if (!bEnable)
+	{
+		UE_LOG(LogAkAudio, Verbose, TEXT("UAkRoomComponent::SetReverbZone: The Room component %s is not enabled. When the Room gets enabled, it will be set as a Reverb Zone."), *GetRoomName());
+	}
 }
 
 void UAkRoomComponent::RemoveReverbZone()
 {
+	bEnableReverbZone = false;
+
 	if (!bIsAReverbZoneInWwise)
 	{
 		return;
@@ -528,6 +563,7 @@ void UAkRoomComponent::RemoveSpatialAudioRoom()
 			}
 			AkAudioDevice->RemoveRoom(this);
 			IsRegisteredWithWwise = false;
+			bIsAReverbZoneInWwise = false;
 		}
 	}
 }
@@ -605,7 +641,7 @@ void UAkRoomComponent::BeginPlayInternal()
 		UpdateSpatialAudioRoom();
 	}
 
-	if (bEnableReverbZone && !bIsAReverbZoneInWwise && GeometryComponent)
+	if (ShouldSetReverbZone() && !bIsAReverbZoneInWwise)
 	{
 		UpdateParentRoom();
 		SetReverbZone();
@@ -650,7 +686,7 @@ void UAkRoomComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyCha
 	Super::PostEditChangeProperty(PropertyChangedEvent);
 
 	const FName memberPropertyName = (PropertyChangedEvent.MemberProperty != nullptr) ? PropertyChangedEvent.MemberProperty->GetFName() : NAME_None;
-	
+
 	if (memberPropertyName == GET_MEMBER_NAME_CHECKED(UAkRoomComponent, WallOcclusion) ||
 		memberPropertyName == GET_MEMBER_NAME_CHECKED(UAkRoomComponent, AuxSendLevel))
 	{
@@ -663,7 +699,6 @@ void UAkRoomComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyCha
 	}
 	if (memberPropertyName == GET_MEMBER_NAME_CHECKED(UAkRoomComponent, ParentRoomActor))
 	{
-		UpdateParentRoom();
 		bReverbZoneNeedsUpdate = true;
 	}
 	if (memberPropertyName == GET_MEMBER_NAME_CHECKED(UAkRoomComponent, TransitionRegionWidth))
@@ -673,13 +708,31 @@ void UAkRoomComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyCha
 
 		bReverbZoneNeedsUpdate = true;
 	}
+
+	if (IsAReverbZone())
+	{
+		UpdateParentRoom();
+		check(ParentRoom != this);
+	}
 }
 
 void UAkRoomComponent::OnParentNameChanged()
 {
+	TArray<AkPortalID> PortalsToRemove;
+
 	for (auto& Portal : ConnectedPortals)
 	{
+		if (!Portal.Value.IsValid())
+		{
+			PortalsToRemove.Add(Portal.Key);
+			continue;
+		}
 		Portal.Value->UpdateRoomNames();
+	}
+
+	for (auto& PortalID : PortalsToRemove)
+	{
+		ConnectedPortals.Remove(PortalID);
 	}
 }
 #endif
@@ -749,7 +802,7 @@ UAkLateReverbComponent* UAkRoomComponent::GetReverbComponent()
 
 void UAkRoomComponent::AddPortalConnection(UAkPortalComponent* in_pPortal)
 {
-	ConnectedPortals.Add(in_pPortal->GetPortalID(), in_pPortal);
+	ConnectedPortals.Add(in_pPortal->GetPortalID(), TWeakObjectPtr<UAkPortalComponent>(in_pPortal));
 }
 
 void UAkRoomComponent::RemovePortalConnection(AkPortalID in_portalID)
@@ -825,6 +878,11 @@ AkRoomID UAkRoomComponent::GetParentRoomID() const
 	return ParentRoom.IsValid() ? ParentRoom->GetRoomID() : AK::SpatialAudio::kOutdoorRoomID;
 }
 
+bool UAkRoomComponent::ShouldSetReverbZone()
+{
+	return bEnable && bEnableReverbZone && GeometryComponent;
+}
+
 void UAkRoomComponent::OnSetEnableReverbZone()
 {
 	if (bEnableReverbZone)
@@ -897,7 +955,8 @@ AkRoomID UAkRoomComponent::GetRootID() const
 		return GetRoomID();
 	}
 
-	if (!ParentRoom.IsValid())
+	if (!ParentRoom.IsValid() ||
+		ParentRoom == this )
 	{
 		return AK::SpatialAudio::kOutdoorRoomID;
 	}

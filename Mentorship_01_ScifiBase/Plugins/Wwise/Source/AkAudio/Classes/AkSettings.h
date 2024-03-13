@@ -251,8 +251,8 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "Geometry Surface Properties")
 	TSoftObjectPtr<UDataTable> GeometrySurfacePropertiesTable;
 
-	// Global surface absorption value to use when estimating environment Decay value. It is used for the decay estimations of environments without Acoustic Texture information. The default value is 0.5.
-	UPROPERTY(Config, EditAnywhere, Category = "Reverb Assignment", meta = (ClampMin = 0.1f, ClampMax = 1.0f, UIMin = 0.1f, UIMax = 1.0f))
+	// Default surface absorption value to use when estimating environment Decay value. It is used for the decay estimations of environments without Acoustic Texture information. The default value is 0.5.
+	UPROPERTY(Config, EditAnywhere, Category = "Reverb Assignment", DisplayName = "Default Surface Absorption", meta = (ClampMin = 0.1f, ClampMax = 1.0f, UIMin = 0.1f, UIMax = 1.0f))
 	float GlobalDecayAbsorption = .5f;
 
 	// The default Auxiliary Bus to choose for Automatic Reverb Assignment.

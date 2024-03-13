@@ -38,6 +38,7 @@ the specific language governing permissions and limitations under the License.
 #include <AK/SoundEngine/Common/IAkPluginMemAlloc.h>
 #include <AK/Tools/Common/AkArray.h>
 #include <AK/Tools/Common/AkString.h>
+#include <AK/Tools/Common/AkBitFuncs.h>
 
 //-----------------------------------------------------------------------------
 // AUDIO DATA FORMAT

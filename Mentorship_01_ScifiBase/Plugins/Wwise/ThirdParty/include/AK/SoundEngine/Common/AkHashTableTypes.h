@@ -12,7 +12,6 @@
 #pragma once
 
 #include <AK/SoundEngine/Common/AkTypes.h>
-#include <AK/Tools/Common/AkPlatformFuncs.h>
 
 // Basic types for an open-addressed hash array (or, otherwise, keyState-value array).
 // Exposing enough data and structures to used for forward declarations of types.

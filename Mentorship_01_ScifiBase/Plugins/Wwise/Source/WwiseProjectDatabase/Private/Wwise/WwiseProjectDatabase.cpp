@@ -448,7 +448,7 @@ const FWwisePlatformDataStructure* FWwiseDataStructureScopeLock::GetCurrentPlatf
 		}
 
 
-		if (!UE_LOG_ACTIVE(LogWwiseProjectDatabase, Verbose) || !UE_LOG_ACTIVE(LogWwiseProjectDatabase, VeryVerbose))
+		if (!UE_LOG_ACTIVE(LogWwiseProjectDatabase, Verbose) && !UE_LOG_ACTIVE(LogWwiseProjectDatabase, VeryVerbose))
 		{
 			UE_LOG(LogWwiseHints, Warning,
 			       TEXT("Enable Verbose or VeryVerbose logs for LogWwiseProjectDatabase for more details on why %s is missing from your current platforms."),

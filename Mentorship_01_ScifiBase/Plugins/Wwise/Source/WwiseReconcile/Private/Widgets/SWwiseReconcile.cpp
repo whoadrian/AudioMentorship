@@ -172,6 +172,6 @@ FReply SWwiseReconcile::CloseWindow()
 FReply SWwiseReconcile::ReconcileAssets()
 {
 	CloseWindow();
-	FWwiseReconcile::Get()->ReconcileAssets();
+	IWwiseReconcile::Get()->ReconcileAssets();
 	return FReply::Handled();
 }

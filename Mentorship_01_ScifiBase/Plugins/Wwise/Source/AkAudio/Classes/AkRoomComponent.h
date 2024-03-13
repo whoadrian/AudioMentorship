@@ -29,8 +29,8 @@ class AKAUDIO_API UAkRoomComponent : public UAkGameObject
 	GENERATED_BODY()
 
 public:
-	typedef WwiseUnrealHelper::AkSpatialAudioIDKeyFuncs<UAkPortalComponent*, false> PortalComponentSpatialAudioIDKeyFuncs;
-	typedef TMap<AkPortalID, UAkPortalComponent*, FDefaultSetAllocator, PortalComponentSpatialAudioIDKeyFuncs> PortalComponentMap;
+	typedef WwiseUnrealHelper::AkSpatialAudioIDKeyFuncs<TWeakObjectPtr<UAkPortalComponent>, false> PortalComponentSpatialAudioIDKeyFuncs;
+	typedef TMap<AkPortalID, TWeakObjectPtr<UAkPortalComponent>, FDefaultSetAllocator, PortalComponentSpatialAudioIDKeyFuncs> PortalComponentMap;
 
 	static const FString OutdoorsRoomName;
 
@@ -71,14 +71,28 @@ public:
 	* 'thickness', as it relates to how much sound energy is transmitted through the wall. Valid range 0.0f-1.0f, 
 	* and is mapped to the occlusion curve as defined in the Wwise project.
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Transmission Loss", Category = "Room", meta = (ClampMin=0.0f, ClampMax=1.0f, UIMin=0.0f, UIMax=1.0f))
+	UPROPERTY(EditAnywhere, BlueprintSetter = SetTransmissionLoss, DisplayName = "Transmission Loss", Category = "Room", meta = (ClampMin=0.0f, ClampMax=1.0f, UIMin=0.0f, UIMax=1.0f))
 	float WallOcclusion = .0f;
+
+	/**
+	* Sets the transmission loss value.
+	* @param InTransmissionLoss - The new value for the transmission loss. Valid range 0.0f-1.0f.
+	*/
+	UFUNCTION(BlueprintSetter, Category = "Room")
+	void SetTransmissionLoss(float InTransmissionLoss);
 
 	/**
 	* Send level for sounds that are posted on the room. Valid range: (0.f-1.f). A value of 0 disables the aux send.
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AkEvent", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	UPROPERTY(EditAnywhere, BlueprintSetter = SetAuxSendLevel, Category = "AkEvent", meta = (ClampMin = "0.0", ClampMax = "1.0"))
 	float AuxSendLevel = .0f;
+
+	/**
+	* Sets the Send level. A value of 0 disables the aux send.
+	* @param InAuxSendLevel - The new value for the Send level. Valid range 0.0f-1.0f.
+	*/
+	UFUNCTION(BlueprintSetter, Category = "ReverbZone")
+	void SetAuxSendLevel(float InAuxSendLevel);
 
 	/** Automatically post the associated AkAudioEvent on BeginPlay */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AkEvent", SimpleDisplay)
@@ -116,7 +130,7 @@ public:
 	* The name of the Parent Room of this Reverb Zone.
 	* If the Parent Room Actor is None, or if the Parent Room Actor doesn't have an enabled Room, the 'outdoors' Room is chosen and printed here.
 	*/
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, NonTransactional, Category = "ReverbZone")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ReverbZone", meta = (EditCondition = "bEnableReverbZone"))
 	FString ParentRoomName = OutdoorsRoomName;
 
 	/**
@@ -219,7 +233,7 @@ public:
 
 	void AddPortalConnection(UAkPortalComponent* in_pPortal);
 	void RemovePortalConnection(AkPortalID in_portalID);
-	const PortalComponentMap& GetConnectedPortals() const { return ConnectedPortals; }
+	PortalComponentMap& GetConnectedPortals() { return ConnectedPortals; }
 
 	bool IsAReverbZone() const;
 	AkRoomID GetParentRoomID() const;
@@ -254,6 +268,7 @@ private:
 	float SecondsSinceMovement = 0.0f;
 	bool Moving = false;
 
+	bool ShouldSetReverbZone();
 	void OnSetEnableReverbZone();
 	void UpdateParentRoom();
 	void ResetParentRoom();

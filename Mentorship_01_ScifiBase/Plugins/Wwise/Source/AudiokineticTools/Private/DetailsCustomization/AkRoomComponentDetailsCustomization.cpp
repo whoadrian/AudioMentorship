@@ -85,6 +85,7 @@ void FAkRoomComponentDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder
 		{
 			InDetailBuilder.HideCategory("Room");
 			InDetailBuilder.HideCategory("AkEvent");
+			InDetailBuilder.HideCategory("ReverbZone");
 		}
 	}
 }

@@ -121,7 +121,7 @@ int32 UWwiseReconcileCommandlet::Main(const FString& Params)
 		return Result;
 	}
 
-	if (auto WwiseReconcile = FWwiseReconcile::Get())
+	if (auto WwiseReconcile = IWwiseReconcile::Get())
 	{
 		WwiseReconcile->GetAllAssets(ReconcileItems);
 		WwiseReconcile->GetAssetChanges(ReconcileItems, ReconcileOperationFlags);

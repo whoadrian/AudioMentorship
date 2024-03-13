@@ -17,6 +17,8 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #include "WwiseBrowserDataSource.h"
 
+#include <Wwise/Stats/AudiokineticTools.h>
+
 #include "AkUnrealAssetDataHelper.h"
 #include "AkWaapiUtils.h"
 #include "WaapiDataSource.h"
@@ -114,7 +116,7 @@ bool FUAssetStatusFilter::IsKeptInBrowser(FWwiseTreeItemPtr& Item) const
 	{
 		return true;
 	}
-	
+
 	if(bFilters[UAssetUpToDate] && Item->IsUAssetUpToDate())
 	{
 		return true;
@@ -240,6 +242,8 @@ FWwiseBrowserDataSource::~FWwiseBrowserDataSource()
 
 void FWwiseBrowserDataSource::ConstructTree()
 {
+	SCOPED_AUDIOKINETICTOOLS_EVENT_2(TEXT("FWwiseBrowserDataSource::ConstructTree"))
+
 	UAssetDataSource->ConstructItems();
 	ProjectDBDataSource->ConstructTree(false);
 	WaapiDataSource->ConstructTree(false);
@@ -255,6 +259,8 @@ bool FWwiseBrowserDataSource::AreFiltersOff()
 
 void FWwiseBrowserDataSource::ApplyTextFilter(TSharedPtr<StringFilter> FilterText)
 {
+	SCOPED_AUDIOKINETICTOOLS_EVENT_3(TEXT("FWwiseBrowserDataSource::ApplyTextFilter"))
+
 	CurrentFilterText = FilterText;
 	ConstructTree();
 	if (!AreFiltersOff())
@@ -372,6 +378,7 @@ FText FWwiseBrowserDataSource::GetConnectedWwiseProjectName()
 
 int32 FWwiseBrowserDataSource::LoadChildren(FWwiseTreeItemPtr TreeItem, TArray<FWwiseTreeItemPtr>& OutChildren)
 {
+	SCOPED_AUDIOKINETICTOOLS_EVENT_3(TEXT("FWwiseBrowserDataSource::LoadChildren"))
 
 	UE_LOG(LogAudiokineticTools, VeryVerbose, TEXT("Loading children for %s"), *TreeItem->FolderPath )
 
@@ -453,6 +460,8 @@ void FWwiseBrowserDataSource::HandleFindWwiseItemInProjectExplorerCommandExecute
 
 void FWwiseBrowserDataSource::MergeDataSources(bool bGenerateUAssetsInfo)
 {
+	SCOPED_AUDIOKINETICTOOLS_EVENT_3(TEXT("FWwiseBrowserDataSource::MergeDataSources"))
+
 	FWwiseTreeItemPtr WaapiRootItem;
 	FWwiseTreeItemPtr SoundBanksRootItem;
 
@@ -669,11 +678,15 @@ void FWwiseBrowserDataSource::CreateWaapiItem(const FWwiseTreeItemPtr& TreeItemR
 
 void FWwiseBrowserDataSource::OnWaapiDataSourceRefreshed()
 {
+	SCOPED_AUDIOKINETICTOOLS_EVENT_3(TEXT("FWwiseBrowserDataSource::OnWaapiDataSourceRefreshed"))
+
 	MergeDataSources(false);
 }
 
 void FWwiseBrowserDataSource::OnProjectDBDataSourceRefreshed()
 {
+	SCOPED_AUDIOKINETICTOOLS_EVENT_3(TEXT("FWwiseBrowserDataSource::OnProjectDBDataSourceRefreshed"))
+
 	MergeDataSources();
 }
 

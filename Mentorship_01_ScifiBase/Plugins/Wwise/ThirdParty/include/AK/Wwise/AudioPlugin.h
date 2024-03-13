@@ -323,6 +323,7 @@ namespace AK
 		/// \akwarning
 		/// The functions in this interface are not thread-safe, unless stated otherwise.
 		/// \endakwarning
+		/// \deprecated This class is deprecated. Use AK::Wwise::Plugin::AudioPlugin instead.
 		/// \sa
 		/// - \ref effectpluginwwise
 		class IAudioPlugin

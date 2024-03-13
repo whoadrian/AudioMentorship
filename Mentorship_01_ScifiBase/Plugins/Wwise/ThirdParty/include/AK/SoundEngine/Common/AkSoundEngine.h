@@ -2442,12 +2442,11 @@ namespace AK
 		/// - \ref integrating_elements_plugins
 		/// - \ref sdk_bank_training
 		AK_EXTERNAPIFUNC(AKRESULT, LoadBankMemoryCopy)(
-			const void* in_pInMemoryBankPtr,	///< Pointer to the in-memory bank to load (pointer is not stored in sound engine, memory can be released after callback)
+			const void*			in_pInMemoryBankPtr,	///< Pointer to the in-memory bank to load (pointer is not stored in sound engine, memory can be released after callback)
 			AkUInt32			in_uInMemoryBankSize,	///< Size of the in-memory bank to load
 			AkBankCallbackFunc  in_pfnBankCallback,	    ///< Callback function
-			void* in_pCookie,				///< Callback cookie
-			AkBankID& out_bankID,				///< Returned bank ID
-			AkBankType& out_bankType			///< Returned bank type
+			void*				in_pCookie,				///< Callback cookie
+			AkBankID&			out_bankID				///< Returned bank ID
 			);
 
 		/// Loads a bank asynchronously (from in-memory data, out-of-place, any bank type).\n

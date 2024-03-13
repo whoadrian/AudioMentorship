@@ -87,7 +87,7 @@ const TSharedRef<SWidget> FProjectedResultColumn::ConstructRowWidget(FWwiseRecon
 
 	auto WwiseRef = TreeItem.WwiseAnyRef.WwiseAnyRef;
 	FName AssetName = AkUnrealAssetDataHelper::GetAssetDefaultName(WwiseRef);
-	FString AssetPackagePath = AkUnrealAssetDataHelper::GetAssetDefaultPackagePath(WwiseRef);
+	FString AssetPackagePath = IWwiseReconcile::Get()->GetAssetPackagePath(*WwiseRef);
 	int PackageLength = AssetViewUtils::GetPackageLengthForCooking(AssetPackagePath / AssetName.ToString(), FEngineBuildSettings::IsInternalBuild());
 	int MaxPath = AssetViewUtils::GetMaxCookPathLen();
 

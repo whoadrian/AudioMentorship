@@ -60,16 +60,16 @@ struct UAssetDataSourceInformation
 
 class FUAssetDataSource
 {
-	TMap<FGuid, UAssetDataSourceInformation> OrphanedItems;
+	// UAssets that have a valid Guid that exists in the Project Database
 	TMap<FGuid, UAssetDataSourceInformation> UsedItems;
-	//UAssets with invalid Guid will use the ShortId to sync with the Project Database.
+	// UAssets with invalid Guid will use the ShortId to sync with the Project Database.
 	TMap<uint32, UAssetDataSourceInformation> UAssetWithoutGuid;
-	//UAssets with invalid Guid and ShortId will use the AssetName to sync with the Project Database.
+	// UAssets with invalid Guid and ShortId will use the AssetName to sync with the Project Database. Also includes "None" States.
 	TMap<FName, UAssetDataSourceInformation> UAssetWithoutShortId;
-	
+
 	UAssetDataSourceInformation CreateUAssetInfo(const UAssetDataSourceId& Id, const FAssetData& Asset);
 
-	bool GuidExistsInProjectDatabase(const FGuid ItemId, EWwiseItemType::Type Type);
+	bool GuidExistsInProjectDatabase(const FGuid ItemId);
 
 public:
 	void ConstructItems();

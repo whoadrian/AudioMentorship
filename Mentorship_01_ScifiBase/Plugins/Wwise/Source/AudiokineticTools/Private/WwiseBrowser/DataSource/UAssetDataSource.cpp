@@ -20,6 +20,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "AkUnrealAssetDataHelper.h"
 #include "AssetManagement/AkAssetDatabase.h"
 #include "Wwise/WwiseProjectDatabase.h"
+#include "Wwise/Stats/AudiokineticTools.h"
 #include "WwiseBrowser/WwiseBrowserHelpers.h"
 
 UAssetDataSourceInformation FUAssetDataSource::CreateUAssetInfo(const UAssetDataSourceId& Id, const FAssetData& Asset)
@@ -32,16 +33,22 @@ UAssetDataSourceInformation FUAssetDataSource::CreateUAssetInfo(const UAssetData
 	return AssetInfo;
 }
 
-bool FUAssetDataSource::GuidExistsInProjectDatabase(const FGuid ItemId, EWwiseItemType::Type Type)
+bool FUAssetDataSource::GuidExistsInProjectDatabase(const FGuid ItemId)
 {
+	SCOPED_AUDIOKINETICTOOLS_EVENT_3(TEXT("FUAssetDataSource::GuidExistsInProjectDatabase"))
 	auto* ProjectDatabase = FWwiseProjectDatabase::Get();
-	if(ProjectDatabase)
+	if (ProjectDatabase)
 	{
 		const FWwiseDataStructureScopeLock DataStructure(*ProjectDatabase);
 		const FWwiseRefPlatform Platform = DataStructure.GetPlatform(ProjectDatabase->GetCurrentPlatform());
 		const auto* PlatformData = DataStructure.GetCurrentPlatformData();
 
-		FWwiseDatabaseLocalizableGuidKey Key = FWwiseDatabaseLocalizableGuidKey(ItemId, DataStructure.GetCurrentLanguage().GetLanguageId());
+		if (UNLIKELY(!PlatformData))
+		{
+			return false;
+		}
+
+		FWwiseDatabaseLocalizableGuidKey Key = FWwiseDatabaseLocalizableGuidKey(ItemId, FWwiseDatabaseLocalizableIdKey::GENERIC_LANGUAGE);
 		return PlatformData->Guids.Find(Key) != nullptr;
 	}
 	return false;
@@ -49,49 +56,61 @@ bool FUAssetDataSource::GuidExistsInProjectDatabase(const FGuid ItemId, EWwiseIt
 
 void FUAssetDataSource::ConstructItems()
 {
-	OrphanedItems.Empty();
+	SCOPED_AUDIOKINETICTOOLS_EVENT_2(TEXT("FUAssetDataSource::ConstructItems"))
 	UsedItems.Empty();
 	UAssetWithoutGuid.Empty();
 	UAssetWithoutShortId.Empty();
+
 	TArray<FAssetData> AllAssets;
 	AkAssetDatabase::Get().FindAllAssets(AllAssets);
 
 	for (auto& Asset : AllAssets)
 	{
-		if(WwiseBrowserHelpers::GetTypeFromClass(Asset.GetClass()) == EWwiseItemType::InitBank)
+		auto AssetType = WwiseBrowserHelpers::GetTypeFromClass(Asset.GetClass());
+		
+		if (AssetType == EWwiseItemType::InitBank)
 		{
 			continue;
 		}
+
 		auto GuidValue = Asset.TagsAndValues.FindTag(GET_MEMBER_NAME_CHECKED(FWwiseObjectInfo, WwiseGuid));
 		auto ShortIdValue = Asset.TagsAndValues.FindTag(GET_MEMBER_NAME_CHECKED(FWwiseObjectInfo, WwiseShortId));
+
 		UAssetDataSourceId Id;
 		Id.Name = Asset.AssetName;
+
 		if (GuidValue.IsSet())
 		{
 			FString GuidAsString = GuidValue.GetValue();
 			FGuid Guid = FGuid(GuidAsString);
 			Id.ItemId = Guid;
 		}
+
 		if (ShortIdValue.IsSet())
 		{
 			Id.ShortId = FCString::Strtoui64(*ShortIdValue.GetValue(), NULL, 10);
 		}
-		Id.Name = Asset.AssetName;
-		if(Id.ItemId.IsValid())
+		
+		// States always share a state called None, and therefore always share the same ShortId. Do not list by ShortId in that case.
+		bool bStoreByShortId = Id.ShortId != AK_INVALID_UNIQUE_ID &&
+							   !(AssetType == EWwiseItemType::State && Asset.AssetName.ToString().EndsWith("None"));
+
+		if (Id.ItemId.IsValid() && GuidExistsInProjectDatabase(Id.ItemId))
 		{
-			if (auto UAssetInfo = OrphanedItems.Find(Id.ItemId))
+			if (auto UAssetInfo = UsedItems.Find(Id.ItemId))
 			{
 				UAssetInfo->AssetsData.Add(Asset);
 			}
 			else
 			{
 				auto AssetInfo = CreateUAssetInfo(Id, Asset);
-				OrphanedItems.Add(Id.ItemId, AssetInfo);
+				UsedItems.Add(Id.ItemId, AssetInfo);
 			}
 		}
-		else if(Id.ShortId > 0)
+
+		else if (bStoreByShortId)
 		{
-			if(auto UAsset = UAssetWithoutGuid.Find(Id.ShortId))
+			if (auto UAsset = UAssetWithoutGuid.Find(Id.ShortId))
 			{
 				UAsset->AssetsData.Add(Asset);
 			}
@@ -101,9 +120,10 @@ void FUAssetDataSource::ConstructItems()
 				UAssetWithoutGuid.Add(Id.ShortId, AssetInfo);
 			}
 		}
+
 		else
 		{
-			if(auto UAsset = UAssetWithoutShortId.Find(Id.Name))
+			if (auto UAsset = UAssetWithoutShortId.Find(Id.Name))
 			{
 				UAsset->AssetsData.Add(Asset);
 			}
@@ -118,30 +138,25 @@ void FUAssetDataSource::ConstructItems()
 
 void FUAssetDataSource::GetAssetsInfo(FGuid ItemId, uint32 ShortId, FString Name, EWwiseItemType::Type& ItemType, FName& AssetName, TArray<FAssetData>& Assets)
 {
+	SCOPED_AUDIOKINETICTOOLS_EVENT_2(TEXT("FUAssetDataSource::GetAssetsInfo"))
 	UAssetDataSourceId Id;
 	Id.ItemId = ItemId;
 	Id.ShortId = ShortId;
 	Id.Name = FName(*Name);
+
 	if (auto Item = UsedItems.Find(Id.ItemId))
 	{
 		Assets = Item->AssetsData;
 		ItemType = Item->Type;
 		AssetName = Item->AssetName;
 	}
-	else if (auto OrphanedItem = OrphanedItems.Find(Id.ItemId))
-	{
-		UsedItems.Add(Id.ItemId, *OrphanedItem);
-		Assets = OrphanedItem->AssetsData;
-		ItemType = OrphanedItem->Type;
-		AssetName = OrphanedItem->AssetName;
-		OrphanedItems.Remove(Id.ItemId);
-	}
-	if(auto Item = UAssetWithoutGuid.Find(ShortId))
+
+	if (auto Item = UAssetWithoutGuid.Find(Id.ShortId))
 	{
 		auto GuidItem = UsedItems.Find(Id.ItemId);
 		for(auto Asset : Item->AssetsData)
 		{
-			if(!AkUnrealAssetDataHelper::IsSameType(Asset, Item->Type))
+			if (!AkUnrealAssetDataHelper::IsSameType(Asset, Item->Type))
 			{
 				continue;
 			}
@@ -158,7 +173,8 @@ void FUAssetDataSource::GetAssetsInfo(FGuid ItemId, uint32 ShortId, FString Name
 		}
 		UAssetWithoutGuid.Remove(ShortId);
 	}
-	if(auto Item = UAssetWithoutShortId.Find(FName(*Name)))
+
+	if (auto Item = UAssetWithoutShortId.Find(FName(*Name)))
 	{
 		auto GuidItem = UsedItems.Find(Id.ItemId);
 		for(auto Asset : Item->AssetsData)
@@ -180,56 +196,10 @@ void FUAssetDataSource::GetAssetsInfo(FGuid ItemId, uint32 ShortId, FString Name
 			UAssetWithoutShortId.Remove(FName(*Name));
 		}
 	}
-
-	if(AssetName != FName())
-	{
-		return;
-	}
-
-	FGuid FoundKey = FGuid();
-	for(auto& Item : OrphanedItems)
-	{
-		if(GuidExistsInProjectDatabase(Item.Key, ItemType))
-		{
-			continue;
-		}
-		
-		if(FoundKey.IsValid())
-		{
-			break;
-		}
-		//States always share a state called None which has the same ShortId. Do not check for the ShortId in that case.
-		bool bShouldCheckShortId = !(Item.Value.Type == EWwiseItemType::State && Item.Value.AssetName.ToString().EndsWith("None"));
-		if((Item.Value.Id.ShortId == ShortId && ShortId > 0 && bShouldCheckShortId)
-			|| Item.Value.AssetName == FName(*Name))
-		{
-			for(auto Asset : Item.Value.AssetsData)
-			{
-				if(!AkUnrealAssetDataHelper::IsSameType(Asset, Item.Value.Type))
-				{
-					continue;
-				}
-				Assets.Add(Asset);
-				if(AssetName == FName())
-				{
-					AssetName = Item.Value.AssetName;
-					ItemType = Item.Value.Type;
-				}
-				FoundKey = Item.Value.Id.ItemId;
-				Item.Value.Id.ItemId = ItemId;
-				Item.Value.Id.ShortId = ShortId;
-				Item.Value.Id.Name = FName(*Name);
-				UsedItems.Add(ItemId, Item.Value);
-				break;
-			}
-		}
-	}
-	OrphanedItems.Remove(FoundKey);
 }
 
 void FUAssetDataSource::GetOrphanAssets(TArray<UAssetDataSourceInformation>& OrphanAssets) const
 {
-	OrphanedItems.GenerateValueArray(OrphanAssets);
 	for(auto ShortIdItem : UAssetWithoutGuid)
 	{
 		OrphanAssets.Add(ShortIdItem.Value);

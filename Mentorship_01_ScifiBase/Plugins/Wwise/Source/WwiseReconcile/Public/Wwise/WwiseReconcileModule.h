@@ -17,13 +17,77 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #pragma once
 
+class IWwiseReconcile;
+
 #include "CoreMinimal.h"
 #include "Modules/ModuleInterface.h"
 #include "Modules/ModuleManager.h"
+#include "Misc/ConfigCacheIni.h"
 
-class FWwiseReconcileModule : public IModuleInterface
+class IWwiseReconcileModule : public IModuleInterface
 {
 public:
-	virtual void StartupModule() override;
-	virtual void ShutdownModule() override;
+	static FName GetModuleName()
+	{
+		static const FName ModuleName = GetModuleNameFromConfig();
+		return ModuleName;
+	}
+
+	/**
+	 * Checks to see if this module is loaded and ready.
+	 *
+	 * @return True if the module is loaded and ready to use
+	 */
+	static bool IsAvailable()
+	{
+		return FModuleManager::Get().IsModuleLoaded(GetModuleName());
+	}
+
+	static IWwiseReconcileModule* GetModule()
+	{
+		const auto ModuleName = GetModuleName();
+		if (ModuleName.IsNone())
+		{
+			return nullptr;
+		}
+#if UE_SERVER
+		return nullptr;
+#else
+		FModuleManager& ModuleManager = FModuleManager::Get();
+		IWwiseReconcileModule* Result = ModuleManager.GetModulePtr<IWwiseReconcileModule>(ModuleName);
+		if (UNLIKELY(!Result))
+		{
+			if (UNLIKELY(IsEngineExitRequested()))
+			{
+				UE_LOG(LogLoad, Verbose, TEXT("Skipping reloading missing WwiseReconcileImpl module: Exiting."));
+			}
+			else if (UNLIKELY(!IsInGameThread()))
+			{
+				UE_LOG(LogLoad, Warning, TEXT("Skipping loading missing WwiseReconcileImpl module: Not in game thread"));
+			}
+			else
+			{
+				UE_LOG(LogLoad, Log, TEXT("Loading WwiseReconcileImpl module: %s"), *ModuleName.GetPlainNameString());
+				Result = ModuleManager.LoadModulePtr<IWwiseReconcileModule>(ModuleName);
+				if (UNLIKELY(!Result))
+				{
+					UE_LOG(LogLoad, Fatal, TEXT("Could not load WwiseReconcileImpl module: %s not found"), *ModuleName.GetPlainNameString());
+				}
+			}
+		}
+
+		return Result;
+#endif
+	}
+
+	virtual IWwiseReconcile* GetReconcile() { return nullptr; }
+	virtual IWwiseReconcile* InstantiateReconcile() { return nullptr; }
+
+private:
+	static inline FName GetModuleNameFromConfig()
+	{
+		FString ModuleName = TEXT("WwiseReconcile");
+		GConfig->GetString(TEXT("Audio"), TEXT("WwiseReconcileModuleName"), ModuleName, GEngineIni);
+		return FName(ModuleName);
+	}
 };

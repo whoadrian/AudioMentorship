@@ -1429,7 +1429,7 @@ public:
 
 	void AddPortalConnectionToOutdoors(const UWorld* in_world, UAkPortalComponent* in_pPortal);
 	void RemovePortalConnectionToOutdoors(const UWorld* in_world, AkPortalID in_portalID);
-	void GetObsOccServicePortalMap(const TWeakObjectPtr<UAkRoomComponent> InRoom, const UWorld* InWorld, AkObstructionAndOcclusionService::PortalMap& OutPortalMap) const;
+	void GetObsOccServicePortalMap(const TWeakObjectPtr<UAkRoomComponent> InRoom, const UWorld* InWorld, AkObstructionAndOcclusionService::PortalMap& OutPortalMap);
 
 	struct SetCurrentAudioCultureAsyncTask
 	{
@@ -1539,8 +1539,8 @@ private:
 	*/
 	TMap<UWorld*, TArray<TWeakObjectPtr<UAkPortalComponent>>> WorldPortalsMap;
 
-	typedef WwiseUnrealHelper::AkSpatialAudioIDKeyFuncs<UAkPortalComponent*, false> PortalComponentSpatialAudioIDKeyFuncs;
-	typedef TMap<AkPortalID, UAkPortalComponent*, FDefaultSetAllocator, PortalComponentSpatialAudioIDKeyFuncs> PortalComponentMap;
+	typedef WwiseUnrealHelper::AkSpatialAudioIDKeyFuncs<TWeakObjectPtr<UAkPortalComponent>, false> PortalComponentSpatialAudioIDKeyFuncs;
+	typedef TMap<AkPortalID, TWeakObjectPtr<UAkPortalComponent>, FDefaultSetAllocator, PortalComponentSpatialAudioIDKeyFuncs> PortalComponentMap;
 	TMap<const UWorld*, PortalComponentMap> OutdoorsConnectedPortals;
 
 	void CleanupComponentMapsForWorld(UWorld* World);

@@ -26,10 +26,7 @@ IMPLEMENT_MODULE(FWwiseProjectDatabaseModule, WwiseProjectDatabase)
 
 FWwiseProjectDatabase* FWwiseProjectDatabaseModule::GetProjectDatabase()
 {
-	if(!FPaths::FileExists(FPaths::Combine(WwiseUnrealHelper::GetSoundBankDirectory(), TEXT("ProjectInfo.json"))))
-	{
-		return nullptr;
-	}
+	SCOPED_WWISEPROJECTDATABASE_EVENT(TEXT("GetProjectDatabase"));
 	Lock.ReadLock();
 	if (LIKELY(ProjectDatabase))
 	{
@@ -57,13 +54,9 @@ FWwiseProjectDatabase* FWwiseProjectDatabaseModule::InstantiateProjectDatabase()
 
 bool FWwiseProjectDatabaseModule::CanHaveDefaultInstance()
 {
-	if(!FPaths::FileExists(FPaths::Combine(WwiseUnrealHelper::GetSoundBankDirectory(), TEXT("ProjectInfo.json"))))
+	if (IsRunningCommandlet())
 	{
-		return false;
-	}
-	if(IsRunningCommandlet())
-	{
-		if(WwiseUnrealHelper::GetSoundBankDirectory().IsEmpty())
+		if (WwiseUnrealHelper::GetSoundBankDirectory().IsEmpty())
 		{
 			return false;
 		}
@@ -77,7 +70,7 @@ FWwiseProjectDatabaseDelegates* FWwiseProjectDatabaseModule::GetProjectDatabaseD
 	{
 		ProjectDatabaseDelegates = InstantiateProjectDatabaseDelegates();
 	}
-	
+
 	return ProjectDatabaseDelegates;
 }
 
@@ -97,11 +90,11 @@ void FWwiseProjectDatabaseModule::ShutdownModule()
 		ProjectDatabase.Reset();
 	}
 	Lock.WriteUnlock();
-	
+
 	if (ProjectDatabaseDelegates)
 	{
 		delete ProjectDatabaseDelegates;
 	}
-	
+
 	IWwiseProjectDatabaseModule::ShutdownModule();
 }

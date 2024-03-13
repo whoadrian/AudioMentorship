@@ -442,12 +442,12 @@ struct AkRoomParams
 	/// - \ref AkRoomID
 	AkReal32						RoomGameObj_AuxSendLevelToSelf;
 
-	/// If set to true, the room game object will be registered on calling \c SetRoom(), and not released untill the room is deleted or removed with \c RemoveRoom(). If set to false, spatial audio will register
-	/// the room object only when it is needed by the sound propagation system for the purposes of reverb, and will unregister the game object when all reverb tails have finished.
-	/// If the game intends to post events on the room game object for the purpose of ambiance or room tones, RoomGameObj_KeepRegistered should be set to true.
-	/// \aknote The room game object can be accessed though the ID that is passed to \c SetRoom() and the \c AkRoomID::AsGameObjectID() method.  Posting an event on the room game object leverages automatic room game object placement 
-	///	by spatial audio so that when the listener is inside the room, the sound comes from all around the listener, and when the listener is outside the room, the sound comes from the portal(s). Typically, this would be used for
-	/// surround ambiance beds or room tones. Point source sounds should use separate game objects that are registered as spatial audio emitters.
+	/// If set to true, the room game object is registered on calling \c SetRoom(), and not released until the room is deleted or removed with \c RemoveRoom(). If set to false, Spatial Audio registers
+	/// the room object only when it is needed by the sound propagation system for the purposes of reverb, and unregisters the game object when all reverb tails are finished.
+	/// We recommend that you set RoomGameObj_KeepRegistered to true if you use RTPCs on the room game object, if you call \c SetScalingFactor(), or call \c PostEvent() for the purpose of ambience or room tones.
+	/// \aknote The room game object can be accessed through the ID that is passed to \c SetRoom() and the \c AkRoomID::AsGameObjectID() method. Posting an event on the room game object uses automatic room game object placement 
+	///	by Spatial Audio so that when the listener is inside the room, the sound comes from all around the listener, and when the listener is outside the room, the sound comes from the portal(s). Typically, this would be used for
+	/// surround ambience beds or room tones. For point source sounds, use separate game objects that are registered as Spatial Audio emitters.
 	/// \sa
 	/// - \ref AkRoomParams::RoomGameObj_AuxSendLevelToSelf
 	/// - \ref AkRoomID

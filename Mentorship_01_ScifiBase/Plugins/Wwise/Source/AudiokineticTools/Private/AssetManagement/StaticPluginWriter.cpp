@@ -149,10 +149,12 @@ namespace StaticPluginWriter_Helper
 	{
 		TArray<FString> Result;
 		FWwiseProjectDatabase* ProjectDatabase = FWwiseProjectDatabase::Get();
-		if(UNLIKELY(!ProjectDatabase || !ProjectDatabase->IsProjectDatabaseParsed()))
+		
+		if(UNLIKELY(!ProjectDatabase))
 		{
 			return {};
 		}
+
 		const FWwiseDataStructureScopeLock DataStructure(*ProjectDatabase);
 
 		WwisePluginLibGlobalIdsMap PluginLibs = DataStructure.GetPluginLibs();

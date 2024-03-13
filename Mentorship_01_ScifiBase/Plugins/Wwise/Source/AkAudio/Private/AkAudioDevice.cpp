@@ -4293,26 +4293,40 @@ void FAkAudioDevice::RemovePortalConnectionToOutdoors(const UWorld* in_world, Ak
 	pPortals->Remove(in_portalID);
 }
 
-void FAkAudioDevice::GetObsOccServicePortalMap(const TWeakObjectPtr<UAkRoomComponent> InRoom, const UWorld* InWorld, AkObstructionAndOcclusionService::PortalMap& OutPortalMap) const
+void FAkAudioDevice::GetObsOccServicePortalMap(const TWeakObjectPtr<UAkRoomComponent> InRoom, const UWorld* InWorld, AkObstructionAndOcclusionService::PortalMap& OutPortalMap)
 {
-	PortalComponentMap ConnectedPortals;
+	PortalComponentMap* ConnectedPortals = nullptr;
 
 	if (InRoom.IsValid())
 	{
-		ConnectedPortals = InRoom->GetConnectedPortals();
+		ConnectedPortals = &InRoom->GetConnectedPortals();
 	}
 	else
 	{
-		auto Portals = OutdoorsConnectedPortals.Find(InWorld);
-		if (Portals != nullptr)
-		{
-			ConnectedPortals = *Portals;
-		}
+		ConnectedPortals = OutdoorsConnectedPortals.Find(InWorld);
 	}
 
-	for (auto& Portal : ConnectedPortals)
+	if (ConnectedPortals == nullptr)
 	{
+		return;
+	}
+
+	TArray<AkPortalID> PortalsToRemove;
+
+	for (auto& Portal : *ConnectedPortals)
+	{
+		if (!Portal.Value.IsValid())
+		{
+			PortalsToRemove.Add(Portal.Key);
+			continue;
+		}
+
 		AkObstructionAndOcclusionService::FPortalInfo PortalInfo(Portal.Value->Bounds.GetBox().GetCenter(), Portal.Value->ObstructionRefreshInterval != 0.f);
 		OutPortalMap.Add(Portal.Key, PortalInfo);
+	}
+
+	for (auto& PortalID : PortalsToRemove)
+	{
+		ConnectedPortals->Remove(PortalID);
 	}
 }

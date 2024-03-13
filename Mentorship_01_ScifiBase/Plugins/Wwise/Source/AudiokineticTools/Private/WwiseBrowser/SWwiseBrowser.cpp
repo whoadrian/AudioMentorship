@@ -1595,7 +1595,7 @@ void SWwiseBrowser::CreateReconcileTab() const
 		SelectedItems = RootItems;
 	}
 	TArray<FWwiseReconcileItem> ReconcileItems;
-	if (auto WwiseReconcile = FWwiseReconcile::Get())
+	if (auto WwiseReconcile = IWwiseReconcile::Get())
 	{
 		WwiseReconcile->ConvertWwiseItemTypeToReconcileItem(SelectedItems, ReconcileItems);
 		if (ReconcileItems.Num() == 0)

@@ -28,6 +28,7 @@ the specific language governing permissions and limitations under the License.
 #define _AK_SPEAKERCONFIG_H_
 
 #include <AK/SoundEngine/Common/AkTypes.h>
+#include <AK/Tools/Common/AkBitFuncs.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h>
 
 /// Standard speakers (channel mask):
