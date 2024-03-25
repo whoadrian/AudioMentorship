@@ -5,7 +5,6 @@
 	"VersionName": "2023.1.2.8444.2933",
 	"CreatedBy": "Audiokinetic, Inc.",
 	"CreatedByURL": "http://audiokinetic.com",
-	"EngineVersion": "5.3.0",
 	"Description": "Wwise integration for Unreal Engine",
 	"Category": "Audio",
 	"EnabledByDefault": true,

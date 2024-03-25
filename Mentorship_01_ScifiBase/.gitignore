@@ -80,3 +80,6 @@ DerivedDataCache/*
 !Plugins/Wwise/**/*.dll
 !Plugins/Wwise/**/*.lib
 !Plugins/Wwise/**/*.pdb
+
+.idea/
+Plugins/Developer/RiderLink/*
