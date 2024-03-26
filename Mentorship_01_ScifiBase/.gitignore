@@ -14,7 +14,8 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+#*.dll
+*.pdb
 
 # Fortran module files
 *.mod
@@ -46,8 +47,8 @@ SourceArt/**/*.png
 SourceArt/**/*.tga
 
 # Binary Files
-Binaries/*
-Plugins/*/Binaries/*
+#Binaries/*
+#Plugins/*/Binaries/*
 
 # Builds
 Build/*
@@ -72,14 +73,6 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
-
-!Plugins/WwiseNiagara/**/*.dll
-!Plugins/WwiseNiagara/**/*.lib
-!Plugins/WwiseNiagara/**/*.pdb
-
-!Plugins/Wwise/**/*.dll
-!Plugins/Wwise/**/*.lib
-!Plugins/Wwise/**/*.pdb
 
 .idea/
 Plugins/Developer/RiderLink/*
