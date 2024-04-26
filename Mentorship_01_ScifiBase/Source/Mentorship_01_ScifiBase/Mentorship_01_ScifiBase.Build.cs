@@ -8,7 +8,7 @@ public class Mentorship_01_ScifiBase : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "AkAudio", "WwiseSoundEngine", "GameplayTags" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
