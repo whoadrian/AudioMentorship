@@ -59,6 +59,7 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void OnWorldBeginPlay(UWorld& InWorld) override;
 	virtual void Tick(float DeltaTime) override;
+	virtual TStatId GetStatId() const override;
 
 	void RegisterAmbienceZone(AAudioAmbienceZone* InZone);
 	void UnregisterAmbienceZone(AAudioAmbienceZone* InZone);

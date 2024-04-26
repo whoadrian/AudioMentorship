@@ -18,15 +18,15 @@ void UAudioAmbienceSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 
-	TArray<UObject*> Objects;
-	UAssetManager::Get().GetPrimaryAssetObjectList(FPrimaryAssetType(FName("AudioAmbienceSystemData")), Objects);
-	if(Objects.Num() == 0)
+	TArray<FAssetData> Assets;
+	UAssetManager::Get().GetPrimaryAssetDataList(FPrimaryAssetType(FName("AudioAmbienceSystemData")), Assets);
+	if(Assets.Num() == 0)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Ambience Data not found!"))
 		return;
 	}
 	
-	Data = Cast<UAudioAmbienceSystemData>(Objects[0]);
+	Data = Cast<UAudioAmbienceSystemData>(Assets[0].GetAsset());
 	if (!IsValid(Data))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Ambience Data not found!"))
@@ -63,6 +63,11 @@ void UAudioAmbienceSubsystem::Tick(float DeltaTime)
 	}
 
 	DebugDraw(DeltaTime);
+}
+
+TStatId UAudioAmbienceSubsystem::GetStatId() const
+{
+	RETURN_QUICK_DECLARE_CYCLE_STAT(UAudioAmbienceSubsystem, STATGROUP_Tickables);
 }
 
 void UAudioAmbienceSubsystem::RegisterAmbienceZone(AAudioAmbienceZone* InZone)
