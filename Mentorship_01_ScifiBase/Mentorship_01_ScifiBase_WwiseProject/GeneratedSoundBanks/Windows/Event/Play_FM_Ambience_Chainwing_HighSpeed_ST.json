@@ -1,0 +1,47 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "3609811055",
+    "Type": "Event",
+    "GUID": "{F7B40117-0A72-4687-8457-B8992765FED2}",
+    "Language": "SFX",
+    "Hash": "{7BF752F5-F574-184B-59B0-1BE428BCEC84}",
+    "ObjectPath": "Play_FM_Ambience_Chainwing_HighSpeed_ST",
+    "ShortName": "Play_FM_Ambience_Chainwing_HighSpeed_ST",
+    "Path": "Event/Play_FM_Ambience_Chainwing_HighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "484601434",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Ambience_Chainwing_HighSpeed_ST.wav",
+      "Path": "Media/484601434.wem",
+      "CachePath": "SFX/FM_Ambience_Chainwing_HighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3609811055",
+      "Name": "Play_FM_Ambience_Chainwing_HighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Ambience_Chainwing_HighSpeed_ST",
+      "GUID": "{F7B40117-0A72-4687-8457-B8992765FED2}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "484601434"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{CB6ED083-8710-C9B8-CF07-2EC4BA8688AC}"
+ }
+}

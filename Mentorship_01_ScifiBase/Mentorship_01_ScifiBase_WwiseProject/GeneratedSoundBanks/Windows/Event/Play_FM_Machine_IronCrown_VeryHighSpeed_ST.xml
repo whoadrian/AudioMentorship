@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="3925636173" Type="Event" GUID="{EAF57382-8E9E-414B-9E57-107DF34D3061}" Language="SFX" Hash="{BF4B7DF1-2BE9-BB89-1043-E2316D3CBEBC}">
+			<ObjectPath>Play_FM_Machine_IronCrown_VeryHighSpeed_ST</ObjectPath>
+			<ShortName>Play_FM_Machine_IronCrown_VeryHighSpeed_ST</ShortName>
+			<Path>Event/Play_FM_Machine_IronCrown_VeryHighSpeed_ST.bnk</Path>
+			<Media>
+				<File Id="583160277" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>FM_Machine_IronCrown_VeryHighSpeed_ST.wav</ShortName>
+					<Path>Media/583160277.wem</Path>
+					<CachePath>SFX/FM_Machine_IronCrown_VeryHighSpeed_ST_FBC78EF0.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="3925636173" Name="Play_FM_Machine_IronCrown_VeryHighSpeed_ST" ObjectPath="\Events\Default Work Unit\Ambience\Play_FM_Machine_IronCrown_VeryHighSpeed_ST" GUID="{EAF57382-8E9E-414B-9E57-107DF34D3061}" MaxAttenuation="5000" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="583160277"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{AA08C7AF-BD59-098B-AB32-C7D17F99B613}</FileHash>
+</SoundBanksInfo>

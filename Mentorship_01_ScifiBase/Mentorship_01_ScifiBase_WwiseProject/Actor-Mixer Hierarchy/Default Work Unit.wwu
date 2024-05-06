@@ -919,6 +919,9 @@
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
 							</PropertyList>
 							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="AmbienceSystemAttenuation" ID="{09E39CFF-0789-42F2-AB5C-7023A3B3A88D}" WorkUnitID="{AED71D1A-7CA6-4E8F-A03C-B29B65813C4B}"/>
+								</Reference>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
 								</Reference>
@@ -926,6 +929,309 @@
 									<ObjectRef Name="emitters" ID="{E7C2B957-CDB8-4ADD-B665-5E125D9C28C9}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
 								</Reference>
 							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="FM_Ambience_Chainwing_HighSpeed_ST" ID="{E0332770-FABA-4990-89BD-9D3669127776}" ShortID="10642059">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Ambience_Chainwing_HighSpeed_ST" ID="{6D2E5402-570C-4B47-8865-62126071E818}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Ambience_Chainwing_HighSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="484601434"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Ambience_Chainwing_HighSpeed_ST" ID="{6D2E5402-570C-4B47-8865-62126071E818}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Ambience_Gloomcollar_HighSpeed_ST" ID="{0F1B5CCB-5B89-48BD-A243-B097F01FB5C6}" ShortID="1002346129">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Ambience_Gloomcollar_HighSpeed_ST" ID="{5B37F090-715D-4763-AE00-09BFF8EB0058}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Ambience_Gloomcollar_HighSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="634643119"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Ambience_Gloomcollar_HighSpeed_ST" ID="{5B37F090-715D-4763-AE00-09BFF8EB0058}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Ambience_Gloomcollar_VeryHighSpeed_ST" ID="{9F5C0779-13EF-45D2-B21A-23F3EAC220CC}" ShortID="348335004">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Ambience_Gloomcollar_VeryHighSpeed_ST" ID="{B73D853F-A0F7-44BD-99C6-41F0A5347B31}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Ambience_Gloomcollar_VeryHighSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="188501958"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Ambience_Gloomcollar_VeryHighSpeed_ST" ID="{B73D853F-A0F7-44BD-99C6-41F0A5347B31}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Ambience_Halfbeak_MediumSpeed_ST" ID="{85D888EE-47B2-4BC4-98CE-5B6FF7D545D1}" ShortID="339006777">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Ambience_Halfbeak_MediumSpeed_ST" ID="{37C6C4A5-8AD5-42F4-BF76-80B13A0FD438}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Ambience_Halfbeak_MediumSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="33158586"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Ambience_Halfbeak_MediumSpeed_ST" ID="{37C6C4A5-8AD5-42F4-BF76-80B13A0FD438}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Machine_Averter_VeryHighSpeed_ST" ID="{4BE5E6C1-F22D-4564-84A3-09FA06930CD5}" ShortID="769117968">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Machine_Averter_VeryHighSpeed_ST" ID="{BE58F1C7-A3F8-42B5-94D2-F3F8CFE8F76B}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Machine_Averter_VeryHighSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1040319635"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Machine_Averter_VeryHighSpeed_ST" ID="{BE58F1C7-A3F8-42B5-94D2-F3F8CFE8F76B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Machine_Chainwing_MediumSpeed_ST" ID="{95BA5068-56B2-4CCB-8036-A201C6E095FD}" ShortID="79209182">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Machine_Chainwing_MediumSpeed_ST" ID="{5FA58F2E-43A2-4CCD-B491-3029A3C2457B}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Machine_Chainwing_MediumSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="790313246"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Machine_Chainwing_MediumSpeed_ST" ID="{5FA58F2E-43A2-4CCD-B491-3029A3C2457B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Machine_Halfbeak_MediumSpeed_ST" ID="{0AAAB950-9132-4502-8DAD-FDE3D1A60451}" ShortID="925788405">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Machine_Halfbeak_MediumSpeed_ST" ID="{589C477B-02C2-4FF8-960D-7401153BD2E4}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Machine_Halfbeak_MediumSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="919849680"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Machine_Halfbeak_MediumSpeed_ST" ID="{589C477B-02C2-4FF8-960D-7401153BD2E4}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Machine_IronCrown_VeryHighSpeed_ST" ID="{8207664C-55CE-44BD-A285-F445F409E6D8}" ShortID="713517753">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Machine_IronCrown_VeryHighSpeed_ST" ID="{75301DFD-E2C3-49A9-A1ED-5900CD59B391}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Machine_IronCrown_VeryHighSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="583160277"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Machine_IronCrown_VeryHighSpeed_ST" ID="{75301DFD-E2C3-49A9-A1ED-5900CD59B391}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Machine_Silverhorn_HighSpeed_ST" ID="{B4F475B0-641E-43E7-A1AE-A2690EC16B06}" ShortID="85949076">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Machine_Silverhorn_HighSpeed_ST" ID="{EF91E2DB-7498-4BE9-9EA1-57EB0F007060}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Machine_Silverhorn_HighSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="725440768"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Machine_Silverhorn_HighSpeed_ST" ID="{EF91E2DB-7498-4BE9-9EA1-57EB0F007060}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Machine_Splinterer_HighSpeed_ST" ID="{056B49E6-98CC-4C08-B72D-814F93342C7F}" ShortID="732405293">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Machine_Splinterer_HighSpeed_ST" ID="{60E95986-62A8-43EB-AE23-1EB0F3C51F4C}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Machine_Splinterer_HighSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="173396697"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Machine_Splinterer_HighSpeed_ST" ID="{60E95986-62A8-43EB-AE23-1EB0F3C51F4C}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Machine_Tallbird_VeryHighSpeed_ST" ID="{BA1A0644-EB66-439F-8E2C-A1A30A546EC7}" ShortID="546326111">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Machine_Tallbird_VeryHighSpeed_ST" ID="{8DDA7D63-3111-41CE-8996-3EDD22AD677B}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Machine_Tallbird_VeryHighSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="874180463"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Machine_Tallbird_VeryHighSpeed_ST" ID="{8DDA7D63-3111-41CE-8996-3EDD22AD677B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FM_Machine_Vanisher_VeryHighSpeed_ST" ID="{7809FE37-603E-441F-9C6A-2F726EC3B569}" ShortID="446616471">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{310FE241-EDCA-4554-949B-64944E50F633}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{66A8B640-1354-4BCF-A38B-F320532D2756}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="FM_Machine_Vanisher_VeryHighSpeed_ST" ID="{164C18AB-7D4D-4939-9294-056AC49C647C}">
+											<Language>SFX</Language>
+											<AudioFile>FM_Machine_Vanisher_VeryHighSpeed_ST.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="205286077"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="FM_Machine_Vanisher_VeryHighSpeed_ST" ID="{164C18AB-7D4D-4939-9294-056AC49C647C}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
 						</ActorMixer>
 						<ActorMixer Name="Amb_Props" ID="{36D145F0-F166-4607-8357-9CAD283FF763}" ShortID="1003178776">
 							<PropertyList>

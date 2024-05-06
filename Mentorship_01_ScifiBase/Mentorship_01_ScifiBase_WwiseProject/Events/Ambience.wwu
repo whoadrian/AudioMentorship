@@ -1,6 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{15CF1AB4-8766-4FA9-BF12-53F52469882E}" SchemaVersion="119" RootDocumentID="{B124D76C-D4E0-454B-9FF8-D3E5417BF0AE}" ParentDocumentID="{B124D76C-D4E0-454B-9FF8-D3E5417BF0AE}">
 	<Events>
-		<WorkUnit Name="Ambience" ID="{15CF1AB4-8766-4FA9-BF12-53F52469882E}" OwnerID="{B124D76C-D4E0-454B-9FF8-D3E5417BF0AE}" PersistMode="Nested"/>
+		<WorkUnit Name="Ambience" ID="{15CF1AB4-8766-4FA9-BF12-53F52469882E}" OwnerID="{B124D76C-D4E0-454B-9FF8-D3E5417BF0AE}" PersistMode="Nested">
+			<ChildrenList>
+				<Event Name="Play_FM_Ambience_Halfbeak_MediumSpeed_ST" ID="{5ACC886A-B9A6-4452-B52D-288E5DA48A58}">
+					<ChildrenList>
+						<Action Name="" ID="{6A45D97B-E213-40F9-96EC-26E47648AB7A}" ShortID="606500345">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Ambience_Halfbeak_MediumSpeed_ST" ID="{85D888EE-47B2-4BC4-98CE-5B6FF7D545D1}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Machine_Silverhorn_HighSpeed_ST" ID="{7553DBCB-9CC2-4518-AB8B-A72E05C838FE}">
+					<ChildrenList>
+						<Action Name="" ID="{9417E9A2-A195-4567-B88D-72055A630639}" ShortID="712211443">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Machine_Silverhorn_HighSpeed_ST" ID="{B4F475B0-641E-43E7-A1AE-A2690EC16B06}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Machine_Splinterer_HighSpeed_ST" ID="{FEB210BB-D6D2-485F-A058-B2BB82413B48}">
+					<ChildrenList>
+						<Action Name="" ID="{23125F3F-DB11-4504-A4A3-7C7439759F89}" ShortID="365138785">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Machine_Splinterer_HighSpeed_ST" ID="{056B49E6-98CC-4C08-B72D-814F93342C7F}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Machine_Vanisher_VeryHighSpeed_ST" ID="{BC709557-3D00-45CD-816F-C64EAEC3617C}">
+					<ChildrenList>
+						<Action Name="" ID="{B3779761-B6A8-49CF-84BD-1A0AD10E06F7}" ShortID="885329746">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Machine_Vanisher_VeryHighSpeed_ST" ID="{7809FE37-603E-441F-9C6A-2F726EC3B569}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Machine_Halfbeak_MediumSpeed_ST" ID="{045B2A39-2844-418E-96CA-E4C0D2E2C8FC}">
+					<ChildrenList>
+						<Action Name="" ID="{EFA4B4B0-787A-4767-B748-DF20D3A55E4C}" ShortID="363296826">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Machine_Halfbeak_MediumSpeed_ST" ID="{0AAAB950-9132-4502-8DAD-FDE3D1A60451}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Machine_IronCrown_VeryHighSpeed_ST" ID="{EAF57382-8E9E-414B-9E57-107DF34D3061}">
+					<ChildrenList>
+						<Action Name="" ID="{4BF83AFF-F837-4DC7-B427-224243F8336F}" ShortID="418657779">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Machine_IronCrown_VeryHighSpeed_ST" ID="{8207664C-55CE-44BD-A285-F445F409E6D8}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Machine_Tallbird_VeryHighSpeed_ST" ID="{654CAD69-3ECF-4489-B4B0-A17D0830BC3A}">
+					<ChildrenList>
+						<Action Name="" ID="{F9EFB7B9-65D7-4037-93B8-20ADD6423E92}" ShortID="611574080">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Machine_Tallbird_VeryHighSpeed_ST" ID="{BA1A0644-EB66-439F-8E2C-A1A30A546EC7}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Machine_Averter_VeryHighSpeed_ST" ID="{8A287EC9-8813-4366-8832-7D189D5A81DE}">
+					<ChildrenList>
+						<Action Name="" ID="{26B61C41-F1EE-427B-855D-89F0BDC55DD3}" ShortID="63314894">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Machine_Averter_VeryHighSpeed_ST" ID="{4BE5E6C1-F22D-4564-84A3-09FA06930CD5}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Ambience_Chainwing_HighSpeed_ST" ID="{F7B40117-0A72-4687-8457-B8992765FED2}">
+					<ChildrenList>
+						<Action Name="" ID="{D63A1558-DCEF-4AD4-904A-A7A384A22072}" ShortID="247493349">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Ambience_Chainwing_HighSpeed_ST" ID="{E0332770-FABA-4990-89BD-9D3669127776}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Machine_Chainwing_MediumSpeed_ST" ID="{0A1157D3-F345-416B-85C2-5D8AC4F6FAAA}">
+					<ChildrenList>
+						<Action Name="" ID="{7F2E4AE7-0658-4878-8786-CE17239B8B5F}" ShortID="477970534">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Machine_Chainwing_MediumSpeed_ST" ID="{95BA5068-56B2-4CCB-8036-A201C6E095FD}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST" ID="{389ED702-17E8-4089-BD0B-C31E9C150CE2}">
+					<ChildrenList>
+						<Action Name="" ID="{B414D5DF-4707-4E6D-AB7A-E565ADB6E6C1}" ShortID="812994751">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Ambience_Gloomcollar_VeryHighSpeed_ST" ID="{9F5C0779-13EF-45D2-B21A-23F3EAC220CC}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_FM_Ambience_Gloomcollar_HighSpeed_ST" ID="{4CE13585-D13E-4CEB-90C1-AB25EA51DD16}">
+					<ChildrenList>
+						<Action Name="" ID="{0D227843-BD8E-4D98-98F9-E57444521C2D}" ShortID="359194150">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FM_Ambience_Gloomcollar_HighSpeed_ST" ID="{0F1B5CCB-5B89-48BD-A243-B097F01FB5C6}" WorkUnitID="{BF6F88CC-74F7-45C3-BE10-24CC8710E491}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
 	</Events>
 </WwiseDocument>

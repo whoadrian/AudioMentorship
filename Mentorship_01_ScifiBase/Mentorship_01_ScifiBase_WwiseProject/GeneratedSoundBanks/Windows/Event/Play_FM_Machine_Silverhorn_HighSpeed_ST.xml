@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="4219363276" Type="Event" GUID="{7553DBCB-9CC2-4518-AB8B-A72E05C838FE}" Language="SFX" Hash="{1F33256A-169D-2DE7-631B-47DEF09A6604}">
+			<ObjectPath>Play_FM_Machine_Silverhorn_HighSpeed_ST</ObjectPath>
+			<ShortName>Play_FM_Machine_Silverhorn_HighSpeed_ST</ShortName>
+			<Path>Event/Play_FM_Machine_Silverhorn_HighSpeed_ST.bnk</Path>
+			<Media>
+				<File Id="725440768" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>FM_Machine_Silverhorn_HighSpeed_ST.wav</ShortName>
+					<Path>Media/725440768.wem</Path>
+					<CachePath>SFX/FM_Machine_Silverhorn_HighSpeed_ST_FBC78EF0.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="4219363276" Name="Play_FM_Machine_Silverhorn_HighSpeed_ST" ObjectPath="\Events\Default Work Unit\Ambience\Play_FM_Machine_Silverhorn_HighSpeed_ST" GUID="{7553DBCB-9CC2-4518-AB8B-A72E05C838FE}" MaxAttenuation="5000" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="725440768"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{AF842CC6-9B1B-7593-9D76-4774577C9812}</FileHash>
+</SoundBanksInfo>

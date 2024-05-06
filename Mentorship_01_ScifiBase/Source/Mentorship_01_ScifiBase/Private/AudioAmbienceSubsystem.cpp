@@ -60,6 +60,9 @@ void UAudioAmbienceSubsystem::Tick(float DeltaTime)
 		}
 	
 		AkDevice->SetMultiplePositions(ZoneData.Value.Emitter->AkComponent, Positions, AkMultiPositionType::MultiDirections);
+
+		// TODO : Obstruction & Occlusion
+		//AkDevice->SetMultipleObstructionAndOcclusion()
 	}
 
 	DebugDraw(DeltaTime);
@@ -91,6 +94,7 @@ void UAudioAmbienceSubsystem::RegisterAmbienceZone(AAudioAmbienceZone* InZone)
 
 		// Initialize zone
 		Zones[InZone->ZoneTag].Emitter = GetWorld()->SpawnActor<AAudioAmbienceEmitter>(FVector::ZeroVector, FRotator::ZeroRotator);
+		Zones[InZone->ZoneTag].Emitter->AkComponent->OcclusionRefreshInterval = 0.0f; // Disable occlusion for now
 		Zones[InZone->ZoneTag].Emitter->AkComponent->PostAkEvent(ZoneEvent);
 
 		UE_LOG(LogTemp, Warning, TEXT("Ambience Zone initialized for tag %s"), *InZone->ZoneTag.GetTagName().ToString());
@@ -153,8 +157,14 @@ void UAudioAmbienceSubsystem::DebugDraw(float DeltaTime)
 			DebugString += FString::Printf(TEXT("Tag: %s\n"), *ZoneTag.GetTagName().ToString());
 			DebugString += FString::Printf(TEXT("Event: %s\n"), *Data->Zones[ZoneTag].AmbienceEvent.GetName());
 
-			DrawDebugSphere(GetWorld(), Zone->GetActorLocation(), 50, 16,
+			DrawDebugSphere(GetWorld(), Zone->GetActorLocation(), 50, 32,
 				FColor::Green, false, DeltaTime, 1);
+
+			if (Data->bDrawAttenuation)
+			{
+				DrawDebugSphere(GetWorld(), Zone->GetActorLocation(), Data->Zones[ZoneTag].AmbienceEvent->MaxAttenuationRadius, 32,
+				FColor::Blue, false, DeltaTime, 1);
+			}
 	
 			DrawDebugString(GetWorld(), Zone->GetActorLocation() + FVector::DownVector * 60,
 				DebugString, nullptr, FColor::Green, DeltaTime, false, 1);

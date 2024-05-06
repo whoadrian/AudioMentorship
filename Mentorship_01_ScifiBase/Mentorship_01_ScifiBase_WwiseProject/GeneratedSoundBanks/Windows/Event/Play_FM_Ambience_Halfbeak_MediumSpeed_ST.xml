@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="1274093022" Type="Event" GUID="{5ACC886A-B9A6-4452-B52D-288E5DA48A58}" Language="SFX" Hash="{4D0E1B26-9A36-6663-81EB-569F83DE318F}">
+			<ObjectPath>Play_FM_Ambience_Halfbeak_MediumSpeed_ST</ObjectPath>
+			<ShortName>Play_FM_Ambience_Halfbeak_MediumSpeed_ST</ShortName>
+			<Path>Event/Play_FM_Ambience_Halfbeak_MediumSpeed_ST.bnk</Path>
+			<Media>
+				<File Id="33158586" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>FM_Ambience_Halfbeak_MediumSpeed_ST.wav</ShortName>
+					<Path>Media/33158586.wem</Path>
+					<CachePath>SFX/FM_Ambience_Halfbeak_MediumSpeed_ST_FBC78EF0.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1274093022" Name="Play_FM_Ambience_Halfbeak_MediumSpeed_ST" ObjectPath="\Events\Default Work Unit\Ambience\Play_FM_Ambience_Halfbeak_MediumSpeed_ST" GUID="{5ACC886A-B9A6-4452-B52D-288E5DA48A58}" MaxAttenuation="5000" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="33158586"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{A294036F-2E5D-0DF3-5592-F58C39FCC001}</FileHash>
+</SoundBanksInfo>

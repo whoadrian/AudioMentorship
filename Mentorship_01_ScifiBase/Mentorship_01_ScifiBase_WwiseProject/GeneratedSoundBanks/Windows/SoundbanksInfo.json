@@ -14,6 +14,150 @@
   "DialogueEvents": [],
   "SoundBanks": [
    {
+    "Id": "262400104",
+    "Type": "Event",
+    "GUID": "{654CAD69-3ECF-4489-B4B0-A17D0830BC3A}",
+    "Language": "SFX",
+    "Hash": "{CB9B68E7-0EC5-1EEC-D303-549DFD6C60EF}",
+    "ObjectPath": "Play_FM_Machine_Tallbird_VeryHighSpeed_ST",
+    "ShortName": "Play_FM_Machine_Tallbird_VeryHighSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Tallbird_VeryHighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "874180463",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Tallbird_VeryHighSpeed_ST.wav",
+      "Path": "Media/874180463.wem",
+      "CachePath": "SFX/FM_Machine_Tallbird_VeryHighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "262400104",
+      "Name": "Play_FM_Machine_Tallbird_VeryHighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Tallbird_VeryHighSpeed_ST",
+      "GUID": "{654CAD69-3ECF-4489-B4B0-A17D0830BC3A}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "874180463"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "458004308",
+    "Type": "Event",
+    "GUID": "{4CE13585-D13E-4CEB-90C1-AB25EA51DD16}",
+    "Language": "SFX",
+    "Hash": "{44E17656-F8BF-1774-87ED-9FA02E170BC9}",
+    "ObjectPath": "Play_FM_Ambience_Gloomcollar_HighSpeed_ST",
+    "ShortName": "Play_FM_Ambience_Gloomcollar_HighSpeed_ST",
+    "Path": "Event/Play_FM_Ambience_Gloomcollar_HighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "634643119",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Ambience_Gloomcollar_HighSpeed_ST.wav",
+      "Path": "Media/634643119.wem",
+      "CachePath": "SFX/FM_Ambience_Gloomcollar_HighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "458004308",
+      "Name": "Play_FM_Ambience_Gloomcollar_HighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Ambience_Gloomcollar_HighSpeed_ST",
+      "GUID": "{4CE13585-D13E-4CEB-90C1-AB25EA51DD16}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "634643119"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "1141968115",
+    "Type": "Event",
+    "GUID": "{0A1157D3-F345-416B-85C2-5D8AC4F6FAAA}",
+    "Language": "SFX",
+    "Hash": "{640C9254-99F2-EABA-3DDF-5A587A3AF668}",
+    "ObjectPath": "Play_FM_Machine_Chainwing_MediumSpeed_ST",
+    "ShortName": "Play_FM_Machine_Chainwing_MediumSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Chainwing_MediumSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "790313246",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Chainwing_MediumSpeed_ST.wav",
+      "Path": "Media/790313246.wem",
+      "CachePath": "SFX/FM_Machine_Chainwing_MediumSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1141968115",
+      "Name": "Play_FM_Machine_Chainwing_MediumSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Chainwing_MediumSpeed_ST",
+      "GUID": "{0A1157D3-F345-416B-85C2-5D8AC4F6FAAA}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "790313246"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "1274093022",
+    "Type": "Event",
+    "GUID": "{5ACC886A-B9A6-4452-B52D-288E5DA48A58}",
+    "Language": "SFX",
+    "Hash": "{4D0E1B26-9A36-6663-81EB-569F83DE318F}",
+    "ObjectPath": "Play_FM_Ambience_Halfbeak_MediumSpeed_ST",
+    "ShortName": "Play_FM_Ambience_Halfbeak_MediumSpeed_ST",
+    "Path": "Event/Play_FM_Ambience_Halfbeak_MediumSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "33158586",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Ambience_Halfbeak_MediumSpeed_ST.wav",
+      "Path": "Media/33158586.wem",
+      "CachePath": "SFX/FM_Ambience_Halfbeak_MediumSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1274093022",
+      "Name": "Play_FM_Ambience_Halfbeak_MediumSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Ambience_Halfbeak_MediumSpeed_ST",
+      "GUID": "{5ACC886A-B9A6-4452-B52D-288E5DA48A58}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "33158586"
+       }
+      ]
+     }
+    ]
+   },
+   {
     "Id": "1355168291",
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
@@ -682,6 +826,78 @@
     ]
    },
    {
+    "Id": "1731445165",
+    "Type": "Event",
+    "GUID": "{045B2A39-2844-418E-96CA-E4C0D2E2C8FC}",
+    "Language": "SFX",
+    "Hash": "{54CD6E1B-5F68-46D1-D74F-EA981760E52F}",
+    "ObjectPath": "Play_FM_Machine_Halfbeak_MediumSpeed_ST",
+    "ShortName": "Play_FM_Machine_Halfbeak_MediumSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Halfbeak_MediumSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "919849680",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Halfbeak_MediumSpeed_ST.wav",
+      "Path": "Media/919849680.wem",
+      "CachePath": "SFX/FM_Machine_Halfbeak_MediumSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1731445165",
+      "Name": "Play_FM_Machine_Halfbeak_MediumSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Halfbeak_MediumSpeed_ST",
+      "GUID": "{045B2A39-2844-418E-96CA-E4C0D2E2C8FC}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "919849680"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "2087069744",
+    "Type": "Event",
+    "GUID": "{389ED702-17E8-4089-BD0B-C31E9C150CE2}",
+    "Language": "SFX",
+    "Hash": "{6507EBBA-0CEC-AD76-C6A6-B2850B2A2991}",
+    "ObjectPath": "Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST",
+    "ShortName": "Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST",
+    "Path": "Event/Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "188501958",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Ambience_Gloomcollar_VeryHighSpeed_ST.wav",
+      "Path": "Media/188501958.wem",
+      "CachePath": "SFX/FM_Ambience_Gloomcollar_VeryHighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2087069744",
+      "Name": "Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST",
+      "GUID": "{389ED702-17E8-4089-BD0B-C31E9C150CE2}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "188501958"
+       }
+      ]
+     }
+    ]
+   },
+   {
     "Id": "2213992659",
     "Type": "Bus",
     "GUID": "{790B621A-AD9D-4ABE-BEF2-2D35F632FF72}",
@@ -732,6 +948,78 @@
         }
        ]
       }
+     }
+    ]
+   },
+   {
+    "Id": "2536573046",
+    "Type": "Event",
+    "GUID": "{FEB210BB-D6D2-485F-A058-B2BB82413B48}",
+    "Language": "SFX",
+    "Hash": "{16180A8A-B162-A709-9528-A28E144E9C32}",
+    "ObjectPath": "Play_FM_Machine_Splinterer_HighSpeed_ST",
+    "ShortName": "Play_FM_Machine_Splinterer_HighSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Splinterer_HighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "173396697",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Splinterer_HighSpeed_ST.wav",
+      "Path": "Media/173396697.wem",
+      "CachePath": "SFX/FM_Machine_Splinterer_HighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2536573046",
+      "Name": "Play_FM_Machine_Splinterer_HighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Splinterer_HighSpeed_ST",
+      "GUID": "{FEB210BB-D6D2-485F-A058-B2BB82413B48}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "173396697"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "3055441019",
+    "Type": "Event",
+    "GUID": "{8A287EC9-8813-4366-8832-7D189D5A81DE}",
+    "Language": "SFX",
+    "Hash": "{604EAC06-D5C3-6A7E-297D-1808D431E0C3}",
+    "ObjectPath": "Play_FM_Machine_Averter_VeryHighSpeed_ST",
+    "ShortName": "Play_FM_Machine_Averter_VeryHighSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Averter_VeryHighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "1040319635",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Averter_VeryHighSpeed_ST.wav",
+      "Path": "Media/1040319635.wem",
+      "CachePath": "SFX/FM_Machine_Averter_VeryHighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3055441019",
+      "Name": "Play_FM_Machine_Averter_VeryHighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Averter_VeryHighSpeed_ST",
+      "GUID": "{8A287EC9-8813-4366-8832-7D189D5A81DE}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "1040319635"
+       }
+      ]
      }
     ]
    },
@@ -842,8 +1130,152 @@
       }
      }
     ]
+   },
+   {
+    "Id": "3609811055",
+    "Type": "Event",
+    "GUID": "{F7B40117-0A72-4687-8457-B8992765FED2}",
+    "Language": "SFX",
+    "Hash": "{7BF752F5-F574-184B-59B0-1BE428BCEC84}",
+    "ObjectPath": "Play_FM_Ambience_Chainwing_HighSpeed_ST",
+    "ShortName": "Play_FM_Ambience_Chainwing_HighSpeed_ST",
+    "Path": "Event/Play_FM_Ambience_Chainwing_HighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "484601434",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Ambience_Chainwing_HighSpeed_ST.wav",
+      "Path": "Media/484601434.wem",
+      "CachePath": "SFX/FM_Ambience_Chainwing_HighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3609811055",
+      "Name": "Play_FM_Ambience_Chainwing_HighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Ambience_Chainwing_HighSpeed_ST",
+      "GUID": "{F7B40117-0A72-4687-8457-B8992765FED2}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "484601434"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "3753060216",
+    "Type": "Event",
+    "GUID": "{BC709557-3D00-45CD-816F-C64EAEC3617C}",
+    "Language": "SFX",
+    "Hash": "{071B36C1-3A4D-7F2F-6914-2B932DA2A02F}",
+    "ObjectPath": "Play_FM_Machine_Vanisher_VeryHighSpeed_ST",
+    "ShortName": "Play_FM_Machine_Vanisher_VeryHighSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Vanisher_VeryHighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "205286077",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Vanisher_VeryHighSpeed_ST.wav",
+      "Path": "Media/205286077.wem",
+      "CachePath": "SFX/FM_Machine_Vanisher_VeryHighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3753060216",
+      "Name": "Play_FM_Machine_Vanisher_VeryHighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Vanisher_VeryHighSpeed_ST",
+      "GUID": "{BC709557-3D00-45CD-816F-C64EAEC3617C}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "205286077"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "3925636173",
+    "Type": "Event",
+    "GUID": "{EAF57382-8E9E-414B-9E57-107DF34D3061}",
+    "Language": "SFX",
+    "Hash": "{BF4B7DF1-2BE9-BB89-1043-E2316D3CBEBC}",
+    "ObjectPath": "Play_FM_Machine_IronCrown_VeryHighSpeed_ST",
+    "ShortName": "Play_FM_Machine_IronCrown_VeryHighSpeed_ST",
+    "Path": "Event/Play_FM_Machine_IronCrown_VeryHighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "583160277",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_IronCrown_VeryHighSpeed_ST.wav",
+      "Path": "Media/583160277.wem",
+      "CachePath": "SFX/FM_Machine_IronCrown_VeryHighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3925636173",
+      "Name": "Play_FM_Machine_IronCrown_VeryHighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_IronCrown_VeryHighSpeed_ST",
+      "GUID": "{EAF57382-8E9E-414B-9E57-107DF34D3061}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "583160277"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "Id": "4219363276",
+    "Type": "Event",
+    "GUID": "{7553DBCB-9CC2-4518-AB8B-A72E05C838FE}",
+    "Language": "SFX",
+    "Hash": "{1F33256A-169D-2DE7-631B-47DEF09A6604}",
+    "ObjectPath": "Play_FM_Machine_Silverhorn_HighSpeed_ST",
+    "ShortName": "Play_FM_Machine_Silverhorn_HighSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Silverhorn_HighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "725440768",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Silverhorn_HighSpeed_ST.wav",
+      "Path": "Media/725440768.wem",
+      "CachePath": "SFX/FM_Machine_Silverhorn_HighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "4219363276",
+      "Name": "Play_FM_Machine_Silverhorn_HighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Silverhorn_HighSpeed_ST",
+      "GUID": "{7553DBCB-9CC2-4518-AB8B-A72E05C838FE}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "725440768"
+       }
+      ]
+     }
+    ]
    }
   ],
-  "FileHash": "{473705DD-64D4-9BF4-F8DD-945F983D9238}"
+  "FileHash": "{0BE2B090-C379-1E69-711E-E8E4C01F1B9B}"
  }
 }

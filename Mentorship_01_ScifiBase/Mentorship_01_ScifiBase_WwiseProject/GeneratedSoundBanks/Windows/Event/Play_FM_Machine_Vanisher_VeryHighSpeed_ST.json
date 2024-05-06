@@ -1,0 +1,47 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "3753060216",
+    "Type": "Event",
+    "GUID": "{BC709557-3D00-45CD-816F-C64EAEC3617C}",
+    "Language": "SFX",
+    "Hash": "{071B36C1-3A4D-7F2F-6914-2B932DA2A02F}",
+    "ObjectPath": "Play_FM_Machine_Vanisher_VeryHighSpeed_ST",
+    "ShortName": "Play_FM_Machine_Vanisher_VeryHighSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Vanisher_VeryHighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "205286077",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Vanisher_VeryHighSpeed_ST.wav",
+      "Path": "Media/205286077.wem",
+      "CachePath": "SFX/FM_Machine_Vanisher_VeryHighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3753060216",
+      "Name": "Play_FM_Machine_Vanisher_VeryHighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Vanisher_VeryHighSpeed_ST",
+      "GUID": "{BC709557-3D00-45CD-816F-C64EAEC3617C}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "205286077"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{C65B58A6-DBB2-1217-5F2B-C911697FD5DD}"
+ }
+}

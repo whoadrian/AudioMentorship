@@ -1,0 +1,47 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "2536573046",
+    "Type": "Event",
+    "GUID": "{FEB210BB-D6D2-485F-A058-B2BB82413B48}",
+    "Language": "SFX",
+    "Hash": "{16180A8A-B162-A709-9528-A28E144E9C32}",
+    "ObjectPath": "Play_FM_Machine_Splinterer_HighSpeed_ST",
+    "ShortName": "Play_FM_Machine_Splinterer_HighSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Splinterer_HighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "173396697",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Splinterer_HighSpeed_ST.wav",
+      "Path": "Media/173396697.wem",
+      "CachePath": "SFX/FM_Machine_Splinterer_HighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2536573046",
+      "Name": "Play_FM_Machine_Splinterer_HighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Splinterer_HighSpeed_ST",
+      "GUID": "{FEB210BB-D6D2-485F-A058-B2BB82413B48}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "173396697"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{5333F73F-F9BC-F30A-2981-6283B7092443}"
+ }
+}

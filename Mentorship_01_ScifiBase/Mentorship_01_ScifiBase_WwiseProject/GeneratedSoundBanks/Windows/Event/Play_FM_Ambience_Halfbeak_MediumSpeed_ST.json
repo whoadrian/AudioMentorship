@@ -1,0 +1,47 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "1274093022",
+    "Type": "Event",
+    "GUID": "{5ACC886A-B9A6-4452-B52D-288E5DA48A58}",
+    "Language": "SFX",
+    "Hash": "{4D0E1B26-9A36-6663-81EB-569F83DE318F}",
+    "ObjectPath": "Play_FM_Ambience_Halfbeak_MediumSpeed_ST",
+    "ShortName": "Play_FM_Ambience_Halfbeak_MediumSpeed_ST",
+    "Path": "Event/Play_FM_Ambience_Halfbeak_MediumSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "33158586",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Ambience_Halfbeak_MediumSpeed_ST.wav",
+      "Path": "Media/33158586.wem",
+      "CachePath": "SFX/FM_Ambience_Halfbeak_MediumSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1274093022",
+      "Name": "Play_FM_Ambience_Halfbeak_MediumSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Ambience_Halfbeak_MediumSpeed_ST",
+      "GUID": "{5ACC886A-B9A6-4452-B52D-288E5DA48A58}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "33158586"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{CC67639F-D675-05A0-541F-802FCE41E6FF}"
+ }
+}

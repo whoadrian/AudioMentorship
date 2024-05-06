@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="458004308" Type="Event" GUID="{4CE13585-D13E-4CEB-90C1-AB25EA51DD16}" Language="SFX" Hash="{44E17656-F8BF-1774-87ED-9FA02E170BC9}">
+			<ObjectPath>Play_FM_Ambience_Gloomcollar_HighSpeed_ST</ObjectPath>
+			<ShortName>Play_FM_Ambience_Gloomcollar_HighSpeed_ST</ShortName>
+			<Path>Event/Play_FM_Ambience_Gloomcollar_HighSpeed_ST.bnk</Path>
+			<Media>
+				<File Id="634643119" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>FM_Ambience_Gloomcollar_HighSpeed_ST.wav</ShortName>
+					<Path>Media/634643119.wem</Path>
+					<CachePath>SFX/FM_Ambience_Gloomcollar_HighSpeed_ST_FBC78EF0.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="458004308" Name="Play_FM_Ambience_Gloomcollar_HighSpeed_ST" ObjectPath="\Events\Default Work Unit\Ambience\Play_FM_Ambience_Gloomcollar_HighSpeed_ST" GUID="{4CE13585-D13E-4CEB-90C1-AB25EA51DD16}" MaxAttenuation="5000" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="634643119"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{6656E01C-6BF1-7712-0E9A-D1D6E2BD18F0}</FileHash>
+</SoundBanksInfo>

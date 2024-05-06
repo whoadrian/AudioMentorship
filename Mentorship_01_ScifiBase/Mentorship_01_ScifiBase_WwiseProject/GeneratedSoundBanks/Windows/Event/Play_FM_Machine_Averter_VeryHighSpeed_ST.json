@@ -1,0 +1,47 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "3055441019",
+    "Type": "Event",
+    "GUID": "{8A287EC9-8813-4366-8832-7D189D5A81DE}",
+    "Language": "SFX",
+    "Hash": "{604EAC06-D5C3-6A7E-297D-1808D431E0C3}",
+    "ObjectPath": "Play_FM_Machine_Averter_VeryHighSpeed_ST",
+    "ShortName": "Play_FM_Machine_Averter_VeryHighSpeed_ST",
+    "Path": "Event/Play_FM_Machine_Averter_VeryHighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "1040319635",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Machine_Averter_VeryHighSpeed_ST.wav",
+      "Path": "Media/1040319635.wem",
+      "CachePath": "SFX/FM_Machine_Averter_VeryHighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3055441019",
+      "Name": "Play_FM_Machine_Averter_VeryHighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Machine_Averter_VeryHighSpeed_ST",
+      "GUID": "{8A287EC9-8813-4366-8832-7D189D5A81DE}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "1040319635"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{B981C1FF-19FD-9706-D5BF-48D2F955A24F}"
+ }
+}

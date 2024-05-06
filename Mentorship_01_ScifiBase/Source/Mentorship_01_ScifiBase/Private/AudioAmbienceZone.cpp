@@ -8,6 +8,7 @@
 
 AAudioAmbienceZone::AAudioAmbienceZone()
 {
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
 }
 
 void AAudioAmbienceZone::BeginPlay()

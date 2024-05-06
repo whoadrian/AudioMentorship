@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="3055441019" Type="Event" GUID="{8A287EC9-8813-4366-8832-7D189D5A81DE}" Language="SFX" Hash="{604EAC06-D5C3-6A7E-297D-1808D431E0C3}">
+			<ObjectPath>Play_FM_Machine_Averter_VeryHighSpeed_ST</ObjectPath>
+			<ShortName>Play_FM_Machine_Averter_VeryHighSpeed_ST</ShortName>
+			<Path>Event/Play_FM_Machine_Averter_VeryHighSpeed_ST.bnk</Path>
+			<Media>
+				<File Id="1040319635" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>FM_Machine_Averter_VeryHighSpeed_ST.wav</ShortName>
+					<Path>Media/1040319635.wem</Path>
+					<CachePath>SFX/FM_Machine_Averter_VeryHighSpeed_ST_FBC78EF0.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="3055441019" Name="Play_FM_Machine_Averter_VeryHighSpeed_ST" ObjectPath="\Events\Default Work Unit\Ambience\Play_FM_Machine_Averter_VeryHighSpeed_ST" GUID="{8A287EC9-8813-4366-8832-7D189D5A81DE}" MaxAttenuation="5000" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="1040319635"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{6F0A755D-5E8F-781D-3E2B-A6BBBB1B590E}</FileHash>
+</SoundBanksInfo>

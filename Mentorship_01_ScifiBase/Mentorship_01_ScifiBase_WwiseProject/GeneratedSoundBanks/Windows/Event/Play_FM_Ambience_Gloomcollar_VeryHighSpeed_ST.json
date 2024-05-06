@@ -1,0 +1,47 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "2087069744",
+    "Type": "Event",
+    "GUID": "{389ED702-17E8-4089-BD0B-C31E9C150CE2}",
+    "Language": "SFX",
+    "Hash": "{6507EBBA-0CEC-AD76-C6A6-B2850B2A2991}",
+    "ObjectPath": "Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST",
+    "ShortName": "Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST",
+    "Path": "Event/Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST.bnk",
+    "Media": [
+     {
+      "Id": "188501958",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "FM_Ambience_Gloomcollar_VeryHighSpeed_ST.wav",
+      "Path": "Media/188501958.wem",
+      "CachePath": "SFX/FM_Ambience_Gloomcollar_VeryHighSpeed_ST_FBC78EF0.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "2087069744",
+      "Name": "Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST",
+      "ObjectPath": "\\Events\\Default Work Unit\\Ambience\\Play_FM_Ambience_Gloomcollar_VeryHighSpeed_ST",
+      "GUID": "{389ED702-17E8-4089-BD0B-C31E9C150CE2}",
+      "MaxAttenuation": "5000",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "188501958"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{E3299D03-C30D-257C-4BDF-5309250C23C1}"
+ }
+}

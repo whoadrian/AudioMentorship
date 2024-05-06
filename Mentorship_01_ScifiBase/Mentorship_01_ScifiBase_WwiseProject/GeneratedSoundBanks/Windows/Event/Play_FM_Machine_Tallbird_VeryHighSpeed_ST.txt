@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	262400104	Play_FM_Machine_Tallbird_VeryHighSpeed_ST			\Default Work Unit\Ambience\Play_FM_Machine_Tallbird_VeryHighSpeed_ST	
+

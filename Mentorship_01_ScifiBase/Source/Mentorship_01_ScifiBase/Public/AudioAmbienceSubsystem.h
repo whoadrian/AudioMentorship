@@ -31,6 +31,9 @@ public:
 	UPROPERTY(EditInstanceOnly)
 	TMap<FGameplayTag, FAudioAmbienceSystemZoneData> Zones;
 
+	UPROPERTY(EditInstanceOnly)
+	bool bDrawAttenuation = true;
+
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override;
 };
 

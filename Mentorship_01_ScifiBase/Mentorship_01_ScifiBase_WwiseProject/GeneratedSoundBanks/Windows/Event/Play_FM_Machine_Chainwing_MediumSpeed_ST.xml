@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="1141968115" Type="Event" GUID="{0A1157D3-F345-416B-85C2-5D8AC4F6FAAA}" Language="SFX" Hash="{640C9254-99F2-EABA-3DDF-5A587A3AF668}">
+			<ObjectPath>Play_FM_Machine_Chainwing_MediumSpeed_ST</ObjectPath>
+			<ShortName>Play_FM_Machine_Chainwing_MediumSpeed_ST</ShortName>
+			<Path>Event/Play_FM_Machine_Chainwing_MediumSpeed_ST.bnk</Path>
+			<Media>
+				<File Id="790313246" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>FM_Machine_Chainwing_MediumSpeed_ST.wav</ShortName>
+					<Path>Media/790313246.wem</Path>
+					<CachePath>SFX/FM_Machine_Chainwing_MediumSpeed_ST_FBC78EF0.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1141968115" Name="Play_FM_Machine_Chainwing_MediumSpeed_ST" ObjectPath="\Events\Default Work Unit\Ambience\Play_FM_Machine_Chainwing_MediumSpeed_ST" GUID="{0A1157D3-F345-416B-85C2-5D8AC4F6FAAA}" MaxAttenuation="5000" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="790313246"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{50AA6866-33C4-CD6B-A88E-0F4479BC9E7E}</FileHash>
+</SoundBanksInfo>

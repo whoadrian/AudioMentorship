@@ -3,7 +3,7 @@
   "Project": {
    "Name": "Mentorship_01_ScifiBase_WwiseProject",
    "GUID": "{A2904ABD-1068-47A9-AE1A-B3D96B81F0C8}",
-   "Generator": "2023.1.1.8417"
+   "Generator": "2023.1.2.8444"
   },
   "CacheRoot": "../../../Mentorship_01_ScifiBase_WwiseProject/.cache",
   "Platforms": [
@@ -24,6 +24,6 @@
     "UseAsStandIn": "true"
    }
   ],
-  "FileHash": "{7A16BD95-4696-9F90-0889-A6EAEF263FE4}"
+  "FileHash": "{953C4F4C-A42B-0D8C-BDC2-F379EF9D8D5B}"
  }
 }

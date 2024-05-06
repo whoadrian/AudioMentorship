@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	3753060216	Play_FM_Machine_Vanisher_VeryHighSpeed_ST			\Default Work Unit\Ambience\Play_FM_Machine_Vanisher_VeryHighSpeed_ST	
+

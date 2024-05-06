@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="3753060216" Type="Event" GUID="{BC709557-3D00-45CD-816F-C64EAEC3617C}" Language="SFX" Hash="{071B36C1-3A4D-7F2F-6914-2B932DA2A02F}">
+			<ObjectPath>Play_FM_Machine_Vanisher_VeryHighSpeed_ST</ObjectPath>
+			<ShortName>Play_FM_Machine_Vanisher_VeryHighSpeed_ST</ShortName>
+			<Path>Event/Play_FM_Machine_Vanisher_VeryHighSpeed_ST.bnk</Path>
+			<Media>
+				<File Id="205286077" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>FM_Machine_Vanisher_VeryHighSpeed_ST.wav</ShortName>
+					<Path>Media/205286077.wem</Path>
+					<CachePath>SFX/FM_Machine_Vanisher_VeryHighSpeed_ST_FBC78EF0.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="3753060216" Name="Play_FM_Machine_Vanisher_VeryHighSpeed_ST" ObjectPath="\Events\Default Work Unit\Ambience\Play_FM_Machine_Vanisher_VeryHighSpeed_ST" GUID="{BC709557-3D00-45CD-816F-C64EAEC3617C}" MaxAttenuation="5000" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="205286077"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{6DACD74C-97B5-5A9C-44D5-04D80D4892B8}</FileHash>
+</SoundBanksInfo>

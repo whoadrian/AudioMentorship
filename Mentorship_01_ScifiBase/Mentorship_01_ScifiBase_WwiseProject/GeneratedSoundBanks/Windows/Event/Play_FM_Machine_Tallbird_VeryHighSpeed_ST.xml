@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="150">
+	<SoundBanks>
+		<SoundBank Id="262400104" Type="Event" GUID="{654CAD69-3ECF-4489-B4B0-A17D0830BC3A}" Language="SFX" Hash="{CB9B68E7-0EC5-1EEC-D303-549DFD6C60EF}">
+			<ObjectPath>Play_FM_Machine_Tallbird_VeryHighSpeed_ST</ObjectPath>
+			<ShortName>Play_FM_Machine_Tallbird_VeryHighSpeed_ST</ShortName>
+			<Path>Event/Play_FM_Machine_Tallbird_VeryHighSpeed_ST.bnk</Path>
+			<Media>
+				<File Id="874180463" Language="SFX" Streaming="false" Location="Loose">
+					<ShortName>FM_Machine_Tallbird_VeryHighSpeed_ST.wav</ShortName>
+					<Path>Media/874180463.wem</Path>
+					<CachePath>SFX/FM_Machine_Tallbird_VeryHighSpeed_ST_FBC78EF0.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="262400104" Name="Play_FM_Machine_Tallbird_VeryHighSpeed_ST" ObjectPath="\Events\Default Work Unit\Ambience\Play_FM_Machine_Tallbird_VeryHighSpeed_ST" GUID="{654CAD69-3ECF-4489-B4B0-A17D0830BC3A}" MaxAttenuation="5000" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="874180463"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{991FB800-9579-3AC8-8324-74DF15A87495}</FileHash>
+</SoundBanksInfo>
