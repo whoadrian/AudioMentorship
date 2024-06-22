@@ -165,11 +165,12 @@ typedef AkUInt8(*AkChannelMappingFunc)(const AkChannelConfig &config, AkUInt8 id
 
 enum AkSourceChannelOrdering
 {
-	SourceChannelOrdering_Standard = 0, // SMPTE L-R-C-LFE-RL-RR-RC-SL-SR-HL-HR-HC-HRL-HRR-HRC-T
+	SourceChannelOrdering_Standard = 0, // Microsoft L-R-C-LFE-RL-RR-RC-SL-SR-HL-HR-HC-HRL-HRR-HRC-T
 	// or ACN ordering + SN3D norm
 
-	SourceChannelOrdering_Film,	// L/C/R/Ls/Rs/Lfe
-	SourceChannelOrdering_FuMa
+	SourceChannelOrdering_Film,	// L-C-R-SL-SR-LFE
+	SourceChannelOrdering_FuMa,
+	SourceChannelOrdering_Last	// End of enum, invalid value.
 };
 
 #define AK_MAKE_CHANNELCONFIGOVERRIDE(_config,_order)	((AkInt64)_config.Serialize()|((AkInt64)_order<<32))
@@ -567,7 +568,7 @@ public:
 	/// Access to channel data is most optimal through this method. Use whenever the
 	/// speaker configuration is known, or when an operation must be made independently
 	/// for each channel.
-	/// \remarks When using a standard configuration, use ChannelMaskToBufferIndex() to convert channel bits to buffer indices.
+	/// \remarks When using a standard Wwise pipeline configuration, use ChannelBitToIndex() to convert channel bits to buffer indices.
 	/// \return Address of the buffer of the ith channel.
 	/// \sa
 	/// - \ref fx_audiobuffer_struct
@@ -606,7 +607,7 @@ public:
 			AKASSERT(pData != nullptr);
 			for ( AkUInt32 i = 0; i < uNumChannels; ++i )
 			{
-				AKPLATFORM::AkMemSet( GetChannel(i) + uNumCurrentFrames, 0, uNumZeroFrames * sizeof(AkSampleType) );
+				memset( GetChannel(i) + uNumCurrentFrames, 0, uNumZeroFrames * sizeof(AkSampleType) );
 			}
 			uValidFrames = MaxFrames();
 		}

@@ -348,6 +348,17 @@ void UAkPortalComponent::SetPortalOcclusion(float InPortalOcclusion)
 	}
 }
 
+const TWeakObjectPtr<UAkRoomComponent> UAkPortalComponent::GetOppositeRoomComponent(const UAkRoomComponent* pRoomComponent) const
+{
+	if (FrontRoom.Get() == pRoomComponent)
+		return BackRoom;
+
+	if (BackRoom.Get() == pRoomComponent)
+		return FrontRoom;
+
+	return nullptr;
+}
+
 void UAkPortalComponent::BeginPlay()
 {
 	Super::BeginPlay();

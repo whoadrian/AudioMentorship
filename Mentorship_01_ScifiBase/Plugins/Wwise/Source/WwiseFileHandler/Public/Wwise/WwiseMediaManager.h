@@ -17,10 +17,10 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #pragma once
 
-#include "AkInclude.h"
 #include "Wwise/WwiseFileHandlerModule.h"
 #include "Wwise/WwiseStreamableFileHandler.h"
 
+struct AkSourceSettings;
 struct FWwiseMediaCookedData;
 
 class IWwiseMediaManager : public IWwiseStreamableFileHandler
@@ -40,5 +40,8 @@ public:
 
 	virtual void LoadMedia(const FWwiseMediaCookedData& InMediaCookedData, const FString& InRootPath, FLoadMediaCallback&& InCallback) = 0;
 	virtual void UnloadMedia(const FWwiseMediaCookedData& InMediaCookedData, const FString& InRootPath, FUnloadMediaCallback&& InCallback) = 0;
-	virtual void SetGranularity(AkUInt32 Uint32) = 0;
+	virtual void SetGranularity(uint32 Uint32) = 0;
+
+	virtual void SetMedia(AkSourceSettings& InSource, FLoadMediaCallback&& InCallback) = 0;
+	virtual void UnsetMedia(AkSourceSettings& InSource, FLoadMediaCallback&& InCallback) = 0;
 };

@@ -17,7 +17,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #include "Wwise/Stats/AkAudioMemory.h"
 
-LLM_DEFINE_TAG(Wwise_SoundEngineMalloc);
+LLM_DEFINE_TAG(Audio_Wwise_SoundEngine, TEXT("SoundEngine Reserved"));
 
 DEFINE_STAT(STAT_WwiseMemorySoundEngineVM);
 #if AK_SUPPORT_DEVICE_MEMORY

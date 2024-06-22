@@ -196,12 +196,7 @@ void FWwiseReconcileImpl::GetAssetChanges(TArray<FWwiseReconcileItem>& Reconcile
 		{
 			if (EnumHasAnyFlags(OperationFlags, EWwiseReconcileOperationFlags::Delete))
 			{
-				if (ReconcileItem.Asset.IsValid())
-				{
-					ReconcileItem.OperationRequired |= EWwiseReconcileOperationFlags::Delete;
-					AssetsToDelete.Add(ReconcileItem.Asset);
-				}
-				else
+				if(!AddToDelete(ReconcileItem))
 				{
 					ReconcileItems.RemoveAt(i);
 					continue;
@@ -225,29 +220,20 @@ void FWwiseReconcileImpl::GetAssetChanges(TArray<FWwiseReconcileItem>& Reconcile
 		{
 			if (EnumHasAnyFlags(OperationFlags, EWwiseReconcileOperationFlags::Create))
 			{
-				ReconcileItem.OperationRequired |= EWwiseReconcileOperationFlags::Create;
-				AssetsToCreate.Add(ReconcileItem.WwiseAnyRef);
+				AddToCreate(ReconcileItem);
 			}
 		}
-
 		else if (EnumHasAnyFlags(OperationFlags, EWwiseReconcileOperationFlags::UpdateExisting))
 		{
 			if (RefClass && Asset.IsValid())
 			{
-				FName AssetName = AkUnrealAssetDataHelper::GetAssetDefaultName(WwiseRefValue);
-
-				if(IsAssetOutOfDate(Asset, *WwiseRefValue))
-				{
-					ReconcileItem.OperationRequired |= EWwiseReconcileOperationFlags::UpdateExisting;
-					AssetsToUpdate.Add(ReconcileItem.Asset);
-				}
-
-				if (Asset.AssetName != AssetName)
-				{
-					ReconcileItem.OperationRequired |= EWwiseReconcileOperationFlags::RenameExisting;
-					AssetsToRename.Add(ReconcileItem.Asset);
-				}
+				AddToUpdate(ReconcileItem);
+				AddToRename(ReconcileItem);
 			}
+		}
+		if(EnumHasAnyFlags(OperationFlags, EWwiseReconcileOperationFlags::Move))
+		{
+			AddToMove(ReconcileItem);
 		}
 		if(ReconcileItem.OperationRequired == EWwiseReconcileOperationFlags::None)
 		{
@@ -258,6 +244,65 @@ void FWwiseReconcileImpl::GetAssetChanges(TArray<FWwiseReconcileItem>& Reconcile
 			i++;
 		}
 	}
+}
+
+bool FWwiseReconcileImpl::AddToDelete(FWwiseReconcileItem& ReconcileItem)
+{
+	if (ReconcileItem.Asset.IsValid())
+	{
+		ReconcileItem.OperationRequired |= EWwiseReconcileOperationFlags::Delete;
+		AssetsToDelete.Add(ReconcileItem.Asset);
+		return true;
+	}
+	return false;
+}
+
+bool FWwiseReconcileImpl::AddToCreate(FWwiseReconcileItem& ReconcileItem)
+{
+	ReconcileItem.OperationRequired |= EWwiseReconcileOperationFlags::Create;
+	AssetsToCreate.Add(ReconcileItem.WwiseAnyRef);
+	return true;
+}
+
+bool FWwiseReconcileImpl::AddToRename(FWwiseReconcileItem& ReconcileItem)
+{
+	FName AssetName = AkUnrealAssetDataHelper::GetAssetDefaultName(ReconcileItem.WwiseAnyRef.WwiseAnyRef);
+	if (ReconcileItem.Asset.AssetName != AssetName)
+	{
+		ReconcileItem.OperationRequired |= EWwiseReconcileOperationFlags::RenameExisting;
+		AssetsToRename.Add(ReconcileItem.Asset);
+		return true;
+	}
+	return false;
+}
+
+bool FWwiseReconcileImpl::AddToUpdate(FWwiseReconcileItem& ReconcileItem)
+{
+	if(IsAssetOutOfDate(ReconcileItem.Asset, *ReconcileItem.WwiseAnyRef.WwiseAnyRef))
+	{
+		ReconcileItem.OperationRequired |= EWwiseReconcileOperationFlags::UpdateExisting;
+		AssetsToUpdate.Add(ReconcileItem);
+		return true;
+	}
+	return false;
+}
+
+bool FWwiseReconcileImpl::AddToMove(FWwiseReconcileItem& ReconcileItem)
+{
+	FString OutNewPath;
+	if(ShouldMove(*ReconcileItem.WwiseAnyRef.WwiseAnyRef, ReconcileItem.Asset, OutNewPath))
+	{
+		ReconcileItem.OperationRequired |= EWwiseReconcileOperationFlags::Move;
+		ReconcileItem.MovedPath = OutNewPath;
+		AssetsToMove.Add(ReconcileItem);
+		return true;
+	}
+	return false;
+}
+
+bool FWwiseReconcileImpl::ShouldMove(const FWwiseAnyRef& Ref, FAssetData InAssetPath, FString& OutNewAssetPath)
+{
+	return false;
 }
 
 TArray<FAssetData> FWwiseReconcileImpl::UpdateExistingAssets(FScopedSlowTask& SlowTask)
@@ -273,14 +318,14 @@ TArray<FAssetData> FWwiseReconcileImpl::UpdateExistingAssets(FScopedSlowTask& Sl
 		{
 			return UpdatedAssets;
 		}
-		auto AkAudioAsset = Cast<UAkAudioType>(AssetData.GetAsset());
+		auto AkAudioAsset = Cast<UAkAudioType>(AssetData.Asset.GetAsset());
 		if (!LIKELY(AkAudioAsset))
 		{
-			UE_LOG(LogWwiseReconcile, Error, TEXT("Failed to update Wwise asset %s."), *AssetData.AssetName.ToString());
+			UE_LOG(LogWwiseReconcile, Error, TEXT("Failed to update Wwise asset %s."), *AssetData.Asset.AssetName.ToString());
 			continue;
 		}
-		UE_LOG(LogWwiseReconcile, Verbose, TEXT("Updating Wwise asset %s."), *AssetData.AssetName.ToString());
-		AkAudioAsset->FillInfo();
+		UE_LOG(LogWwiseReconcile, Verbose, TEXT("Updating Wwise asset %s."), *AssetData.Asset.AssetName.ToString());
+		AkAudioAsset->FillInfo(*AssetData.WwiseAnyRef.WwiseAnyRef);
 		FAssetData NewAssetData = FAssetData(AkAudioAsset);
 		PackagesToSave.Add(NewAssetData.GetPackage());
 		UpdatedAssets.Add(NewAssetData);
@@ -422,9 +467,15 @@ bool FWwiseReconcileImpl::RenameExistingAssets(FScopedSlowTask& SlowTask)
 	return true;
 }
 
+int32 FWwiseReconcileImpl::MoveAssets(FScopedSlowTask& SlowTask)
+{
+	UE_LOG(LogWwiseReconcile, Log, TEXT("Moving Assets is not implemented. Be careful with your Source Control when implementing it."));
+	return 0;
+}
+
 int FWwiseReconcileImpl::GetNumberOfAssets()
 {
-	return AssetsToDelete.Num() + AssetsToCreate.Num() + AssetsToRename.Num() + AssetsToUpdate.Num();
+	return AssetsToDelete.Num() + AssetsToCreate.Num() + AssetsToRename.Num() + AssetsToUpdate.Num() + AssetsToMove.Num();
 }
 
 int32 FWwiseReconcileImpl::DeleteAssets(FScopedSlowTask& SlowTask)

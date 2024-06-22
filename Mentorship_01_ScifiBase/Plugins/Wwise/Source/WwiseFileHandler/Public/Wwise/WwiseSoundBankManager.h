@@ -39,5 +39,5 @@ public:
 
 	virtual void LoadSoundBank(const FWwiseSoundBankCookedData& InSoundBankCookedData, const FString& InRootPath, FLoadSoundBankCallback&& InCallback) = 0;
 	virtual void UnloadSoundBank(const FWwiseSoundBankCookedData& InSoundBankCookedData, const FString& InRootPath, FUnloadSoundBankCallback&& InCallback) = 0;
-	virtual void SetGranularity(AkUInt32 Uint32) = 0;
+	virtual void SetGranularity(uint32 Uint32) = 0;
 };

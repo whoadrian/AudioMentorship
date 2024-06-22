@@ -26,8 +26,21 @@ AkSubmixInputComponent.cpp:
 #include <inttypes.h>
 
 UAkSubmixInputComponent::UAkSubmixInputComponent(const class FObjectInitializer& ObjectInitializer) :
-	UAkAudioInputComponent(ObjectInitializer)
+	UAkAudioInputComponent(ObjectInitializer), SubmixListener(MakeShared<FAkSubmixBufferListener>())
 {}
+
+void FAkSubmixBufferListener::OnNewSubmixBuffer(
+	const USoundSubmix* InOwningSubmix,
+	float* InAudioData,
+	int32				InNumSamples,
+	int32				InNumChannels,
+	const int32			InSampleRate,
+	double				InAudioClock)
+{
+	check(InNumChannels == NumChannels);
+	check(InSampleRate == SampleRate);
+	SampleBuffer.Push(InAudioData, InNumSamples);
+}
 
 Audio::FMixerDevice* UAkSubmixInputComponent::GetAudioMixerDevice()
 {
@@ -58,13 +71,24 @@ int32 UAkSubmixInputComponent::PostAssociatedAudioInputEvent()
 		Audio::FMixerDevice* AudioMixerDevice = GetAudioMixerDevice();
 		if (AudioMixerDevice)
 		{
-			NumChannels = AudioMixerDevice->GetNumDeviceChannels();
-			SampleRate = AudioMixerDevice->GetDeviceSampleRate();
-			BufferLength = AudioMixerDevice->GetBufferLength();
-			SampleBuffer.SetCapacity(2 * BufferLength * NumChannels);
-			PoppedSamples.Empty();
-			PoppedSamples.AddUninitialized(BufferLength * NumChannels);
-			AudioMixerDevice->RegisterSubmixBufferListener(this, SubmixToRecord);
+			SubmixListener->NumChannels = AudioMixerDevice->GetNumDeviceChannels();
+			SubmixListener->SampleRate = AudioMixerDevice->GetDeviceSampleRate();
+			SubmixListener->BufferLength = AudioMixerDevice->GetBufferLength();
+			SubmixListener->SampleBuffer.SetCapacity(2 * SubmixListener->BufferLength * SubmixListener->NumChannels);
+			SubmixListener->PoppedSamples.Empty();
+			SubmixListener->PoppedSamples.AddUninitialized(SubmixListener->BufferLength * SubmixListener->NumChannels);
+#if UE_5_4_OR_LATER
+			if (!SubmixToRecord)
+			{
+				SubmixToRecord = &AudioMixerDevice->GetMainSubmixObject();
+			}
+			if(SubmixListener->DoesSharedInstanceExist())
+			{
+				AudioMixerDevice->RegisterSubmixBufferListener(SubmixListener, *SubmixToRecord);
+			}
+#else
+			AudioMixerDevice->RegisterSubmixBufferListener(&SubmixListener.Get(), SubmixToRecord);
+#endif
 		}
 		else
 		{
@@ -86,7 +110,18 @@ void UAkSubmixInputComponent::Stop()
 	Audio::FMixerDevice* AudioMixerDevice = GetAudioMixerDevice();
 	if (AudioMixerDevice)
 	{
-		AudioMixerDevice->UnregisterSubmixBufferListener(this, SubmixToRecord);
+#if UE_5_4_OR_LATER
+		if (UNLIKELY(!SubmixToRecord))
+		{
+			SubmixToRecord = &AudioMixerDevice->GetMainSubmixObject();
+		}
+		if(SubmixListener->DoesSharedInstanceExist())
+		{
+			AudioMixerDevice->UnregisterSubmixBufferListener(SubmixListener, *SubmixToRecord);
+		}
+#else
+		AudioMixerDevice->UnregisterSubmixBufferListener(&SubmixListener.Get(), SubmixToRecord);
+#endif
 	}
 	Super::Stop();
 	PlayingID = AK_INVALID_PLAYING_ID;
@@ -94,17 +129,17 @@ void UAkSubmixInputComponent::Stop()
 
 bool UAkSubmixInputComponent::FillSamplesBuffer(uint32 InNumChannels, uint32 InNumSamples, float** InOutBufferToFill)
 {
-	check(InNumChannels == NumChannels);
-	if (SampleBuffer.Num() >= (InNumChannels * InNumSamples))
+	check(InNumChannels == SubmixListener->NumChannels);
+	if (SubmixListener->SampleBuffer.Num() >= (InNumChannels * InNumSamples))
 	{
-		auto NumPopped = SampleBuffer.Pop(PoppedSamples.GetData(), InNumChannels * InNumSamples);
+		auto NumPopped = SubmixListener->SampleBuffer.Pop(SubmixListener->PoppedSamples.GetData(), InNumChannels * InNumSamples);
 		if (NumPopped == InNumChannels * InNumSamples)
 		{
 			for (uint32 Channel = 0; Channel < InNumChannels; Channel++)
 			{
 				for (uint32 Sample = 0; Sample < InNumSamples; Sample++)
 				{
-					InOutBufferToFill[Channel][Sample] = PoppedSamples[((NumChannels * Sample) + Channel)];
+					InOutBufferToFill[Channel][Sample] = SubmixListener->PoppedSamples[((SubmixListener->NumChannels * Sample) + Channel)];
 				}
 			}
 
@@ -128,8 +163,8 @@ void UAkSubmixInputComponent::GetChannelConfig(AkAudioFormat& AudioFormat)
 		return;
 	}
 
-    AudioFormat.uSampleRate = SampleRate;
-	switch (NumChannels)
+    AudioFormat.uSampleRate = SubmixListener->SampleRate;
+	switch (SubmixListener->NumChannels)
 	{
 	case 8:
 		AudioFormat.channelConfig.SetStandard(AK_SPEAKER_SETUP_7POINT1);
@@ -144,19 +179,6 @@ void UAkSubmixInputComponent::GetChannelConfig(AkAudioFormat& AudioFormat)
 		AudioFormat.channelConfig.SetStandard(AK_SPEAKER_SETUP_MONO);
 		break;
 	default:
-		UE_LOG(LogAkAudio, Error, TEXT("AkSubmixInputComponent::GetChannelConfig (%s): Unknown number of channels (%" PRIu32 ")"), *GetOwner()->GetName(), NumChannels);
+		UE_LOG(LogAkAudio, Error, TEXT("AkSubmixInputComponent::GetChannelConfig (%s): Unknown number of channels (%" PRIu32 ")"), *GetOwner()->GetName(), SubmixListener->NumChannels);
 	}
-}
-
-void UAkSubmixInputComponent::OnNewSubmixBuffer(
-	const USoundSubmix* InOwningSubmix,
-	float* InAudioData,
-	int32				InNumSamples,
-	int32				InNumChannels,
-	const int32			InSampleRate,
-	double				InAudioClock)
-{
-	check(InNumChannels == NumChannels);
-	check(InSampleRate == SampleRate);
-	SampleBuffer.Push(InAudioData, InNumSamples);
 }

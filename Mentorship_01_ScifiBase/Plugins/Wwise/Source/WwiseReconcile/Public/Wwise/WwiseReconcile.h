@@ -24,6 +24,8 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 struct FScopedSlowTask;
 
+#define LOCTEXT_NAMESPACE "AkAudio"
+
 enum class EWwiseReconcileOperationFlags
 {
 	None = 0,
@@ -31,7 +33,8 @@ enum class EWwiseReconcileOperationFlags
 	UpdateExisting = 1 << 1,
 	RenameExisting = 1 << 2,
 	Delete = 1 << 3,
-	All = Create | UpdateExisting | Delete | RenameExisting
+	Move = 1 << 4,
+	All = Create | UpdateExisting | Delete | RenameExisting | Move
 };
 
 ENUM_CLASS_FLAGS(EWwiseReconcileOperationFlags)
@@ -48,6 +51,7 @@ struct FWwiseReconcileItem
 	FAssetData Asset;
 	FWwiseNewAsset WwiseAnyRef;
 	FGuid ItemId;
+	FString MovedPath;
 	bool operator==(const FWwiseReconcileItem& Other) const
 	{
 		if(ItemId.IsValid())
@@ -59,6 +63,48 @@ struct FWwiseReconcileItem
 			return Asset.AssetName == Other.Asset.AssetName;
 		}
 	}
+
+	FText GetOperationText() const
+	{
+		if (EnumHasAnyFlags(OperationRequired, EWwiseReconcileOperationFlags::UpdateExisting))
+		{
+			if(EnumHasAnyFlags(OperationRequired, EWwiseReconcileOperationFlags::RenameExisting))
+			{
+				if(EnumHasAnyFlags(OperationRequired, EWwiseReconcileOperationFlags::Move))
+				{
+					return LOCTEXT("WwiseReconcileUpdateRenameMove", "Update, Rename and Move");
+				}
+				return LOCTEXT("WwiseReconcileUpdateRename", "Update and Rename");
+			}
+			if(EnumHasAnyFlags(OperationRequired, EWwiseReconcileOperationFlags::Move))
+			{
+				return LOCTEXT("WwiseReconcileUpdateMove", "Update and Move");
+			}
+		}
+		if(EnumHasAnyFlags(OperationRequired, EWwiseReconcileOperationFlags::RenameExisting))
+		{
+			if(EnumHasAnyFlags(OperationRequired, EWwiseReconcileOperationFlags::Move))
+			{
+				return LOCTEXT("WwiseReconcileRenameMove", "Rename and Move");
+			}
+		}
+		switch (OperationRequired)
+		{
+		case EWwiseReconcileOperationFlags::Create:
+			return LOCTEXT("WwiseReconcileCreate", "Create");
+		case EWwiseReconcileOperationFlags::UpdateExisting:
+			return LOCTEXT("WwiseReconcileUpdate", "Update");
+		case EWwiseReconcileOperationFlags::RenameExisting:
+			return LOCTEXT("WwiseReconcileRename", "Rename");
+		case EWwiseReconcileOperationFlags::Delete:
+			return LOCTEXT("WwiseReconcileDelete", "Delete");
+		case EWwiseReconcileOperationFlags::Move:
+			return LOCTEXT("WwiseReconcileDelete", "Move");
+		default:
+			break;
+		}
+		return LOCTEXT("WwiseReconcileEmpty", "");
+	}
 };
 
 class WWISERECONCILE_API IWwiseReconcile
@@ -66,9 +112,10 @@ class WWISERECONCILE_API IWwiseReconcile
 protected:
 	TMap<FGuid, FWwiseNewAsset> GuidToWwiseRef;
 
-	TArray<FAssetData> AssetsToUpdate;
+	TArray<FWwiseReconcileItem> AssetsToUpdate;
 	TArray<FAssetData> AssetsToRename;
 	TArray<FAssetData> AssetsToDelete;
+	TArray<FWwiseReconcileItem> AssetsToMove;
 	TArray<FWwiseNewAsset> AssetsToCreate;
 
 	virtual bool IsAssetOutOfDate(const FAssetData& AssetData, const FWwiseAnyRef& WwiseRef) = 0;
@@ -103,8 +150,15 @@ public:
 	virtual bool RenameExistingAssets(FScopedSlowTask& SlowTask) = 0;
 	virtual int GetNumberOfAssets() = 0;
 	virtual int32 DeleteAssets(FScopedSlowTask& SlowTask) = 0;
+	virtual int32 MoveAssets(FScopedSlowTask& SlowTask) = 0;
 	virtual UClass* GetUClassFromWwiseRefType(EWwiseRefType RefType) = 0;
 	virtual void GetAssetChanges(TArray<FWwiseReconcileItem>& ReconcileItems, EWwiseReconcileOperationFlags OperationFlags = EWwiseReconcileOperationFlags::All) = 0;
+	virtual bool AddToDelete(FWwiseReconcileItem& Item) = 0;
+	virtual bool AddToCreate(FWwiseReconcileItem& Item) = 0;
+	virtual bool AddToRename(FWwiseReconcileItem& Item) = 0;
+	virtual bool AddToUpdate(FWwiseReconcileItem& Item) = 0;
+	virtual bool AddToMove(FWwiseReconcileItem& Item) = 0;
+	virtual bool ShouldMove(const FWwiseAnyRef& Ref, FAssetData InAssetPath, FString& OutNewAssetPath) = 0;
 	
 	bool ReconcileAssets(EWwiseReconcileOperationFlags OperationFlags = EWwiseReconcileOperationFlags::All);
 
@@ -112,3 +166,5 @@ public:
 	// Delegate to fire when a Reconcile operation is complete
 	FOnWwiseReconcileDoneDelegate OnWwiseAssetsReconciled;
 };
+
+#undef LOCTEXT_NAMESPACE

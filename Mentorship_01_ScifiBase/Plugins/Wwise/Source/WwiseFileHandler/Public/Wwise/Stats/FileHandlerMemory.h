@@ -65,3 +65,7 @@ DECLARE_MEMORY_STAT_EXTERN(TEXT("SoundBank Device"), STAT_WwiseMemorySoundBankDe
 #else
 #define STAT_WwiseMemorySoundBankDevice_FName NAME_None
 #endif
+
+LLM_DECLARE_TAG_API(Audio_Wwise_FileHandler_ExternalSources, WWISEFILEHANDLER_API);
+LLM_DECLARE_TAG_API(Audio_Wwise_FileHandler_Media, WWISEFILEHANDLER_API);
+LLM_DECLARE_TAG_API(Audio_Wwise_FileHandler_SoundBanks, WWISEFILEHANDLER_API);

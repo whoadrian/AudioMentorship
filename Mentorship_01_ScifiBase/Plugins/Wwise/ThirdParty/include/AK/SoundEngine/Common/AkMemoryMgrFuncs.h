@@ -33,7 +33,14 @@ the specific language governing permissions and limitations under the License.
 
 #include <AK/SoundEngine/Common/AkTypes.h>
 
-#if defined(AK_WIN)
+#if defined(AK_NULL_PLATFORM)
+// null platform has no support for memory allocations
+namespace AKPLATFORM
+{
+	AkForceInline void* AllocVM(size_t size, size_t* extra) { return nullptr; }
+	AkForceInline void FreeVM(void* address, size_t size, size_t extra, size_t release) { }
+}
+#elif defined(AK_WIN)
 #include <AK/SoundEngine/Platforms/Windows/AkMemoryMgrFuncs.h>
 
 #elif defined (AK_XBOX)

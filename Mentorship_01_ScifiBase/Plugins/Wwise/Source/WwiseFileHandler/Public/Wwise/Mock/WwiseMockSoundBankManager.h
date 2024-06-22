@@ -17,7 +17,6 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #pragma once
 
-#include "AkInclude.h"
 #include "WwiseMockFileState.h"
 #include "Wwise/WwiseFileHandlerBase.h"
 #include "Wwise/WwiseSoundBankManager.h"
@@ -49,7 +48,7 @@ public:
 		SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseMockSoundBankManager::UnloadSoundBank"));
 		DecrementFileStateUseAsync(InSoundBankCookedData.SoundBankId, nullptr, EWwiseFileStateOperationOrigin::Loading, MoveTemp(InCallback));
 	}
-	void SetGranularity(AkUInt32 InStreamingGranularity) override {}
+	void SetGranularity(uint32 InStreamingGranularity) override {}
 
 	IWwiseStreamingManagerHooks& GetStreamingHooks() override final { return *this; }
 

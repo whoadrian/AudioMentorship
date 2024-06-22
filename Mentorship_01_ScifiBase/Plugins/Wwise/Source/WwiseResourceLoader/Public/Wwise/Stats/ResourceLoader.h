@@ -21,6 +21,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "Logging/LogMacros.h"
 
 #include "Wwise/Stats/NamedEvents.h"
+#include "Wwise/Stats/Memory.h"
 
 DECLARE_STATS_GROUP(TEXT("Resource Loader"), STATGROUP_WwiseResourceLoader, STATCAT_Wwise);
 
@@ -48,3 +49,12 @@ WWISERESOURCELOADER_API DECLARE_LOG_CATEGORY_EXTERN(LogWwiseResourceLoader, Log,
 #define SCOPED_WWISERESOURCELOADER_EVENT_F_4(Format, ...) SCOPED_WWISE_NAMED_EVENT_F_4(TEXT("WwiseResourceLoader"), Format, __VA_ARGS__)
 
 #define WWISERESOURCELOADER_ASYNC_NAME(Text) TEXT("WwiseResourceLoader ") TEXT(Text)
+
+LLM_DECLARE_TAG_API(Audio_Wwise_ResourceLoader_AuxBusses, WWISERESOURCELOADER_API);
+LLM_DECLARE_TAG_API(Audio_Wwise_ResourceLoader_Events, WWISERESOURCELOADER_API);
+LLM_DECLARE_TAG_API(Audio_Wwise_ResourceLoader_ExternalSources, WWISERESOURCELOADER_API);
+LLM_DECLARE_TAG_API(Audio_Wwise_ResourceLoader_GroupValues, WWISERESOURCELOADER_API);
+LLM_DECLARE_TAG_API(Audio_Wwise_ResourceLoader_InitBanks, WWISERESOURCELOADER_API);
+LLM_DECLARE_TAG_API(Audio_Wwise_ResourceLoader_Media, WWISERESOURCELOADER_API);
+LLM_DECLARE_TAG_API(Audio_Wwise_ResourceLoader_ShareSets, WWISERESOURCELOADER_API);
+LLM_DECLARE_TAG_API(Audio_Wwise_ResourceLoader_SoundBanks, WWISERESOURCELOADER_API);

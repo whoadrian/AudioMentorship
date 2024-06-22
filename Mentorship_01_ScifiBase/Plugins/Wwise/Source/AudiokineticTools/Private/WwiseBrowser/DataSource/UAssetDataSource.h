@@ -26,6 +26,7 @@ struct UAssetDataSourceId
 {
 	FGuid ItemId;
 	uint32 ShortId = 0;
+	uint32 GroupId = 0;
 	FName Name;
 	inline const bool operator==(const UAssetDataSourceId& other) const
 	{
@@ -63,7 +64,7 @@ class FUAssetDataSource
 	// UAssets that have a valid Guid that exists in the Project Database
 	TMap<FGuid, UAssetDataSourceInformation> UsedItems;
 	// UAssets with invalid Guid will use the ShortId to sync with the Project Database.
-	TMap<uint32, UAssetDataSourceInformation> UAssetWithoutGuid;
+	TMap<TPair<uint32, uint32>, UAssetDataSourceInformation> UAssetWithoutGuid;
 	// UAssets with invalid Guid and ShortId will use the AssetName to sync with the Project Database. Also includes "None" States.
 	TMap<FName, UAssetDataSourceInformation> UAssetWithoutShortId;
 
@@ -73,6 +74,6 @@ class FUAssetDataSource
 
 public:
 	void ConstructItems();
-	void GetAssetsInfo(FGuid ItemId, uint32 ShortId, FString Name, EWwiseItemType::Type& ItemType, FName& AssetName, TArray<FAssetData>& Assets);
+	void GetAssetsInfo(FGuid ItemId, uint32 ShortId, FString Name, uint32 GroupId, EWwiseItemType::Type& ItemType, FName& AssetName, TArray<FAssetData>& Assets);
 	void GetOrphanAssets(TArray<UAssetDataSourceInformation>& OrphanAssets) const;
 };

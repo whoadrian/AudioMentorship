@@ -1,8 +1,8 @@
 {
 	"FileVersion": 1,
 	"FriendlyName": "Wwise Niagara Integration",
-	"Version": 202312933,
-	"VersionName": "2023.1.2.8444.2933",
+	"Version": 202313012,
+	"VersionName": "2023.1.4.8496.3012",
 	"CreatedBy": "Audiokinetic, Inc.",
 	"CreatedByURL": "http://audiokinetic.com",
 	"Description": "Wwise Niagara integration",

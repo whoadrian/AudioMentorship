@@ -31,7 +31,7 @@ public:
 	const TCHAR* GetManagingTypeName() const override { return TEXT("SoundBank"); }
 	void LoadSoundBank(const FWwiseSoundBankCookedData& InSoundBankCookedData, const FString& InRootPath, FLoadSoundBankCallback&& InCallback) override;
 	void UnloadSoundBank(const FWwiseSoundBankCookedData& InSoundBankCookedData, const FString& InRootPath, FUnloadSoundBankCallback&& InCallback) override;
-	void SetGranularity(AkUInt32 InStreamingGranularity) override;
+	void SetGranularity(uint32 InStreamingGranularity) override;
 
 	IWwiseStreamingManagerHooks& GetStreamingHooks() final { return *this; }
 

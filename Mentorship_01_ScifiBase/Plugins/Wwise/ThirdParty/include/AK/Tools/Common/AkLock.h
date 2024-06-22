@@ -34,7 +34,27 @@ the specific language governing permissions and limitations under the License.
 
 #include <AK/AkPlatforms.h>
 
-#if defined(AK_WIN) || defined(AK_XBOX)
+#if defined(AK_NULL_PLATFORM)
+// null platform can just rely on std::mutex for locking
+#include <mutex>
+class CAkLock
+{
+public:
+    inline AKRESULT Lock(void)
+    {
+        m_lock.lock();
+        return AK_Success;
+    }
+    inline AKRESULT Unlock(void)
+    {
+        m_lock.unlock();
+        return AK_Success;
+    }
+private:
+    std::mutex m_lock;
+};
+
+#elif defined(AK_WIN) || defined(AK_XBOX)
 #include <AK/Tools/Win32/AkLock.h>
 
 #elif defined (AK_APPLE) 

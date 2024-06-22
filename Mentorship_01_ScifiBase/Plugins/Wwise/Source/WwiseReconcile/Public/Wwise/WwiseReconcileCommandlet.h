@@ -54,4 +54,6 @@ private:
 
 	/** Prints command line arguments */
 	void PrintHelp();
+
+	void LogOperations();
 };

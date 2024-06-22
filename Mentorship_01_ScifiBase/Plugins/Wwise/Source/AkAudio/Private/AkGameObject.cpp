@@ -23,6 +23,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "AkAudioEvent.h"
 #include "AkComponentCallbackManager.h"
 #include "AkRtpc.h"
+#include "AkSettings.h"
 #include "Wwise/WwiseExternalSourceManager.h"
 #include "Wwise/API/WwiseSoundEngineAPI.h"
 

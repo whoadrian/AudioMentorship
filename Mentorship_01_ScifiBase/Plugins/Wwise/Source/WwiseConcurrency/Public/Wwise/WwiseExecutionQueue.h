@@ -37,6 +37,7 @@ struct WWISECONCURRENCY_API FWwiseExecutionQueue
 	const TCHAR* const DebugName;
 	const EWwiseTaskPriority TaskPriority;
 	using FBasicFunction = TUniqueFunction<void()>;
+	using FSharedFunction = TFunction<void()>;
 
 #define WWISE_EQ_NAME(name) TEXT(name) TEXT(" Execution Queue worker") 
 
@@ -75,7 +76,7 @@ struct WWISECONCURRENCY_API FWwiseExecutionQueue
 	 *
 	 * Execute the function asynchronously, or on the Task Graph, but never synchronously.
 	*/
-	void AsyncAlways(const TCHAR* InDebugName, FBasicFunction&& InFunction);
+	void AsyncAlways(const TCHAR* InDebugName, FSharedFunction&& InFunction);
 
 	/**
 	 * @brief Calls a function asynchronously in the Execution Queue, and then wait for it to be called.

@@ -48,6 +48,7 @@ public:
 protected:
 	/** This is called after the GameObject that owns this component is unregistered from the Wwise sound engine. */
 	virtual void PostUnregisterGameObject() override;
+	
 	/** The audio callback. This will be called continuously by the Wwise sound engine,
 	  * and is used to provide the sound engine with audio samples. If this function returns false, the audio
 	  * input event will be stopped and the function will stop being called.
@@ -55,6 +56,11 @@ protected:
 	virtual bool FillSamplesBuffer(uint32 NumChannels, uint32 NumSamples, float** BufferToFill) PURE_VIRTUAL(AkAudioInputComponent::FillSamplesBuffer, return false;);
 	/** This callback is used to provide the Wwise sound engine with the required audio format. */
 	virtual void GetChannelConfig(AkAudioFormat& AudioFormat) PURE_VIRTUAL(UAkAudioInputComponent::GetChannelConfig,);
+
+	/**
+	 * Stops playback using this game object as the game object to stop
+	 */
+	virtual void Stop() override;
 
 	TArray<AkPlayingID> CurrentlyPlayingIDs;
 

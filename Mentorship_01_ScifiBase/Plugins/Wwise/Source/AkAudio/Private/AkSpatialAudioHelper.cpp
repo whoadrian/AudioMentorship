@@ -33,11 +33,13 @@ namespace AkSpatialAudioHelper
 	}
 
 #if WITH_EDITOR
-	UEditorEngine::FObjectsReplacedEvent* GetObjectReplacedEvent()
+#if UE_5_0_OR_LATER 
+	FCoreUObjectDelegates::FOnObjectsReplaced* GetObjectReplacedEvent()
 	{
-#if UE_5_0_OR_LATER
 		return &FCoreUObjectDelegates::OnObjectsReplaced;
 #else
+	UEditorEngine::FObjectsReplacedEvent* GetObjectReplacedEvent()
+	{
 		if (GEditor)
 		{
 			return &GEditor->OnObjectsReplaced();
@@ -47,5 +49,4 @@ namespace AkSpatialAudioHelper
 #endif
 	}
 #endif
-
 }

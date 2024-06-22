@@ -56,8 +56,6 @@ UAkLateReverbComponent::UAkLateReverbComponent(const class FObjectInitializer& O
 	// SceneComponent property initialization
 	bUseAttachParentBound = true;
 	bWantsOnUpdateTransform = true;
-	PrimaryComponentTick.bCanEverTick = true;
-	PrimaryComponentTick.bStartWithTickEnabled = true;
 
 	// LateReverbComponent property initialization
 	SendLevel = 1.0f;
@@ -68,7 +66,6 @@ UAkLateReverbComponent::UAkLateReverbComponent(const class FObjectInitializer& O
 
 #if WITH_EDITOR
 	// In editor we always want to tick in case the global RTPCs become active, or aux bus assignment is enabled.
-	bTickInEditor = true;
 
 	if (AkSpatialAudioHelper::GetObjectReplacedEvent())
 	{
@@ -218,6 +215,12 @@ void UAkLateReverbComponent::OnRegister()
 	SetRelativeTransform(FTransform::Identity);
 	InitializeParent();
 	ParentChanged();
+
+	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bStartWithTickEnabled = true;
+#if WITH_EDITOR
+	bTickInEditor = true;
+#endif
 }
 
 void UAkLateReverbComponent::ParentChanged()

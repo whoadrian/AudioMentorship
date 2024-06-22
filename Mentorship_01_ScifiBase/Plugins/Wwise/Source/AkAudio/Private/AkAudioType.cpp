@@ -22,6 +22,9 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "AkSettings.h"
 #include "AkCustomVersion.h"
 #include "Platforms/AkPlatformInfo.h"
+#if UE_5_4_OR_LATER
+#include "UObject/AssetRegistryTagsContext.h"
+#endif
 
 #if WITH_EDITORONLY_DATA
 #include "Wwise/WwiseResourceCooker.h"
@@ -231,6 +234,19 @@ void UAkAudioType::PostEditChangeProperty(FPropertyChangedEvent& PropertyChanged
 	}
 }
 
+#if UE_5_4_OR_LATER 
+void UAkAudioType::GetAssetRegistryTags(FAssetRegistryTagsContext Context) const
+{
+	UObject::GetAssetRegistryTags(Context);
+	
+	auto WwiseInfo = GetInfo();
+	//This seems to be more reliable than putting the AssetRegistrySearchable tag on FWwiseObjectInfo::WwiseGuid
+	Context.AddTag(FAssetRegistryTag(GET_MEMBER_NAME_CHECKED(FWwiseObjectInfo, WwiseGuid), WwiseInfo.WwiseGuid.ToString(), FAssetRegistryTag::ETagType::TT_Hidden));
+	Context.AddTag(FAssetRegistryTag(GET_MEMBER_NAME_CHECKED(FWwiseObjectInfo, WwiseShortId), FString::FromInt(WwiseInfo.WwiseShortId), FAssetRegistryTag::ETagType::TT_Hidden));
+	Context.AddTag(FAssetRegistryTag(GET_MEMBER_NAME_CHECKED(FWwiseObjectInfo, WwiseName), WwiseInfo.WwiseName.ToString(), FAssetRegistryTag::ETagType::TT_Hidden));
+}
+
+#else
 void UAkAudioType::GetAssetRegistryTags(TArray<FAssetRegistryTag>& OutTags) const
 {
 	UObject::GetAssetRegistryTags(OutTags);
@@ -241,7 +257,8 @@ void UAkAudioType::GetAssetRegistryTags(TArray<FAssetRegistryTag>& OutTags) cons
 	OutTags.Add(FAssetRegistryTag(GET_MEMBER_NAME_CHECKED(FWwiseObjectInfo, WwiseShortId), FString::FromInt(WwiseInfo.WwiseShortId), FAssetRegistryTag::ETagType::TT_Hidden));
 	OutTags.Add(FAssetRegistryTag(GET_MEMBER_NAME_CHECKED(FWwiseObjectInfo, WwiseName), WwiseInfo.WwiseName.ToString(), FAssetRegistryTag::ETagType::TT_Hidden));
 }
-#endif
+#endif // UE_5_4_OR_LATER
+#endif // WITH_EDITOR
 
 void UAkAudioType::BeginCacheForCookedPlatformData(const ITargetPlatform* TargetPlatform)
 {

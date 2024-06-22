@@ -17,7 +17,6 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #pragma once
 
-#include "AkInclude.h"
 #include "WwiseMockFileState.h"
 #include "Wwise/WwiseMediaManager.h"
 #include "Wwise/WwiseFileHandlerBase.h"
@@ -48,7 +47,7 @@ public:
 		SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseMockMediaManager::UnloadMedia"));
 		DecrementFileStateUseAsync(InMediaCookedData.MediaId, nullptr, EWwiseFileStateOperationOrigin::Loading, MoveTemp(InCallback));
 	}
-	void SetGranularity(AkUInt32 InStreamingGranularity) override {}
+	void SetGranularity(uint32 InStreamingGranularity) override {}
 
 	IWwiseStreamingManagerHooks& GetStreamingHooks() override final { return *this; }
 
@@ -83,4 +82,8 @@ protected:
 		}
 		return FWwiseFileStateSharedPtr(FileState);
 	}
+
+public:
+	virtual void SetMedia(AkSourceSettings& InSource, FLoadMediaCallback&& InCallback) override { InCallback(true); }
+	virtual void UnsetMedia(AkSourceSettings& InSource, FLoadMediaCallback&& InCallback) override { InCallback(true); }
 };

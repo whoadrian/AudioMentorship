@@ -76,6 +76,9 @@ public class AudiokineticTools : ModuleRules
 				"RHI",
 #endif
 				"Sequencer",
+#if UE_5_1_OR_LATER
+				"SequencerCore",
+#endif
 				"SharedSettingsWidgets",
 				"Slate",
 				"SlateCore",

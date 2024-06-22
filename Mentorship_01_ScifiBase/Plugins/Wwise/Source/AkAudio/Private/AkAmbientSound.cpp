@@ -43,8 +43,6 @@ Super(ObjectInitializer)
 
 	RootComponent = AkComponent;
 
-	AkComponent->AttenuationScalingFactor = 1.f;
-
 	//bNoDelete = true;
 	SetHidden(true);
 	AutoPost = false;

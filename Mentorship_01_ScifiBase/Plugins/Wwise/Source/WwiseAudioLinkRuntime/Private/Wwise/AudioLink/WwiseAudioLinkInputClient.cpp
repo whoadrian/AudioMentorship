@@ -58,26 +58,26 @@ void FWwiseAudioLinkInputClient::Start(UWwiseAudioLinkComponent* InAkComponent)
 
 	if (UNLIKELY(ObjectId == AK_INVALID_AUDIO_OBJECT_ID))
 	{
-		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Unregistered Object (this=%" PRIu64 " %s)"), this, *ProducerName.ToString());
+		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Unregistered Object (this=%p %s)"), this, *ProducerName.ToString());
 		return;
 	}
 
 	if (UNLIKELY(PlayId != AK_INVALID_PLAYING_ID))
 	{
-		UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Start: Reusing an already playing %" PRIu32 " ObjectID %" PRIu64 " (%s). Stopping previous instance."), PlayId.load(), this, *ProducerName.ToString());
+		UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Start: Reusing an already playing %" PRIu32 " ObjectID %p (%s). Stopping previous instance."), PlayId.load(), this, *ProducerName.ToString());
 		Stop();
 	}
 
 	if (UNLIKELY(!IsValid(InAkComponent)))
 	{
-		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid component (this=%" PRIu64 " %s)"), this, *ProducerName.ToString());
+		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid component (this=%p %s)"), this, *ProducerName.ToString());
 		return;
 	}
 
 	FWwiseAudioLinkSettingsProxy* Settings = static_cast<FWwiseAudioLinkSettingsProxy*>(SettingsProxy.Get());
 	if (UNLIKELY(!Settings))
 	{
-		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid Settings (this=%" PRIu64 " %s)"), this, *ProducerName.ToString());
+		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid Settings (this=%p %s)"), this, *ProducerName.ToString());
 		return;
 	}
 
@@ -93,7 +93,7 @@ void FWwiseAudioLinkInputClient::Start(UWwiseAudioLinkComponent* InAkComponent)
             
 		if (UNLIKELY(!IsValid(InAkComponent)))
 		{
-			UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid component (this=%" PRIu64 " %s)"), this, *ProducerName.ToString());
+			UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid component (this=%p %s)"), this, *ProducerName.ToString());
 			return;
 		}
 
@@ -124,20 +124,20 @@ void FWwiseAudioLinkInputClient::Start()
 
 	if (UNLIKELY(ObjectId == AK_INVALID_AUDIO_OBJECT_ID))
 	{
-		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Unregistered Object (this=%" PRIu64 " %s)"), this, *ProducerName.ToString());
+		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Unregistered Object (this=%p %s)"), this, *ProducerName.ToString());
 		return;
 	}
 
 	if (UNLIKELY(PlayId != AK_INVALID_PLAYING_ID))
 	{
-		UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Start: Reusing an already playing %" PRIu32 " ObjectID %" PRIu64 " (%s). Stopping previous instance."), PlayId.load(), this, *ProducerName.ToString());
+		UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Start: Reusing an already playing %" PRIu32 " ObjectID %p (%s). Stopping previous instance."), PlayId.load(), this, *ProducerName.ToString());
 		Stop();
 	}
 
 	FWwiseAudioLinkSettingsProxy* Settings = static_cast<FWwiseAudioLinkSettingsProxy*>(SettingsProxy.Get());
 	if (UNLIKELY(!Settings))
 	{
-		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid Settings (this=%" PRIu64 " %s)"), this, *ProducerName.ToString());
+		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid Settings (this=%p %s)"), this, *ProducerName.ToString());
 		return;
 	}
 
@@ -153,13 +153,13 @@ void FWwiseAudioLinkInputClient::Start()
         
 		if (UNLIKELY(!StartEvent || !IsValid(StartEvent.Get())))
 		{
-			UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid StartEvent (this=%" PRIu64 " %s)"), this, *ProducerName.ToString());
+			UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Start: Invalid StartEvent (this=%p %s)"), this, *ProducerName.ToString());
 			return;
 		}
 
 		if (UNLIKELY(PlayId != AK_INVALID_PLAYING_ID))
 		{
-			UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Start (OnEventLoaded): Reusing an already playing %" PRIu32 " ObjectID %" PRIu64 " (%s). Stopping previous instance."), PlayId.load(), this, *ProducerName.ToString());
+			UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Start (OnEventLoaded): Reusing an already playing %" PRIu32 " ObjectID %p (%s). Stopping previous instance."), PlayId.load(), this, *ProducerName.ToString());
 			Stop();
 		}
 
@@ -188,7 +188,7 @@ void FWwiseAudioLinkInputClient::Stop()
 		FWwiseAudioLinkSettingsProxy* Settings = static_cast<FWwiseAudioLinkSettingsProxy*>(SettingsProxy.Get());
 		if (UNLIKELY(!Settings))
 		{
-			UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Stop: Invalid Settings (this=%" PRIu64 " %s)"), this, *ProducerName.ToString());
+			UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Stop: Invalid Settings (this=%p %s)"), this, *ProducerName.ToString());
 		}
 		else
 		{
@@ -203,7 +203,7 @@ void FWwiseAudioLinkInputClient::Stop()
 		FAkAudioDevice* AudioDevice = FAkAudioDevice::Get();
 		if (UNLIKELY(!AudioDevice))
 		{
-			UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Stop: Invalid AudioDevice (PlayId=%" PRIu32 ", this=%" PRIu64 " %s)"), PlayId.load(), this, *ProducerName.ToString());
+			UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Stop: Invalid AudioDevice (PlayId=%" PRIu32 ", this=%p %s)"), PlayId.load(), this, *ProducerName.ToString());
 		}
 		else
 		{
@@ -221,20 +221,20 @@ void FWwiseAudioLinkInputClient::Register(const FName& InNameOfProducingSource)
 
 	if (UNLIKELY(!SettingsProxy.IsValid()))
 	{
-		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Register: Invalid settings registering %" PRIu64 " %s."), ObjectId, this, *Name);
+		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Register: Invalid settings registering %" PRIu64 " %s."), ObjectId, *Name);
 		return;
 	}
 
 	IWwiseSoundEngineAPI* SoundEngine = IWwiseSoundEngineAPI::Get();
 	if(UNLIKELY(!SoundEngine))
 	{
-		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Register: No Wwise SoundEngine registering %" PRIu64 " %s."), this, *Name);
+		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Register: No Wwise SoundEngine registering %p %s."), this, *Name);
 		return;
 	}
 
 	if (UNLIKELY(ObjectId != AK_INVALID_AUDIO_OBJECT_ID))
 	{
-		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Register: ObjectId %" PRIu64 " already registered for %" PRIu64 " %s."), ObjectId, this, *Name);
+		UE_LOG(LogWwiseAudioLink, Error, TEXT("FWwiseAudioLinkInputClient::Register: ObjectId %" PRIu64 " already registered for %p %s."), ObjectId, this, *Name);
 		return;
 	}
 	ObjectId = reinterpret_cast<AkAudioObjectID>(this);
@@ -284,12 +284,12 @@ void FWwiseAudioLinkInputClient::Unregister()
 	IWwiseSoundEngineAPI* SoundEngine = IWwiseSoundEngineAPI::Get();
 	if(UNLIKELY(!SoundEngine))
 	{
-		UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Unregister: No Wwise SoundEngine unregistering %" PRIu64 " (this=%" PRIu64 " %s)."), ObjectId, this, *ProducerName.ToString());
+		UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Unregister: No Wwise SoundEngine unregistering %" PRIu64 " (this=%p %s)."), ObjectId, this, *ProducerName.ToString());
 		return;
 	}
 	if (UNLIKELY(ObjectId == AK_INVALID_AUDIO_OBJECT_ID))
 	{
-		UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Unregister: Unregistering an unregistered object (this=%" PRIu64 " %s)"), this, *ProducerName.ToString());
+		UE_LOG(LogWwiseAudioLink, Log, TEXT("FWwiseAudioLinkInputClient::Unregister: Unregistering an unregistered object (this=%p %s)"), this, *ProducerName.ToString());
 		return;
 	}
 

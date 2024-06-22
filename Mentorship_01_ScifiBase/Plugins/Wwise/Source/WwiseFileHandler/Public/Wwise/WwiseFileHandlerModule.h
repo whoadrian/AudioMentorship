@@ -20,13 +20,12 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "Modules/ModuleManager.h"
 #include "Misc/ConfigCacheIni.h"
 
-#include "AkInclude.h"
-
 class FWwiseFileCache;
 class FWwiseIOHook;
 class IWwiseSoundBankManager;
 class IWwiseExternalSourceManager;
 class IWwiseMediaManager;
+struct FWwiseExecutionQueue;
 
 class IWwiseFileHandlerModule : public IModuleInterface
 {
@@ -97,11 +96,13 @@ public:
 	virtual IWwiseExternalSourceManager* GetExternalSourceManager() { return nullptr; }
 	virtual IWwiseMediaManager* GetMediaManager() { return nullptr; }
 	virtual FWwiseFileCache* GetFileCache() { return nullptr; }
+	virtual FWwiseExecutionQueue* GetBankExecutionQueue() { return nullptr; } 
 	virtual FWwiseIOHook* InstantiateIOHook() { return nullptr; }
 	virtual IWwiseSoundBankManager* InstantiateSoundBankManager() { return nullptr; }
 	virtual IWwiseExternalSourceManager* InstantiateExternalSourceManager() { return nullptr; }
 	virtual IWwiseMediaManager* InstantiateMediaManager() { return nullptr; }
 	virtual FWwiseFileCache* InstantiateFileCache() { return nullptr; }
+	virtual FWwiseExecutionQueue* InstantiateBankExecutionQueue() { return nullptr; } 
 
 private:
 	static inline FName GetModuleNameFromConfig()

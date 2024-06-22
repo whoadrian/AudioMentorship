@@ -49,5 +49,5 @@ public:
 
 namespace StaticPluginWriter
 {
-	void OutputPluginInformation(const FString& Platform);
+	void OutputPluginInformation(const FString& InWwisePlatform);
 }

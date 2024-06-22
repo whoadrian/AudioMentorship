@@ -1547,6 +1547,7 @@ private:
 
 	bool FindWwiseLanguage(const FString& NewAudioCulture, FString& FoundWwiseLanguage);
 	void UpdateSetCurrentAudioCultureAsyncTasks();
+	void CleanDefaultListeners();
 
 	static bool m_bSoundEngineInitialized;
 	UAkComponentSet m_defaultListeners;

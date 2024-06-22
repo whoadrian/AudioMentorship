@@ -683,8 +683,6 @@ void UAkRoomComponent::SetGeometryComponent(UAkAcousticTextureSetComponent* text
 #if WITH_EDITOR
 void UAkRoomComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-
 	const FName memberPropertyName = (PropertyChangedEvent.MemberProperty != nullptr) ? PropertyChangedEvent.MemberProperty->GetFName() : NAME_None;
 
 	if (memberPropertyName == GET_MEMBER_NAME_CHECKED(UAkRoomComponent, WallOcclusion) ||
@@ -708,12 +706,14 @@ void UAkRoomComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyCha
 
 		bReverbZoneNeedsUpdate = true;
 	}
-
 	if (IsAReverbZone())
 	{
 		UpdateParentRoom();
 		check(ParentRoom != this);
 	}
+
+	// If this is a blueprint component Super::PostEditChangeProperty will turn this object into garbage
+	Super::PostEditChangeProperty(PropertyChangedEvent);
 }
 
 void UAkRoomComponent::OnParentNameChanged()
@@ -841,16 +841,30 @@ void UAkRoomComponent::UpdateTransitionRegionWidth(float InTransitionRegionWidth
 	}
 }
 
+bool UAkRoomComponent::CanBecomeReverbZone() const
+{
+	if (GeometryComponent == nullptr)
+	{
+		UE_LOG(LogAkAudio, Error, TEXT("UAkRoomComponent::SetReverbZone: Reverb Zone Room component %s doesn't have an associated geometry."), *GetRoomName());
+		return false;
+	}
+
+	for (auto& iter : ConnectedPortals)
+	{
+		if (iter.Value.IsValid() && !iter.Value->PortalPlacementValid())
+		{
+			UE_LOG(LogAkAudio, Error, TEXT("UAkRoomComponent::SetReverbZone: Room component %s cannot become a Reverb Zone because Portal %s would connect rooms in the same hierarchy."), *GetRoomName(), *iter.Value->GetPortalName());
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void UAkRoomComponent::SetReverbZone()
 {
 	if (!AkComponentHelpers::IsInGameWorld(this))
 	{
-		return;
-	}
-
-	if (GeometryComponent == nullptr)
-	{
-		UE_LOG(LogAkAudio, Error, TEXT("UAkRoomComponent::SetReverbZone: Reverb Zone Room component %s doesn't have an associated geometry."), *GetRoomName());
 		return;
 	}
 
@@ -860,11 +874,18 @@ void UAkRoomComponent::SetReverbZone()
 		TransitionRegionWidth = 0.f;
 	}
 
-	auto* SpatialAudio = IWwiseSpatialAudioAPI::Get();
-	if (LIKELY(SpatialAudio))
+	if (CanBecomeReverbZone())
 	{
-		SpatialAudio->SetReverbZone(GetRoomID(), GetParentRoomID(), TransitionRegionWidth);
-		bIsAReverbZoneInWwise = true;
+		auto* SpatialAudio = IWwiseSpatialAudioAPI::Get();
+		if (LIKELY(SpatialAudio))
+		{
+			SpatialAudio->SetReverbZone(GetRoomID(), GetParentRoomID(), TransitionRegionWidth);
+			bIsAReverbZoneInWwise = true;
+		}
+	}
+	else
+	{
+		bEnableReverbZone = false;
 	}
 }
 

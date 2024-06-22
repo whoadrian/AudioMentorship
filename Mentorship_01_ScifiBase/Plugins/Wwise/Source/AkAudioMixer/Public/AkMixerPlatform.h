@@ -46,6 +46,7 @@ public:
 	virtual bool StopAudioStream() override;
 	virtual Audio::FAudioPlatformDeviceInfo GetPlatformDeviceInfo() const override;
 	virtual void SubmitBuffer(const uint8* Buffer) override;
+#if !UE_5_4_OR_LATER
 #if UE_5_0_OR_LATER
 	virtual FName GetRuntimeFormat(const USoundWave* InSoundWave) const override;
 	virtual ICompressedAudioInfo* CreateCompressedAudioInfo(const FName& InRuntimeFormat) const override;
@@ -53,7 +54,8 @@ public:
 	virtual FName GetRuntimeFormat(USoundWave* InSoundWave) override;
 	virtual bool HasCompressedAudioInfoClass(USoundWave* InSoundWave) override;
 	virtual ICompressedAudioInfo* CreateCompressedAudioInfo(USoundWave* InSoundWave) override;
-#endif
+#endif // UE_5_4_OR_LATER
+#endif // !UE_5_4_OR_LATER
 	virtual bool SupportsRealtimeDecompression() const { return true; }
 	virtual FString GetDefaultDeviceName() override;
 	FString GetDeviceId() const;

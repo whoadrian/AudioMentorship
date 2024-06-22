@@ -1903,8 +1903,8 @@ void FWwiseResourceLoaderImpl::UnloadEventSwitchContainerResources(FWwiseResourc
 			{
 				auto UsageCount = UsageCountPtr.ToSharedRef();
 				UE_CLOG(UNLIKELY(UsageCount->LoadedGroupValues.Num() > 0), LogWwiseResourceLoader, Error, TEXT("FWwiseResourceLoaderImpl::UnloadEventSwitchContainerResources UsageCount[%p]: There are still %d loaded elements for %s in Event %s (%" PRIu32 ")"),
-					&UsageCount.Get(), *UsageCount->Key.GetDebugString(),
-					(int)UsageCount->LoadedGroupValues.Num(), *InCookedData.DebugName.ToString(), (uint32)InCookedData.EventId);
+					&UsageCount.Get(), (int)UsageCount->LoadedGroupValues.Num(), *UsageCount->Key.GetDebugString(),
+					*InCookedData.DebugName.ToString(), (uint32)InCookedData.EventId);
 
 				
 				FCompletionPromise UnloadLeafResourcesPromise;

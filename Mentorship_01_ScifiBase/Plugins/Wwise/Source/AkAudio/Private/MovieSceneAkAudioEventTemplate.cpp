@@ -56,7 +56,7 @@ struct FMovieSceneAkAudioEventSectionData
 		    case EMovieScenePlayerStatus::Paused:
 		    case EMovieScenePlayerStatus::Stopped:
             {
-                ResetTracker(AudioDevice);
+                ResetTracker(AudioDevice, Player.GetPlaybackStatus());
                 break;
             }
 		case EMovieScenePlayerStatus::Playing:
@@ -69,23 +69,33 @@ struct FMovieSceneAkAudioEventSectionData
             {
                 /* If the sequencer has looped, we want to kill any currently playing events */
                 if (EventTracker->IsPlaying() && bSequencerHasLooped)
-                    WwiseEventTriggering::StopAllPlayingIDs(AudioDevice, *EventTracker);
+                {
+	                WwiseEventTriggering::StopAllPlayingIDs(AudioDevice, *EventTracker);
+                }
 
                 /* If the section has a valid object binding */
                 if (Operand.ObjectBindingID.IsValid())
                 {
                     /* If the Wwise event hasn't been previously triggered */
                     if (EventTracker->PreviousEventStartTime == -1.0f || bSequencerHasLooped)
-                        ObjectBindingPlay(AudioDevice, Player.FindBoundObjects(Operand), Context);
+                    {
+	                    ObjectBindingPlay(AudioDevice, Player.FindBoundObjects(Operand), Context);
+                    }
                     else if (RetriggerEvent)
-                        ObjectBindingRetrigger(AudioDevice, Player.FindBoundObjects(Operand), Context);
+                    {
+	                    ObjectBindingRetrigger(AudioDevice, Player.FindBoundObjects(Operand), Context);
+                    }
                 }
                 else /* Otherwwise play or re-trigger the Wwise event on a dummy object. */
                 {
 					if (EventTracker->PreviousEventStartTime == -1.0f || bSequencerHasLooped)
+					{
 						MasterPlay(AudioDevice, Context);
+					}
 					else if (RetriggerEvent)
+					{
 						MasterRetrigger(AudioDevice, Context);
+					}
 				}
 				EventTracker->PreviousPlayingTime = CurrentTime;
             }
@@ -111,13 +121,15 @@ struct FMovieSceneAkAudioEventSectionData
 	void SectionBeingDestroyed(FAkAudioDevice* AudioDevice)
 	{
 		AudioDevice->CancelEventCallbackCookie(EventTracker.Get());
-		ResetTracker(AudioDevice);
+		ResetTracker(AudioDevice, EMovieScenePlayerStatus::Stopped);
 	}
 
-    void ResetTracker(FAkAudioDevice* AudioDevice) 
+    void ResetTracker(FAkAudioDevice* AudioDevice, EMovieScenePlayerStatus::Type Status) 
     {
-        if (EventTracker->bStopAtSectionEnd)
-            WwiseEventTriggering::StopAllPlayingIDs(AudioDevice, *EventTracker);
+        if (EventTracker->bStopAtSectionEnd || Status == EMovieScenePlayerStatus::Paused)
+        {
+	        WwiseEventTriggering::StopAllPlayingIDs(AudioDevice, *EventTracker);
+        }
 
         EventTracker->PreviousEventStartTime = -1.0f;
         EventTracker->PreviousPlayingTime = -1.0f;
@@ -230,7 +242,9 @@ private:
 		const auto& DurationRange = EventTracker->EventDuration;
 		auto MaxDuration = DurationRange.GetUpperBoundValue();
 		if (!DurationRange.IsDegenerate() || MaxDuration == 0.0f)
+		{
 			MaxDuration = EventTracker->CurrentDurationEstimation == -1.0f ? EventTracker->GetClipDuration() : EventTracker->CurrentDurationEstimation;
+		}
 
 		return MaxDuration;
 	}
@@ -277,12 +291,16 @@ struct FAkAudioEventExecutionToken : IMovieSceneExecutionToken
 	{
 		auto AudioDevice = FAkAudioDevice::Get();
 		if (!AudioDevice)
+		{
 			return;
+		}
 
-        auto persistentData = PersistentData.GetSectionData<FAkAudioEventEvaluationData>();
+		auto persistentData = PersistentData.GetSectionData<FAkAudioEventEvaluationData>();
 		TSharedPtr<FMovieSceneAkAudioEventSectionData> SectionData = persistentData.SectionData;
 		if (SectionData.IsValid())
+		{
 			SectionData->Update(Context, Operand, Player, AudioDevice);
+		}
 	}
 };
 
@@ -296,7 +314,9 @@ void FMovieSceneAkAudioEventTemplate::Evaluate(const FMovieSceneEvaluationOperan
 {
 	auto AudioDevice = FAkAudioDevice::Get();
 	if (!AudioDevice)
+	{
 		return;
+	}
 
 	ExecutionTokens.Add(FAkAudioEventExecutionToken());
 }
@@ -305,17 +325,23 @@ void FMovieSceneAkAudioEventTemplate::Setup(FPersistentEvaluationData& Persisten
 {
 	auto AudioDevice = FAkAudioDevice::Get();
 	if (!AudioDevice)
+	{
 		return;
+	}
 
 	if (Section)
-        PersistentData.AddSectionData<FAkAudioEventEvaluationData>().SectionData = MakeShareable(new FMovieSceneAkAudioEventSectionData(*Section));
+	{
+		PersistentData.AddSectionData<FAkAudioEventEvaluationData>().SectionData = MakeShareable(new FMovieSceneAkAudioEventSectionData(*Section));
+	}
 }
 
 void FMovieSceneAkAudioEventTemplate::TearDown(FPersistentEvaluationData& PersistentData, IMovieScenePlayer& Player) const
 {
 	auto AudioDevice = FAkAudioDevice::Get();
 	if (!AudioDevice)
+	{
 		return;
+	}
 
 	TSharedPtr<FMovieSceneAkAudioEventSectionData> SectionData = PersistentData.GetSectionData<FAkAudioEventEvaluationData>().SectionData;
 	if (SectionData.IsValid())

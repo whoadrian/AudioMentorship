@@ -38,7 +38,10 @@ the specific language governing permissions and limitations under the License.
 #include <AK/SoundEngine/Common/IAkPlugin.h>
 #include <AK/SoundEngine/Common/AkCallback.h>
 
-#ifdef AK_WIN
+#if defined(AK_NULL_PLATFORM)
+// null platform has no platform-specific soundengine 
+struct AkPlatformInitSettings { };
+#elif defined(AK_WIN)
 #include <AK/SoundEngine/Platforms/Windows/AkWinSoundEngine.h>
 #include <AK/SoundEngine/Platforms/Windows/AkPlatformContext.h>
 
@@ -1540,7 +1543,7 @@ namespace AK
 		///		the value returned corresponds to the least buffered source. 
 		/// - The returned buffering status out_bIsBuffering will be true If any of the sources associated with the playing ID are actively being buffered.
 		///		It will be false if all of them have reached the end of file, or have reached a state where they are buffered enough and streaming is temporarily idle.
-		/// - Purely in-memory sources are excluded from this database. If all sources are in-memory, GetSourceStreamBuffering() will return AK_Fail.
+		/// - Purely in-memory sources are excluded from this database. If all sources are in-memory, GetSourceStreamBuffering() will return AK_PlayingIDNotFound.
 		/// - The returned buffering amount and state is not completely accurate with some hardware-accelerated codecs. In such cases, the amount of stream buffering is generally underestimated.
 		///		On the other hand, it is not guaranteed that the source will be ready to produce data at the next audio frame even if out_bIsBuffering has turned to false.
 		/// \return 
@@ -4388,8 +4391,15 @@ namespace AK
 		#endif
 		
 		/// Returns a listing of the current devices for a given sink plug-in, including Device ID, friendly name, and state.
+		/// \remarks
 		/// This call is only valid for sink plug-ins that support device enumeration.
-		/// Prerequisites: the plug-in must have been initialized by loading the init bank or by calling \ref AK::SoundEngine::RegisterPlugin.
+		/// Prerequisites:
+		///  * The plug-in must have been initialized by loading the init bank or by calling \ref AK::SoundEngine::RegisterPlugin.
+		///  * A physical device recognized by this plug-in must exist in the system.
+		/// 
+		/// The built-in audio devices (System, Communication, Headphones, Personal, Pad Speaker) all support enumeration, on all platforms.
+		/// The only Wwise plug-in that support device enumeration is Motion, for the Windows platform only. 
+		/// Note that it is optional to implement device enumeration on custom sink plug-ins.
 		/// \return
 		/// - \c AK_NotImplemented if the sink plug-in does not implement device enumeration
 		/// - \c AK_PluginNotRegistered if the plug-in has not been registered yet either by loading the init bank or by calling RegisterPluginDLL.
@@ -4404,10 +4414,15 @@ namespace AK
 			);
 
 		/// Returns a listing of the current devices for a given sink plug-in, including Device ID, friendly name, and state.
+		/// \remarks
 		/// This call is only valid for sink plug-ins that support device enumeration.
 		/// Prerequisites:
 		///  * The plug-in must have been initialized by loading the init bank or by calling \ref AK::SoundEngine::RegisterPlugin.
-		///  * The audio device shareset must have been loaded from a soundbank and a device with this shareset must exist in the pipeline.
+		///  * The audio device shareset must have been loaded from a soundbank, and a physical device recognized by this plug-in must exist in the system.
+		/// 
+		/// The built-in audio devices (System, Communication, Headphones, Personal, Pad Speaker) all support enumeration, on all platforms.
+		/// The only Wwise plug-in that support device enumeration is Motion, for the Windows platform only. 
+		/// Note that it is optional to implement device enumeration on custom sink plug-ins.
 		/// \return
 		/// AK_NotImplemented if the sink plug-in does not implement device enumeration
 		/// AK_PluginNotRegistered if the plug-in has not been registered yet either by loading the init bank or by calling RegisterPluginDLL.

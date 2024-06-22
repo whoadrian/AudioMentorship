@@ -19,6 +19,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #include "AkInclude.h"
 #include "AkAudioDevice.h"
+#include "AkAudioEvent.h"
 #include "Templates/Function.h"
 
 /*------------------------------------------------------------------------------------
@@ -104,5 +105,15 @@ public:
 		FAkGlobalAudioInputDelegate AudioSamplesDelegate,
 		FAkGlobalAudioFormatDelegate AudioFormatDelegate,
         EAkAudioContext AudioContext = EAkAudioContext::Foreign
+	);
+
+    // ReSharper disable once CppDoxygenUnresolvedReference
+    /**
+     * Stop a given Playing ID
+     *
+     * @param PlayingID The Playing ID to stop
+     */
+	static void Stop(
+		uint32 PlayingID
 	);
 };

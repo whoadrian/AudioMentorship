@@ -26,8 +26,9 @@ bool FWwiseTreeItem::WwiseBankRefExists() const
 {
 #if WITH_EDITORONLY_DATA
 	return WwiseItemRef.IsValid() && WwiseItemRef->GUID.IsValid();
-#endif
+#else
 	return false;
+#endif
 }
 
 bool FWwiseTreeItem::WaapiRefExists() const
@@ -101,7 +102,7 @@ bool FWwiseTreeItem::IsNotInSoundBankOrUnreal() const
 
 bool FWwiseTreeItem::IsUAssetUpToDate() const
 {
-	return WwiseBankRefExists() && HasUniqueUAsset() && !IsRenamedInSoundBank() && !IsUAssetOutOfDate();
+	return WwiseBankRefExists() && HasUniqueUAsset() && !IsRenamedInSoundBank() && !IsUAssetOutOfDate() && !bIsInWrongLocation;
 }
 
 bool FWwiseTreeItem::HasUniqueUAsset() const

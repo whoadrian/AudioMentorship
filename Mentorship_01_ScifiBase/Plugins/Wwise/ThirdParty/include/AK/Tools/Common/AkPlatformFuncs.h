@@ -38,7 +38,10 @@ the specific language governing permissions and limitations under the License.
 // Uncomment the following to enable built-in platform profiler markers in the sound engine
 //#define AK_ENABLE_INSTRUMENT
 
-#if defined(AK_WIN)
+#if defined(AK_NULL_PLATFORM)
+// null platform has no funcs
+struct AkThreadProperties {};
+#elif defined(AK_WIN)
 #include <AK/Tools/Win32/AkPlatformFuncs.h>
 
 #elif defined (AK_XBOX)
@@ -110,6 +113,28 @@ the specific language governing permissions and limitations under the License.
 #define AK_THREAD_INIT_CODE(_threadProperties)
 #endif
 
+#ifndef AK_PLATFORM_MEMCPY
+namespace AKPLATFORM
+{
+	/// Platform Independent Helper for memcpy/memmove/memset
+	AkForceInline void AkMemCpy(void* pDest, const void* pSrc, AkUInt32 uSize)
+	{
+		memcpy(pDest, pSrc, uSize);
+	}
+
+	AkForceInline void AkMemMove(void* pDest, const void* pSrc, AkUInt32 uSize)
+	{
+		memmove(pDest, pSrc, uSize);
+	}
+
+	AkForceInline void AkMemSet(void* pDest, AkInt32 iVal, AkUInt32 uSize)
+	{
+		memset(pDest, iVal, uSize);
+	}
+}
+#endif // AK_PLATFORM_MEMCPY
+
+#if !defined(AK_NULL_PLATFORM)
 /// Platform-dependent helpers
 namespace AKPLATFORM
 {
@@ -205,6 +230,7 @@ namespace AKPLATFORM
 		}
 	}
 }
+#endif
 
 #ifndef AK_PERF_RECORDING_RESET
 #define AK_PERF_RECORDING_RESET()

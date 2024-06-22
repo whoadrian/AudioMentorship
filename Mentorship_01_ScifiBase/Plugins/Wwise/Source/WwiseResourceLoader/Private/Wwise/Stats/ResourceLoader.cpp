@@ -16,6 +16,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 *******************************************************************************/
 
 #include "Wwise/Stats/ResourceLoader.h"
+#include "Wwise/Stats/Memory.h"
 
 DEFINE_STAT(STAT_WwiseResourceLoaderAuxBusses);
 DEFINE_STAT(STAT_WwiseResourceLoaderEvents);
@@ -30,3 +31,12 @@ DEFINE_STAT(STAT_WwiseResourceLoaderSwitchContainerCombinations);
 DEFINE_STAT(STAT_WwiseResourceLoaderTiming);
 
 DEFINE_LOG_CATEGORY(LogWwiseResourceLoader);
+
+LLM_DEFINE_TAG(Audio_Wwise_ResourceLoader_AuxBusses, TEXT("Aux Busses"));
+LLM_DEFINE_TAG(Audio_Wwise_ResourceLoader_Events, TEXT("Events"));
+LLM_DEFINE_TAG(Audio_Wwise_ResourceLoader_ExternalSources, TEXT("External Sources"));
+LLM_DEFINE_TAG(Audio_Wwise_ResourceLoader_GroupValues, TEXT("Group Values"));
+LLM_DEFINE_TAG(Audio_Wwise_ResourceLoader_InitBanks, TEXT("Init Banks"));
+LLM_DEFINE_TAG(Audio_Wwise_ResourceLoader_Media, TEXT("Media"));
+LLM_DEFINE_TAG(Audio_Wwise_ResourceLoader_ShareSets, TEXT("ShareSets"));
+LLM_DEFINE_TAG(Audio_Wwise_ResourceLoader_SoundBanks, TEXT("SoundBanks"));

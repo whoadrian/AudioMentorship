@@ -5,15 +5,15 @@ released in source code form as part of the SDK installer package.
 Commercial License Usage
 
 Licensees holding valid commercial licenses to the AUDIOKINETIC Wwise Technology
-may use this file in accordance with the end user license agreement provided 
+may use this file in accordance with the end user license agreement provided
 with the software or, alternatively, in accordance with the terms contained in a
 written agreement between you and Audiokinetic Inc.
 
 Apache License Usage
 
-Alternatively, this file may be used under the Apache License, Version 2.0 (the 
-"Apache License"); you may not use this file except in compliance with the 
-Apache License. You may obtain a copy of the Apache License at 
+Alternatively, this file may be used under the Apache License, Version 2.0 (the
+"Apache License"); you may not use this file except in compliance with the
+Apache License. You may obtain a copy of the Apache License at
 http://www.apache.org/licenses/LICENSE-2.0.
 
 Unless required by applicable law or agreed to in writing, software distributed
@@ -33,29 +33,29 @@ the specific language governing permissions and limitations under the License.
 template <AkMemID T_MEMID>
 struct AkRingBufferAllocatorNoAlign
 {
-	static AkForceInline void* Alloc(size_t in_uSize)
-	{
-		return AkAlloc(T_MEMID, in_uSize);
-	}
+    static AkForceInline void* Alloc(size_t in_uSize)
+    {
+        return AkAlloc(T_MEMID, in_uSize);
+    }
 
-	static AkForceInline void Free(void * in_pAddress)
-	{
-		AkFree(T_MEMID, in_pAddress);
-	}
+    static AkForceInline void Free(void * in_pAddress)
+    {
+        AkFree(T_MEMID, in_pAddress);
+    }
 };
 
 template <AkMemID T_MEMID>
 struct AkRingBufferAllocatorAligned
 {
-	static AkForceInline void* Alloc(size_t in_uSize)
-	{
-		return AkMalign(T_MEMID, in_uSize, AK_SIMD_ALIGNMENT);
-	}
+    static AkForceInline void* Alloc(size_t in_uSize)
+    {
+        return AkMalign(T_MEMID, in_uSize, AK_SIMD_ALIGNMENT);
+    }
 
-	static AkForceInline void Free(void * in_pAddress)
-	{
-		AkFree(T_MEMID, in_pAddress);
-	}
+    static AkForceInline void Free(void * in_pAddress)
+    {
+        AkFree(T_MEMID, in_pAddress);
+    }
 };
 
 typedef AkRingBufferAllocatorNoAlign<AkMemID_Object> AkRingBufferAllocatorDefault;
@@ -97,7 +97,7 @@ public:
         m_readIndex = 0;
         m_writeIndex = 0;
         m_nbReadableItems = 0;
-        
+
         if (m_data != NULL)
         {
             TAlloc::Free(reinterpret_cast<void*>(m_data));
@@ -119,7 +119,7 @@ public:
     {
         return m_writeIndex;
     }
-    
+
     T* GetWritePtr()
     {
         return &m_data[m_writeIndex];
@@ -149,14 +149,14 @@ public:
     // Peek at any item between the read and write pointer without advancing the read pointer.
     const T* Peek(AkUInt32 uOffset) const
     {
-        AKASSERT((AkUInt32)m_nbReadableItems > uOffset);
+        AKASSERT(GetNbReadableItems() > uOffset);
         AkUInt32 uReadIndex = (m_readIndex + uOffset) % m_nbItems;
         return &m_data[uReadIndex];
     }
 
     void IncrementReadIndex(AkUInt32 nbItems)
     {
-        AKASSERT((AkUInt32)m_nbReadableItems >= nbItems);
+        AKASSERT(GetNbReadableItems() >= nbItems);
         
         m_readIndex = (m_readIndex + nbItems) % m_nbItems;
 
@@ -165,12 +165,12 @@ public:
 
     AkUInt32 GetNbReadableItems() const
     {
-        return m_nbReadableItems;
+        return (AkUInt32)AkAtomicLoad32(const_cast<AkAtomic32*>(&m_nbReadableItems));
     }
 
     AkUInt32 GetNbWritableItems() const
     {
-        return m_nbItems - (AkUInt32)m_nbReadableItems;
+        return m_nbItems - GetNbReadableItems();
     }
 
     AkUInt32 Size() const
@@ -185,7 +185,8 @@ public:
         AkUInt32 uTargetItems = m_nbItems + in_uGrowBy;
         if (T* pNewData = reinterpret_cast<T*>(TAlloc::Alloc(uTargetItems * sizeof(T))))
         {
-            if (m_nbReadableItems)
+            AkUInt32 uReadableItems = GetNbReadableItems();
+            if (uReadableItems)
             {
                 if (m_readIndex >= m_writeIndex)
                 {
@@ -201,7 +202,7 @@ public:
                 {
                     // insert new free space at the end of the buffer.
 
-                    memcpy(pNewData + m_readIndex, m_data + m_readIndex, sizeof(T) * (AkUInt32)m_nbReadableItems);
+                    memcpy(pNewData + m_readIndex, m_data + m_readIndex, sizeof(T) * uReadableItems);
                 }
             }
 

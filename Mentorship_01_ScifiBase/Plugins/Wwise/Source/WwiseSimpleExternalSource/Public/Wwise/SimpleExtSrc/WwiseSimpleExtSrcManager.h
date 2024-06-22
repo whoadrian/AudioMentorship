@@ -65,6 +65,7 @@ protected:
 	TStrongObjectPtr<UDataTable> ExternalSourceDefaultMedia;
 	FStreamableManager StreamableManager;
 	TMap<uint32, uint32> CookieToMediaId;
+	TMap<uint32, int> CookieLoadCount;
 	TMap<FName, uint32> MediaNameToId;
 
 	//We cook all media in one shot, so we use this to track whether this cooking has been performed yet

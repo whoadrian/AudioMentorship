@@ -18,6 +18,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "Wwise/WwiseSoundBankManagerImpl.h"
 #include "Wwise/WwiseSoundBankFileState.h"
 #include "Wwise/Stats/FileHandler.h"
+#include "Wwise/Stats/FileHandlerMemory.h"
 
 FWwiseSoundBankManagerImpl::FWwiseSoundBankManagerImpl() :
 	StreamingGranularity(0)
@@ -33,6 +34,7 @@ void FWwiseSoundBankManagerImpl::LoadSoundBank(const FWwiseSoundBankCookedData& 
 	SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseSoundBankManagerImpl::LoadSoundBank"));
 	IncrementFileStateUseAsync(InSoundBankCookedData.SoundBankId, EWwiseFileStateOperationOrigin::Loading, [this, InSoundBankCookedData, InRootPath]() mutable
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_FileHandler_SoundBanks);
 		return CreateOp(InSoundBankCookedData, InRootPath);
 	}, [InCallback = MoveTemp(InCallback)](const FWwiseFileStateSharedPtr, bool bInResult)
 	{
@@ -46,7 +48,7 @@ void FWwiseSoundBankManagerImpl::UnloadSoundBank(const FWwiseSoundBankCookedData
 	DecrementFileStateUseAsync(InSoundBankCookedData.SoundBankId, nullptr, EWwiseFileStateOperationOrigin::Loading, MoveTemp(InCallback));
 }
 
-void FWwiseSoundBankManagerImpl::SetGranularity(AkUInt32 InStreamingGranularity)
+void FWwiseSoundBankManagerImpl::SetGranularity(uint32 InStreamingGranularity)
 {
 	SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseSoundBankManagerImpl::SetGranularity"));
 	StreamingGranularity = InStreamingGranularity;

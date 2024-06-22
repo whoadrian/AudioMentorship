@@ -41,9 +41,9 @@ template < class T_KEY >
 AkForceInline AkHashType AkHash(T_KEY in_key) { return (AkHashType)in_key; }
 
 #define AK_HASH_SIZE_VERY_SMALL 11
-static const AkHashType kHashSizes[] = { 29, 53, 97, 193, 389, 769, 1543, 3079, 6151, 12289, 24593, 49157, 98317, 196613, 393241, 786433, 1572869, 3145739, 6291469, 12582917, 25165843, 50331653, 100663319, 201326611, 402653189, 805306457, 1610612741 };
-static const size_t kNumHashSizes = sizeof(kHashSizes) / sizeof(kHashSizes[0]);
-static const AkReal32 kHashTableGrowthFactor = 0.9f; 
+extern const AK_SELECTANY AkHashType kHashSizes[] = { 29, 53, 97, 193, 389, 769, 1543, 3079, 6151, 12289, 24593, 49157, 98317, 196613, 393241, 786433, 1572869, 3145739, 6291469, 12582917, 25165843, 50331653, 100663319, 201326611, 402653189, 805306457, 1610612741 };
+constexpr size_t kNumHashSizes = sizeof(kHashSizes) / sizeof(kHashSizes[0]);
+constexpr AkReal32 kHashTableGrowthFactor = 0.9f;
 
 template < class T_KEY, class T_ITEM, typename T_ALLOC = ArrayPoolDefault >
 class AkHashList: public T_ALLOC

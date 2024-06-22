@@ -255,9 +255,9 @@ public:
 	void SetOutputBusVolume(float BusVolume);
 
 
-	/** Modifies the attenuation computations on this game object to simulate sounds with a a larger or smaller area of effect. */
+	/** Modifies the attenuation computations on this game object to simulate sounds with a larger or smaller area of effect. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="AkComponent")
-	float AttenuationScalingFactor = .0f;
+	float AttenuationScalingFactor = 1.f;
 
 	/** Sets the attenuation scaling factor, which modifies the attenuation computations on this game object to simulate sounds with a a larger or smaller area of effect. */
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Audiokinetic|AkComponent")

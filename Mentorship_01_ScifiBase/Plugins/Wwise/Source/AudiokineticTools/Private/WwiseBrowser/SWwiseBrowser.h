@@ -136,6 +136,9 @@ private:
 	/** True when the tree is current being filtered */
 	bool bIsFilterApplied;
 
+	/** True when (re)loading the Browser */
+	bool bIsRefreshing;
+
 	FSoundBankStatusFilter SoundBankStatusFilter;
 
 	FUAssetStatusFilter UAssetStatusFilter;
@@ -194,6 +197,7 @@ private:
 
 	EVisibility IsWarningVisible() const;
 	EVisibility IsWarningNotVisible() const;
+	bool IsRefreshing() const;
 	FText GetWarningText() const;
 
 	FText GetConnectionStatusText() const;
@@ -205,7 +209,6 @@ private:
 	void OnSearchBoxChanged( const FText& InSearchText );
 	void SetItemVisibility(FWwiseTreeItemPtr Item, bool IsVisible);
 	void SaveCurrentTreeExpansion();
-	void RestoreTreeExpansion(const TArray< FWwiseTreeItemPtr >& Items);
 
 	/** Handler for tree view selection changes */
 	void TreeSelectionChanged( FWwiseTreeItemPtr TreeItem, ESelectInfo::Type SelectInfo );

@@ -46,9 +46,9 @@ public:
 	void SetEnable(bool bInEnable);
 
 	/** 
-	* If true, the portal connections for this room can change during runtime when this room moves.
-	* For worlds containing many portals, this can be expensive. Note that this room's portal connections 
-	* may still change, even when Room Is Dynamic = false, when dynamic portals are moved (i.e. when portals
+	* If true, the Portal connections for this Room can change during runtime when this Room moves.
+	* For worlds containing many Portals, this can be expensive. Note that this Room's Portal connections 
+	* may still change, even when Room Is Dynamic = false, when dynamic Portals are moved (that is when Portals
 	* move who have bDynamic = true).
 	*/
 	UPROPERTY(EditAnywhere, BlueprintSetter = SetDynamic, Category = "Room", meta = (DisplayName = "Room Is Dynamic"))
@@ -58,15 +58,15 @@ public:
 	void SetDynamic(bool bInDynamic);
 
 	/**
-	* The precedence in which the Rooms will be applied. In the case of overlapping rooms, only the one
-	* with the highest priority is chosen. If two or more overlapping rooms have the same
-	* priority, the chosen room is unpredictable.
+	* The precedence in which the Rooms is applied. In the case of overlapping Rooms, only the one
+	* with the highest priority is chosen. If two or more overlapping Rooms have the same
+	* priority, the chosen Room is unpredictable.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Room")
 	float Priority = .0f;
 
 	/**
-	* Used to set the transmission loss value in wwise, on emitters in the room, when no audio paths to the 
+	* Used to set the transmission loss value in wwise, on emitters in the Room, when no audio paths to the 
 	* listener are found via sound propagation in Wwise Spatial Audio. This value can be thought of as 
 	* 'thickness', as it relates to how much sound energy is transmitted through the wall. Valid range 0.0f-1.0f, 
 	* and is mapped to the occlusion curve as defined in the Wwise project.
@@ -99,8 +99,8 @@ public:
 	bool AutoPost = false;
 
 	/**
-	* Sets this room as a Reverb Zone.
-	* A Reverb Zone models a region that has a distinct reverb effect or ambience but does not require portals to connect to neighboring Rooms.
+	* Sets this Room as a Reverb Zone.
+	* A Reverb Zone models a region that has a distinct reverb effect or ambience but does not require Portals to connect to neighboring Rooms.
 	* Use Reverb Zones instead of standard Rooms whenever there are no obvious walls,
 	* or generally when there is more negative space than positive space at the interface between the two regions.
 	*/
@@ -128,14 +128,14 @@ public:
 
 	/**
 	* The name of the Parent Room of this Reverb Zone.
-	* If the Parent Room Actor is None, or if the Parent Room Actor doesn't have an enabled Room, the 'outdoors' Room is chosen and printed here.
+	* If the Parent Room Actor is None, or if the Parent Room Actor is not valid, the 'outdoors' Room is chosen and printed here.
 	*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ReverbZone", meta = (EditCondition = "bEnableReverbZone"))
 	FString ParentRoomName = OutdoorsRoomName;
 
 	/**
 	* Width of the transition region between the Reverb Zone and its parent.
-	* The transition region is centered around the Reverb Zone geometry. It only applies where surface transmission loss is set to 0.
+	* The transition region acts the same way as Portal depth, but is centered around the Reverb Zone geometry. Transition regions are only added on surfaces where transmission loss is set to 0.
 	* The value must be positive. Negative values are treated as 0.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintSetter = UpdateTransitionRegionWidth, Category = "ReverbZone", meta = (EditCondition = "bEnableReverbZone"))
@@ -158,30 +158,30 @@ public:
 	* Establishes a parent-child relationship between this Room and a parent Room and allows for sound propagation between them as if they were the same Room, without the need for a connecting Portal.
 	* Setting a Room as a Reverb Zone is useful in situations where two or more acoustic environments are not easily modeled as closed Rooms connected by Portals.
 	* Possible uses for Reverb Zones include: a covered area with no walls, a forested area within an outdoor space, or any situation where multiple reverb effects are desired within a common space.
-	* Reverb Zones have many advantages compared to standard Game-Defined Auxiliary Sends (i.e. compared to the AkLateReverbComponent or the AkReverbVolume). They are part of the wet path, and form reverb chains with other Rooms;
+	* Reverb Zones have many advantages compared to standard Game-Defined Auxiliary Sends (that is compared to the AkLateReverbComponent or the AkReverbVolume). They are part of the wet path, and form reverb chains with other Rooms;
 	* they are spatialized according to their 3D extent; they are also subject to other acoustic phenomena simulated in Wwise Spatial Audio, such as diffraction and transmission.
 	* A Reverb Zone needs to be a Room component with an associated geometry.
 	*
-	* @param InParentRoom - The parent Room component. A parent Room can have multiple Reverb Zones, but a Reverb Zone can only have a single Parent. If a Room is already assigned to a parent Room, it is first removed from the old parent (exactly as if RemoveReverbZone were called) before then being assigned to the new parent Room. A Reverb Zone can be the parent of another Reverb Zone. A Room cannot be its own parent. Defaults to the 'Outdoors' Room if left empty.
-	* @param InTransitionRegionWidth - Width of the transition region between the Reverb Zone and its parent. The transition region acts the same as the depth of a Portal but centered around the Reverb Zone geometry. It only applies where transmission loss is set to 0. The value must be positive. Negative values are treated as 0.
+	* @param InParentRoom - The parent Room component. A parent Room can have multiple Reverb Zones, but a Reverb Zone can only have a single Parent. If a Room is already assigned to a parent Room, it is first removed from the old parent (exactly as if RemoveReverbZone were called), and is then assigned to the new parent Room. A Reverb Zone can be the parent of another Reverb Zone. A Room cannot be its own parent. Defaults to the 'Outdoors' Room if left empty.
+	* @param InTransitionRegionWidth - Width of the transition region between the Reverb Zone and its parent. The transition region acts the same way as Portal depth, but is centered around the Reverb Zone geometry. Transition regions are only added on surfaces where transmission loss is set to 0. The value must be positive. Negative values are treated as 0.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Audiokinetic|AkRoomComponent")
 	void SetReverbZone(const UAkRoomComponent* InParentRoom, float InTransitionRegionWidth);
 
 	/**
 	* Removes this Reverb Zone from its parent.
-	* Sound can no longer propagate between the two rooms, unless they are explicitly connected with a Portal.
+	* Sound can no longer propagate between the two Rooms, unless they are explicitly connected with a Portal.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Audiokinetic|AkRoomComponent")
 	void RemoveReverbZone();
 
-	/** Register a room in AK Spatial Audio. */
+	/** Register a Room in AK Spatial Audio. */
 	void AddSpatialAudioRoom();
 
-	/** Modify a room in AK Spatial Audio. */
+	/** Modify a Room in AK Spatial Audio. */
 	void UpdateSpatialAudioRoom();
 
-	/** Remove a room from AK Spatial Audio	*/
+	/** Remove a Room from AK Spatial Audio	*/
 	void RemoveSpatialAudioRoom();
 
 	bool HasEffectOnLocation(const FVector& Location) const;
@@ -225,8 +225,8 @@ public:
 	void OnParentNameChanged();
 #endif
 
-	/** Set the geometry component that will be used to send the geometry of the room to Wwise. For example, in a Blueprint that has a static mesh component with an AkGeometry child component, this function can be called in BeginPlay to associate that AkGeometry component with this room component.
-	 *  If this room component has a sibling geometry component (or surface reflector set component), they will be associated automatically and there is no need to call this function.
+	/** Set the geometry component used to send the geometry of the Room to Wwise. For example, in a Blueprint that has a static mesh component with an AkGeometry child component, this function can be called in BeginPlay to associate that AkGeometry component with this Room component.
+	 *  If this Room component has a sibling AkGeometry component (or AkSurfaceReflectorSet component), they are automatically associated and there is no need to call this function.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Audiokinetic|AkRoomComponent")
 	void SetGeometryComponent(UAkAcousticTextureSetComponent* textureSetComponent);
@@ -240,8 +240,8 @@ public:
 	TWeakObjectPtr<const UAkRoomComponent> GetParentRoom() const { return ParentRoom; }
 
 	/// <summary>
-	/// Returns the root Room ID of this room's hierarchy.
-	/// Returns this room's ID if this room is not a Reverb Zone.
+	/// Returns the root Room ID of this Room's hierarchy.
+	/// Returns this Room's ID if this Room is not a Reverb Zone.
 	/// </summary>
 	/// <returns></returns>
 	AkRoomID GetRootID() const;
@@ -270,6 +270,8 @@ private:
 
 	bool ShouldSetReverbZone();
 	void OnSetEnableReverbZone();
+	bool CanBecomeReverbZone() const;
+	
 	void UpdateParentRoom();
 	void ResetParentRoom();
 	bool IsAParentOf(TWeakObjectPtr<const UAkRoomComponent> InRoom) const;

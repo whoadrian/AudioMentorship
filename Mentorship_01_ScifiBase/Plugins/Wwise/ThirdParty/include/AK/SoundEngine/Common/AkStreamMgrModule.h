@@ -432,7 +432,6 @@ namespace AK
 			///		- AK_NotImplemented if there is only one device in the system and file resolution is trivial.
 			/// \remark
 			/// This can be called from multiple threads.
-			/// Note that there is a 
 			virtual AKRESULT GetNextPreferredDevice(
 				AkAsyncFileOpenData& in_FileOpen,	///< File name and flags passed to the Open call.
 				AkDeviceID& io_idDevice				///< In: last device used. Out: next device to use to open the file

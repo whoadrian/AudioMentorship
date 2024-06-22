@@ -17,6 +17,13 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #pragma once
 
+#include "HAL/LowLevelMemStats.h"
 #include "Stats/Stats.h"
 
 DECLARE_STATS_GROUP(TEXT("Memory"), STATGROUP_WwiseMemory, STATCAT_Wwise);
+
+#if ENABLE_LOW_LEVEL_MEM_TRACKER
+#define WWISE_LLM_GET_NAME(TagDeclName) PREPROCESSOR_JOIN(LLMTagDeclaration_, TagDeclName).GetUniqueName()
+#else
+#define WWISE_LLM_GET_NAME(TagDeclName) FName{}
+#endif

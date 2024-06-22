@@ -52,6 +52,7 @@ void FWwiseWriteFileState::CloseStreaming()
 				delete FileHandle;
 				FileHandle = nullptr;
 			}
+			FileStateExecutionQueue->CloseAndDelete(); FileStateExecutionQueue = nullptr;
 		});
 	}
 	delete this;

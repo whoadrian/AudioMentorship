@@ -16,6 +16,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 *******************************************************************************/
 
 #include "Wwise/Stats/FileHandlerMemory.h"
+#include "Wwise/Stats/Memory.h"
 
 DEFINE_STAT(STAT_WwiseMemoryExtSrc);
 #if AK_SUPPORT_DEVICE_MEMORY
@@ -42,3 +43,7 @@ DEFINE_STAT(STAT_WwiseMemorySoundBankMapped);
 #if AK_SUPPORT_DEVICE_MEMORY
 DEFINE_STAT(STAT_WwiseMemorySoundBankDevice);
 #endif
+
+LLM_DEFINE_TAG(Audio_Wwise_FileHandler_ExternalSources, TEXT("External Sources"));
+LLM_DEFINE_TAG(Audio_Wwise_FileHandler_Media, TEXT("Media"));
+LLM_DEFINE_TAG(Audio_Wwise_FileHandler_SoundBanks, TEXT("SoundBanks"));

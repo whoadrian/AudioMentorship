@@ -33,7 +33,9 @@ static constexpr auto ModesParam = TEXT("modes");
 static constexpr auto CreateOption = TEXT("create");
 static constexpr auto UpdateOption = TEXT("update");
 static constexpr auto DeleteOption = TEXT("delete");
+static constexpr auto MoveOption = TEXT("move");
 static constexpr auto AllOption = TEXT("all");
+static constexpr auto DryRunParam = TEXT("dryrun");
 static constexpr auto HelpOption = TEXT("help");
 
 UWwiseReconcileCommandlet::UWwiseReconcileCommandlet()
@@ -47,16 +49,20 @@ UWwiseReconcileCommandlet::UWwiseReconcileCommandlet()
 
 	HelpParamNames.Add(ModesParam);
 	HelpParamDescriptions.Add(FString::Format(TEXT("Comma separated list of operations to perform on assets.\n"
-		"{0}: Create Unreal assets from the Generated SoundBanks\n"
+		"{0}: Create Unreal assets from the Generated SoundBanks.\n"
 		"{1}: Update existing Unreal assets. This updates the asset name as well as its metadata.\n"
-		"{2}: Delete Unreal assets that no longer exist in the Generated SoundBanks\n"
-		"{3}: Fully reconcile Unreal assets"),
-		{CreateOption, UpdateOption, DeleteOption, AllOption}));
+		"{2}: Delete Unreal assets that no longer exist in the Generated SoundBanks.\n"
+		"{3}: Move Unreal assets at their expected location.\n"
+		"{4}: Fully reconcile Unreal assets.\n"),
+		{CreateOption, UpdateOption, DeleteOption, MoveOption, AllOption}));
+
+	HelpParamNames.Add(DryRunParam);
+	HelpParamDescriptions.Add("(Optional): Dry-run, Displays changes required for the assets and log them as errors. This parameter will prevent the Reconcile Operations.");
 
 	HelpParamNames.Add("?, help");
 	HelpParamDescriptions.Add(TEXT("Display help"));
 
-	HelpUsage = FString::Format(TEXT("<Editor.exe> <path_to_uproject> -run=WwiseReconcileCommandlet -modes={0},{1},{2},{3}"), {CreateOption, DeleteOption, UpdateOption, AllOption});
+	HelpUsage = FString::Format(TEXT("<Editor.exe> <path_to_uproject> -run=WwiseReconcileCommandlet -modes={0},{1},{2},{3},{4}"), {CreateOption, DeleteOption, UpdateOption, MoveOption, AllOption});
 }
 
 int32 UWwiseReconcileCommandlet::Main(const FString& Params)
@@ -102,6 +108,11 @@ int32 UWwiseReconcileCommandlet::Main(const FString& Params)
 		if (Modes.Contains(UpdateOption))
 		{
 			ReconcileOperationFlags |= EWwiseReconcileOperationFlags::UpdateExisting;
+			ReconcileOperationFlags |= EWwiseReconcileOperationFlags::RenameExisting;
+		}
+		if (Modes.Contains(MoveOption))
+		{
+			ReconcileOperationFlags |= EWwiseReconcileOperationFlags::Move;
 		}
 		if (Modes.Contains(DeleteOption))
 		{
@@ -111,6 +122,12 @@ int32 UWwiseReconcileCommandlet::Main(const FString& Params)
 		{
 			ReconcileOperationFlags |= EWwiseReconcileOperationFlags::All;
 		}
+	}
+
+	bool bDryRun = false;
+	if(CmdSwitches.Contains(DryRunParam))
+	{
+		bDryRun = true;
 	}
 
 	if (ReconcileOperationFlags == EWwiseReconcileOperationFlags::None)
@@ -130,13 +147,18 @@ int32 UWwiseReconcileCommandlet::Main(const FString& Params)
 
 		if (TotalNumberOfAssets > 0)
 		{
+			if(bDryRun)
+			{
+				LogOperations();
+				UE_LOG(LogWwiseReconcile, Error, TEXT("Assets need be reconciled. Check the log for details"));
+				return -1;
+			}
 			UE_LOG(LogWwiseReconcile, Display, TEXT("Reconciling %d Wwise Asset(s)..."), TotalNumberOfAssets)
-
-				if (!WwiseReconcile->ReconcileAssets())
-				{
-					Result = -1;
-					UE_LOG(LogWwiseReconcile, Error, TEXT("Failed to reconcile assets. Check the log for details"));
-				}
+			if (!WwiseReconcile->ReconcileAssets())
+			{
+				Result = -1;
+				UE_LOG(LogWwiseReconcile, Error, TEXT("Failed to reconcile assets. Check the log for details"));
+			}
 		}
 		else
 		{
@@ -163,4 +185,29 @@ void UWwiseReconcileCommandlet::PrintHelp()
 		UE_LOG(LogWwiseReconcile, Display, TEXT("\t- %s: %s"), *HelpParamNames[i], *HelpParamDescriptions[i]);
 	}
 	UE_LOG(LogWwiseReconcile, Display, TEXT("For more information, see %s"), *HelpWebLink);
+}
+
+void UWwiseReconcileCommandlet::LogOperations()
+{
+	for (const FWwiseReconcileItem& Item: ReconcileItems)
+	{
+		FString OperationString = Item.GetOperationText().ToString();
+		if(OperationString.IsEmpty())
+		{
+			// No Operations Needed
+			continue;
+		}
+
+		FString AssetName = Item.Asset.GetFullName();
+
+		if (EnumHasAnyFlags(Item.OperationRequired, EWwiseReconcileOperationFlags::Create))
+		{
+			if (Item.WwiseAnyRef.WwiseAnyRef)
+			{
+				AssetName = Item.WwiseAnyRef.WwiseAnyRef->GetName().ToString();
+			}
+		}
+
+		UE_LOG(LogWwiseReconcile, Error, TEXT("Need to perform operation %s on asset %s (GUID: %s)"), *OperationString, *AssetName, *Item.ItemId.ToString());
+	}
 }

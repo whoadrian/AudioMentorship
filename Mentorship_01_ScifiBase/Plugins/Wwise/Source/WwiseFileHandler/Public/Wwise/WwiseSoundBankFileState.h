@@ -41,13 +41,10 @@ class WWISEFILEHANDLER_API FWwiseInMemorySoundBankFileState : public FWwiseSound
 public:
 	const uint8* Ptr;
 	int64 FileSize;
-	IMappedFileHandle* MappedHandle;
-	IMappedFileRegion* MappedRegion;
 
 	FWwiseInMemorySoundBankFileState(const FWwiseSoundBankCookedData& InCookedData, const FString& InRootPath);
 	~FWwiseInMemorySoundBankFileState() override { Term(); }
 
-	bool LoadAsMemoryMapped() const;
 	bool LoadAsMemoryView() const;
 
 	void OpenFile(FOpenFileCallback&& InCallback) override;

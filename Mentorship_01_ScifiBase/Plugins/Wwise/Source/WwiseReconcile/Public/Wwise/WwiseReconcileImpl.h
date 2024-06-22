@@ -34,8 +34,15 @@ public:
 	virtual TArray<FAssetData> UpdateExistingAssets(FScopedSlowTask& SlowTask) override;
 	virtual void ConvertWwiseItemTypeToReconcileItem(const TArray<TSharedPtr<FWwiseTreeItem>>& InWwiseItems, TArray<FWwiseReconcileItem>& OutReconcileItems, EWwiseReconcileOperationFlags OperationFlags = EWwiseReconcileOperationFlags::All, bool bFirstLevel = true) override;
 	virtual bool RenameExistingAssets(FScopedSlowTask& SlowTask) override;
+	virtual int32 MoveAssets(FScopedSlowTask& SlowTask) override;
 	virtual int GetNumberOfAssets() override;
 	virtual int32 DeleteAssets(FScopedSlowTask& SlowTask) override;
 	virtual UClass* GetUClassFromWwiseRefType(EWwiseRefType RefType) override;
 	virtual void GetAssetChanges(TArray<FWwiseReconcileItem>& ReconcileItems, EWwiseReconcileOperationFlags OperationFlags = EWwiseReconcileOperationFlags::All) override;
+	virtual bool AddToDelete(FWwiseReconcileItem& Item) override;
+	virtual bool AddToCreate(FWwiseReconcileItem& Item) override;
+	virtual bool AddToRename(FWwiseReconcileItem& Item) override;
+	virtual bool AddToUpdate(FWwiseReconcileItem& Item) override;
+	virtual bool AddToMove(FWwiseReconcileItem& Item) override;
+	virtual bool ShouldMove(const FWwiseAnyRef& Ref, FAssetData InAssetPath, FString& OutNewAssetPath) override;
 };

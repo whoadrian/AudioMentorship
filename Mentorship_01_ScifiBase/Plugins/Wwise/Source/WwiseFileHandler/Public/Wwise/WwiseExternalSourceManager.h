@@ -49,7 +49,7 @@ public:
 		const FWwiseLanguageCookedData& InLanguage, FLoadExternalSourceCallback&& InCallback) = 0;
 	virtual void UnloadExternalSource(const FWwiseExternalSourceCookedData& InExternalSourceCookedData, const FName& InRootPath,
 		const FWwiseLanguageCookedData& InLanguage, FUnloadExternalSourceCallback&& InCallback) = 0;
-	virtual void SetGranularity(AkUInt32 Uint32) = 0;
+	virtual void SetGranularity(uint32 Uint32) = 0;
 
 	virtual TArray<uint32> PrepareExternalSourceInfos(TArray<AkExternalSourceInfo>& OutInfo,
 	                                                  const TArray<FWwiseExternalSourceCookedData>&& InCookedData) = 0;

@@ -50,6 +50,17 @@ public:
 	/// A serial queue of operations being processed for this state
 	FWwiseExecutionQueue* FileStateExecutionQueue{ new FWwiseExecutionQueue(WWISE_EQ_NAME("FWwiseFileState")) };
 
+	/**
+	 * Retrieves a serial queue for Wwise Bank operation.
+	 *
+	 * Wwise Bank manager works in a Single Locked Producer queue mode. Calls to Bank and Media operations in more than one thread
+	 * will block threads so they're effectively called one after the other. Providing operations sequentially will help improve
+	 * performance.
+
+	 * @return the Bank Execution Queue, or nullptr if the module is not loaded. 
+	 */
+	static FWwiseExecutionQueue* GetBankExecutionQueue();
+
 	using FBasicFunction = FWwiseExecutionQueue::FBasicFunction;
 	using FOpQueueItem = FWwiseExecutionQueue::FOpQueueItem; 
 	using FLaterOpQueue = TQueue<FOpQueueItem, EQueueMode::Spsc>;

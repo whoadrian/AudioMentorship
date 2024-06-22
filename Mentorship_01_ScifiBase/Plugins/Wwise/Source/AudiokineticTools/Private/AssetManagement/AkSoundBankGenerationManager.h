@@ -42,7 +42,8 @@ public:
 	{
 		TArray<FString> Platforms;
 		TArray<FString> Languages;
-		bool SkipLanguages = false;
+		bool bSkipLanguages = false;
+		bool bUserOverride = false;
 		ESoundBankGenerationMode GenerationMode = WwiseConsole;
 	};
 

@@ -79,7 +79,7 @@ void FWwiseInMemoryMediaFileState::OpenFile(FOpenFileCallback&& InCallback)
 		}
 	},
 		FullPathName, bDeviceMemory, MemoryAlignment, true,
-		STAT_WwiseMemoryMedia_FName, STAT_WwiseMemoryMediaDevice_FName);
+		STAT_WwiseMemoryMedia_FName, STAT_WwiseMemoryMediaDevice_FName, WWISE_LLM_GET_NAME(Audio_Wwise_FileHandler_Media));
 
 }
 
@@ -92,50 +92,55 @@ void FWwiseInMemoryMediaFileState::LoadInSoundEngine(FLoadInSoundEngineCallback&
 		return LoadInSoundEngineFailed(MoveTemp(InCallback));
 	}
 
-	auto* SoundEngine = IWwiseSoundEngineAPI::Get();
-	if (UNLIKELY(!SoundEngine))
+	auto* MediaManager = IWwiseMediaManager::Get();
+	if (UNLIKELY(!MediaManager))
 	{
-		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseInMemoryMediaFileState::LoadInSoundEngine %" PRIu32 " (%s): Failed loading media without a SoundEngine."), MediaId, *DebugName.ToString());
-		return LoadInSoundEngineFailed(MoveTemp(InCallback));
+		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseInMemoryMediaFileState::LoadInSoundEngine %" PRIu32 " (%s): Failed loading without the MediaManager."), MediaId, *DebugName.ToString());
+		LoadInSoundEngineFailed(MoveTemp(InCallback));
+		return;
 	}
 
-	const auto SetMediaResult = SoundEngine->SetMedia(this, 1);
-	if (LIKELY(SetMediaResult == AK_Success))
+	MediaManager->SetMedia(*this, [this, InCallback = MoveTemp(InCallback)](bool bResult) mutable
 	{
-		UE_LOG(LogWwiseFileHandler, Verbose, TEXT("FWwiseInMemoryMediaFileState::LoadInSoundEngine: Loaded: %" PRIu32 " (%s) @ %p %" PRIu32 " bytes."), MediaId, *DebugName.ToString(), pMediaMemory, uMediaSize);
-		INC_DWORD_STAT(STAT_WwiseFileHandlerLoadedMedia);
-		return LoadInSoundEngineSucceeded(MoveTemp(InCallback));
-	}
-	else
-	{
-		UE_LOG(LogWwiseFileHandler, Error, TEXT("FWwiseInMemoryMediaFileState::LoadInSoundEngine %" PRIu32 " (%s): Failed to load Media: %d (%s)."), MediaId, *DebugName.ToString(), SetMediaResult, WwiseUnrealHelper::GetResultString(SetMediaResult));
-		return LoadInSoundEngineFailed(MoveTemp(InCallback));
-	}
+		if (LIKELY(bResult))
+		{
+			UE_LOG(LogWwiseFileHandler, Verbose, TEXT("FWwiseInMemoryMediaFileState::LoadInSoundEngine: Loaded: %" PRIu32 " (%s) @ %p %" PRIu32 " bytes."), MediaId, *DebugName.ToString(), pMediaMemory, uMediaSize);
+			INC_DWORD_STAT(STAT_WwiseFileHandlerLoadedMedia);
+			return LoadInSoundEngineSucceeded(MoveTemp(InCallback));
+		}
+		else
+		{
+			UE_LOG(LogWwiseFileHandler, Error, TEXT("FWwiseInMemoryMediaFileState::LoadInSoundEngine %" PRIu32 " (%s): Failed to load Media."), MediaId, *DebugName.ToString());
+			return LoadInSoundEngineFailed(MoveTemp(InCallback));
+		}
+	});	
 }
 
 void FWwiseInMemoryMediaFileState::UnloadFromSoundEngine(FUnloadFromSoundEngineCallback&& InCallback)
 {
 	SCOPED_WWISEFILEHANDLER_EVENT_3(TEXT("FWwiseInMemoryMediaFileState::UnloadFromSoundEngine"));
-	auto* SoundEngine = IWwiseSoundEngineAPI::Get();
-	if (UNLIKELY(!SoundEngine))
+
+	auto* MediaManager = IWwiseMediaManager::Get();
+	if (UNLIKELY(!MediaManager))
 	{
-		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseInMemoryMediaFileState::UnloadFromSoundEngine %" PRIu32 " (%s): Failed unloading media without a SoundEngine."), MediaId, *DebugName.ToString());
+		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseInMemoryMediaFileState::UnloadFromSoundEngine %" PRIu32 " (%s): Failed unloading media without the MediaManager."), MediaId, *DebugName.ToString());
 		return CloseFileDone(MoveTemp(InCallback));
 	}
 
-	const auto Result = SoundEngine->TryUnsetMedia(this, 1, nullptr);
-	if (UNLIKELY(Result == AK_ResourceInUse))
+	MediaManager->UnsetMedia(*this, [this, InCallback = MoveTemp(InCallback)](bool bResult) mutable
 	{
-		UE_LOG(LogWwiseFileHandler, Verbose, TEXT("FWwiseInMemoryMediaFileState::UnloadFromSoundEngine %" PRIu32 " (%s): Deferred (AK_ResourceInUse)."), MediaId, *DebugName.ToString());
-		return UnloadFromSoundEngineDefer(MoveTemp(InCallback));
-	}
-	else
-	{
-		UE_CLOG(UNLIKELY(Result != AK_Success), LogWwiseFileHandler, Error, TEXT("FWwiseInMemoryMediaFileState::UnloadFromSoundEngine %" PRIu32 " (%s): TryUnsetMedia failed: %d (%s)"), MediaId, *DebugName.ToString(), Result, WwiseUnrealHelper::GetResultString(Result));
-		UE_CLOG(LIKELY(Result == AK_Success), LogWwiseFileHandler, VeryVerbose, TEXT("FWwiseInMemoryMediaFileState::UnloadFromSoundEngine: Unloaded: %" PRIu32 " (%s) @ %p %" PRIu32 " bytes."), MediaId, *DebugName.ToString(), pMediaMemory, uMediaSize);
-		DEC_DWORD_STAT(STAT_WwiseFileHandlerLoadedMedia);
-		return UnloadFromSoundEngineDone(MoveTemp(InCallback));
-	}
+		if (UNLIKELY(!bResult))
+		{
+			UE_LOG(LogWwiseFileHandler, Verbose, TEXT("FWwiseInMemoryMediaFileState::UnloadFromSoundEngine %" PRIu32 " (%s): Deferred (AK_ResourceInUse)."), MediaId, *DebugName.ToString());
+			return UnloadFromSoundEngineDefer(MoveTemp(InCallback));
+		}
+		else
+		{
+			UE_LOG(LogWwiseFileHandler, VeryVerbose, TEXT("FWwiseInMemoryMediaFileState::UnloadFromSoundEngine: Unloaded: %" PRIu32 " (%s) @ %p %" PRIu32 " bytes."), MediaId, *DebugName.ToString(), pMediaMemory, uMediaSize);
+			DEC_DWORD_STAT(STAT_WwiseFileHandlerLoadedMedia);
+			return UnloadFromSoundEngineDone(MoveTemp(InCallback));
+		}
+	});
 }
 
 void FWwiseInMemoryMediaFileState::CloseFile(FCloseFileCallback&& InCallback)
@@ -200,34 +205,47 @@ void FWwiseStreamedMediaFileState::OpenFile(FOpenFileCallback&& InCallback)
 		pMediaMemory = const_cast<uint8*>(Ptr);
 		uMediaSize = Size;
 
-		auto* SoundEngine = IWwiseSoundEngineAPI::Get();
-		if (UNLIKELY(!SoundEngine))
+		auto* BankExecutionQueue = GetBankExecutionQueue();
+		if (UNLIKELY(!BankExecutionQueue))
 		{
-			UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseStreamedMediaFileState::OpenFile %" PRIu32 " (%s): Failed prefetch media without a SoundEngine."), MediaId, *DebugName.ToString());
+			UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseStreamedMediaFileState::OpenFile %" PRIu32 " (%s): Failed prefetch media without the FileHandler module."), MediaId, *DebugName.ToString());
 			DeallocateMemory(pMediaMemory, uMediaSize, bDeviceMemory, MemoryAlignment, true, STAT_WwiseMemoryMediaPrefetch_FName, STAT_WwiseMemoryMediaPrefetchDevice_FName);
 			pMediaMemory = nullptr;
 			uMediaSize = 0;
 			return OpenFileFailed(MoveTemp(InCallback));
 		}
 
-		const auto SetMediaResult = SoundEngine->SetMedia(this, 1);
-		if (LIKELY(SetMediaResult == AK_Success))
+		BankExecutionQueue->Async(TEXT("FWwiseStreamedMediaFileState::OpenFile SetMedia"), [this, InCallback = MoveTemp(InCallback)]() mutable
 		{
-			UE_LOG(LogWwiseFileHandler, VeryVerbose, TEXT("FWwiseStreamedMediaFileState::OpenFile %" PRIu32 " (%s): Prefetched @ %p %" PRIu32 " bytes."), MediaId, *DebugName.ToString(), pMediaMemory, uMediaSize);
-			INC_DWORD_STAT(STAT_WwiseFileHandlerPrefetchedMedia);
-			return OpenFileSucceeded(MoveTemp(InCallback));
-		}
-		else
-		{
-			UE_LOG(LogWwiseFileHandler, Error, TEXT("FWwiseStreamedMediaFileState::OpenFile %" PRIu32 " (%s): Failed to prefetch media: %d (%s)."), MediaId, *DebugName.ToString(), SetMediaResult, WwiseUnrealHelper::GetResultString(SetMediaResult));
-			DeallocateMemory(pMediaMemory, uMediaSize, bDeviceMemory, MemoryAlignment, true, STAT_WwiseMemoryMediaPrefetch_FName, STAT_WwiseMemoryMediaPrefetchDevice_FName);
-			pMediaMemory = nullptr;
-			uMediaSize = 0;
-			return OpenFileFailed(MoveTemp(InCallback));
-		}
+			auto* SoundEngine = IWwiseSoundEngineAPI::Get();
+			if (UNLIKELY(!SoundEngine))
+			{
+				UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseStreamedMediaFileState::OpenFile %" PRIu32 " (%s): Failed prefetch media without a SoundEngine."), MediaId, *DebugName.ToString());
+				DeallocateMemory(pMediaMemory, uMediaSize, bDeviceMemory, MemoryAlignment, true, STAT_WwiseMemoryMediaPrefetch_FName, STAT_WwiseMemoryMediaPrefetchDevice_FName);
+				pMediaMemory = nullptr;
+				uMediaSize = 0;
+				return OpenFileFailed(MoveTemp(InCallback));
+			}
+
+			const auto SetMediaResult = SoundEngine->SetMedia(this, 1);
+			if (LIKELY(SetMediaResult == AK_Success))
+			{
+				UE_LOG(LogWwiseFileHandler, VeryVerbose, TEXT("FWwiseStreamedMediaFileState::OpenFile %" PRIu32 " (%s): Prefetched @ %p %" PRIu32 " bytes."), MediaId, *DebugName.ToString(), pMediaMemory, uMediaSize);
+				INC_DWORD_STAT(STAT_WwiseFileHandlerPrefetchedMedia);
+				return OpenFileSucceeded(MoveTemp(InCallback));
+			}
+			else
+			{
+				UE_LOG(LogWwiseFileHandler, Error, TEXT("FWwiseStreamedMediaFileState::OpenFile %" PRIu32 " (%s): Failed to prefetch media: %d (%s)."), MediaId, *DebugName.ToString(), SetMediaResult, WwiseUnrealHelper::GetResultString(SetMediaResult));
+				DeallocateMemory(pMediaMemory, uMediaSize, bDeviceMemory, MemoryAlignment, true, STAT_WwiseMemoryMediaPrefetch_FName, STAT_WwiseMemoryMediaPrefetchDevice_FName);
+				pMediaMemory = nullptr;
+				uMediaSize = 0;
+				return OpenFileFailed(MoveTemp(InCallback));
+			}
+		});
 	},
 		FullPathName, bDeviceMemory, MemoryAlignment, true,
-		STAT_WwiseMemoryMediaPrefetch_FName, STAT_WwiseMemoryMediaPrefetchDevice_FName,
+		STAT_WwiseMemoryMediaPrefetch_FName, STAT_WwiseMemoryMediaPrefetchDevice_FName, WWISE_LLM_GET_NAME(Audio_Wwise_FileHandler_Media),
 		AIOP_Normal, PrefetchSize);
 }
 
@@ -246,6 +264,8 @@ void FWwiseStreamedMediaFileState::LoadInSoundEngine(FLoadInSoundEngineCallback&
 		UE_LOG(LogWwiseFileHandler, Error, TEXT("FWwiseStreamedMediaFileState::LoadInSoundEngine %" PRIu32 " (%s): WwiseFileCache not available."), MediaId, *DebugName.ToString());
 		return LoadInSoundEngineFailed(MoveTemp(InCallback));
 	}
+
+	LLM_SCOPE_BYTAG(Audio_Wwise_FileHandler_Media);
 
 	const auto FullPathName = RootPath / MediaPathName.ToString();
 
@@ -293,36 +313,49 @@ void FWwiseStreamedMediaFileState::CloseFile(FCloseFileCallback&& InCallback)
 		return CloseFileDone(MoveTemp(InCallback));
 	}
 
-	auto* SoundEngine = IWwiseSoundEngineAPI::Get();
-	if (UNLIKELY(!SoundEngine))
+	auto* BankExecutionQueue = GetBankExecutionQueue();
+	if (UNLIKELY(!BankExecutionQueue))
 	{
-		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseStreamedMediaFileState::CloseFile %" PRIu32 " (%s): Failed closing prefetch without a SoundEngine. Leaking."), MediaId, *DebugName.ToString());
+		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseStreamedMediaFileState::CloseFile %" PRIu32 " (%s): Failed closing prefetch without the FileHandler module. Leaking."), MediaId, *DebugName.ToString());
+		DeallocateMemory(pMediaMemory, uMediaSize, bDeviceMemory, MemoryAlignment, true, STAT_WwiseMemoryMediaPrefetch_FName, STAT_WwiseMemoryMediaPrefetchDevice_FName);
 		pMediaMemory = nullptr;
 		uMediaSize = 0;
 		return CloseFileDone(MoveTemp(InCallback));
 	}
 
-	const auto Result = SoundEngine->TryUnsetMedia(this, 1, nullptr);
-	if (UNLIKELY(Result == AK_ResourceInUse))
+	BankExecutionQueue->Async(TEXT("FWwiseStreamedMediaFileState::CloseFile TryUnsetMedia"), [this, InCallback = MoveTemp(InCallback)]() mutable
 	{
-		return CloseFileDefer(MoveTemp(InCallback));
-	}
-	else
-	{
-		if (LIKELY(Result == AK_Success))
+		auto* SoundEngine = IWwiseSoundEngineAPI::Get();
+		if (UNLIKELY(!SoundEngine))
 		{
-			DEC_DWORD_STAT(STAT_WwiseFileHandlerPrefetchedMedia);
-			UE_LOG(LogWwiseFileHandler, Verbose, TEXT("FWwiseStreamedMediaFileState::CloseFile: Unloaded: %" PRIu32 " (%s). Prefetch Deallocating @ %p %" PRIu32 " bytes."), MediaId, *DebugName.ToString(), pMediaMemory, uMediaSize);
-			DeallocateMemory(pMediaMemory, uMediaSize, bDeviceMemory, MemoryAlignment, true, STAT_WwiseMemoryMediaPrefetch_FName, STAT_WwiseMemoryMediaPrefetchDevice_FName);
+			UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseStreamedMediaFileState::CloseFile %" PRIu32 " (%s): Failed closing prefetch without a SoundEngine. Leaking."), MediaId, *DebugName.ToString());
+			pMediaMemory = nullptr;
+			uMediaSize = 0;
+			return CloseFileDone(MoveTemp(InCallback));
+		}
+
+		const auto Result = SoundEngine->TryUnsetMedia(this, 1, nullptr);
+		if (UNLIKELY(Result == AK_ResourceInUse))
+		{
+			return CloseFileDefer(MoveTemp(InCallback));
 		}
 		else
 		{
-			UE_LOG(LogWwiseFileHandler, Error, TEXT("FWwiseStreamedMediaFileState::CloseFile %" PRIu32 " (%s): TryUnsetMedia of prefetch failed: %d (%s). Leaking."), MediaId, *DebugName.ToString(), Result, WwiseUnrealHelper::GetResultString(Result));
+			if (LIKELY(Result == AK_Success))
+			{
+				DEC_DWORD_STAT(STAT_WwiseFileHandlerPrefetchedMedia);
+				UE_LOG(LogWwiseFileHandler, Verbose, TEXT("FWwiseStreamedMediaFileState::CloseFile: Unloaded: %" PRIu32 " (%s). Prefetch Deallocating @ %p %" PRIu32 " bytes."), MediaId, *DebugName.ToString(), pMediaMemory, uMediaSize);
+				DeallocateMemory(pMediaMemory, uMediaSize, bDeviceMemory, MemoryAlignment, true, STAT_WwiseMemoryMediaPrefetch_FName, STAT_WwiseMemoryMediaPrefetchDevice_FName);
+			}
+			else
+			{
+				UE_LOG(LogWwiseFileHandler, Error, TEXT("FWwiseStreamedMediaFileState::CloseFile %" PRIu32 " (%s): TryUnsetMedia of prefetch failed: %d (%s). Leaking."), MediaId, *DebugName.ToString(), Result, WwiseUnrealHelper::GetResultString(Result));
+			}
+			pMediaMemory = nullptr;
+			uMediaSize = 0;
+			return CloseFileDone(MoveTemp(InCallback));
 		}
-		pMediaMemory = nullptr;
-		uMediaSize = 0;
-		return CloseFileDone(MoveTemp(InCallback));
-	}
+	});
 }
 
 bool FWwiseStreamedMediaFileState::CanProcessFileOp() const

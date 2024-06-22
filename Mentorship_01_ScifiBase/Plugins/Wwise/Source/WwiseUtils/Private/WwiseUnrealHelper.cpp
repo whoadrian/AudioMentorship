@@ -17,6 +17,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #include "WwiseUnrealHelper.h"
 
+#include "Async/Async.h"
 #include "Misc/Guid.h"
 #include "Misc/Paths.h"
 #include "Wwise/Stats/Global.h"
@@ -70,6 +71,11 @@ namespace WwiseUnrealHelper
 			return {};
 		}	
 		return GetSoundBankDirectoryPtr();
+	}
+	
+	FString GetSoundBankProjectMetadataFile()
+	{
+		return GetSoundBankDirectoryPtr() / TEXT("ProjectInfo.json");
 	}
 
 	FString GetStagePath()
@@ -125,6 +131,21 @@ namespace WwiseUnrealHelper
 		AbsolutePath.ReplaceInline(TEXT("/"), TEXT("\\"));
 #endif
 		return success;
+	}
+
+	void RunTaskInGameThread(TFunction<void()> Function)
+	{
+		if (!IsInGameThread())
+		{
+			AsyncTask(ENamedThreads::Type::GameThread, [Function]
+			{
+				Function();
+			});
+		}
+		else
+		{
+			Function();
+		}
 	}
 
 	FString GetWwiseSoundBankInfoCachePath()

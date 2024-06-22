@@ -29,6 +29,9 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "AssetManagement/AkAssetDatabase.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "Editor.h"
+#include "Wwise/WwiseProjectDatabase.h"
+#include "Wwise/WwiseReconcile.h"
+#include "WwiseUnrealHelper.h"
 
 bool FSoundBankStatusFilter::IsKeptInBrowser(FWwiseTreeItemPtr& Item) const
 {
@@ -171,17 +174,17 @@ EWwiseItemType::Type FWwiseTypeFilter::GetExpectedType(EWwiseTypeFilter Filter) 
 	{
 	case AcousticTexture:
 		return EWwiseItemType::AcousticTexture;
-	case Effects: 
+	case Effects:
 		return EWwiseItemType::EffectShareSet;
 	case Events:
 		return EWwiseItemType::Event;
-	case GameParameters: 
+	case GameParameters:
 		return EWwiseItemType::GameParameter;
 	case MasterMixerHierarchy:
 		return EWwiseItemType::Bus;
-	case State: 
+	case State:
 		return EWwiseItemType::State;
-	case Switch: 
+	case Switch:
 		return EWwiseItemType::Switch;
 	case Trigger:
 		return EWwiseItemType::Trigger;
@@ -234,9 +237,12 @@ FWwiseBrowserDataSource::~FWwiseBrowserDataSource()
 	AssetRegistry.OnAssetRemoved().Remove(OnAssetRemoved);
 	AssetRegistry.OnAssetRenamed().Remove(OnAssetRenamed);
 	AssetRegistry.OnAssetUpdated().Remove(OnAssetUpdated);
-	if(PostEditorTickHandle.IsValid())
+	AssetRegistry.OnFilesLoaded().Remove(OnFilesLoaded);
+
+	if (PostEditorTickHandle.IsValid())
 	{
-		GEditor->OnPostEditorTick().Remove(PostEditorTickHandle);
+		GEngine->OnPostEditorTick().Remove(PostEditorTickHandle);
+		PostEditorTickHandle.Reset();
 	}
 }
 
@@ -244,10 +250,18 @@ void FWwiseBrowserDataSource::ConstructTree()
 {
 	SCOPED_AUDIOKINETICTOOLS_EVENT_2(TEXT("FWwiseBrowserDataSource::ConstructTree"))
 
-	UAssetDataSource->ConstructItems();
-	ProjectDBDataSource->ConstructTree(false);
-	WaapiDataSource->ConstructTree(false);
-	MergeDataSources(false);
+	auto ConstructTask = [this]
+	{
+		if(ProjectDBDataSource->ConstructTree(false))
+		{
+			UAssetDataSource->ConstructItems();
+			WaapiDataSource->ConstructTree(false);
+			MergeDataSources();
+		}
+	};
+
+	WwiseUnrealHelper::RunTaskInGameThread(ConstructTask);
+
 }
 
 bool FWwiseBrowserDataSource::AreFiltersOff()
@@ -458,17 +472,12 @@ void FWwiseBrowserDataSource::HandleFindWwiseItemInProjectExplorerCommandExecute
 	WaapiDataSource->HandleFindWwiseItemInProjectExplorerCommandExecute(SelectedItems);
 }
 
-void FWwiseBrowserDataSource::MergeDataSources(bool bGenerateUAssetsInfo)
+void FWwiseBrowserDataSource::MergeDataSources()
 {
 	SCOPED_AUDIOKINETICTOOLS_EVENT_3(TEXT("FWwiseBrowserDataSource::MergeDataSources"))
 
 	FWwiseTreeItemPtr WaapiRootItem;
 	FWwiseTreeItemPtr SoundBanksRootItem;
-
-	if (bGenerateUAssetsInfo)
-	{
-		UAssetDataSource->ConstructItems();
-	}
 
 	{
 		FScopeLock AutoLock(&RootItemsLock);
@@ -492,9 +501,8 @@ void FWwiseBrowserDataSource::MergeDataSources(bool bGenerateUAssetsInfo)
 
 		if (SoundBanksRootItem)
 		{
-			NewRootItem = MakeShared<FWwiseTreeItem>(SoundBanksRootItem->DisplayName, SoundBanksRootItem->FolderPath, nullptr, SoundBanksRootItem->ItemType, SoundBanksRootItem->ItemId);
+			NewRootItem = MakeShared<FWwiseTreeItem>(SoundBanksRootItem->DisplayName, SoundBanksRootItem->FolderPath, nullptr, SoundBanksRootItem->ItemType, SoundBanksRootItem->ItemId, SoundBanksRootItem->ShortId);
 			NewRootItem->WwiseItemRef = SoundBanksRootItem->WwiseItemRef;
-			NewRootItem->ShortId = SoundBanksRootItem->ShortId;
 			UE_LOG(LogAudiokineticTools, VeryVerbose, TEXT("Creating Tree for %s "), *SoundBanksRootItem->FolderPath)
 		}
 
@@ -513,7 +521,7 @@ void FWwiseBrowserDataSource::MergeDataSources(bool bGenerateUAssetsInfo)
 		{
 			if (!NewRootItem)
 			{
-				NewRootItem = MakeShared<FWwiseTreeItem>(WaapiRootItem->DisplayName, WaapiRootItem->FolderPath, nullptr, WaapiRootItem->ItemType, WaapiRootItem->ItemId);
+				NewRootItem = MakeShared<FWwiseTreeItem>(WaapiRootItem->DisplayName, WaapiRootItem->FolderPath, nullptr, WaapiRootItem->ItemType, WaapiRootItem->ItemId, WaapiRootItem->ShortId);
 				NewRootItem->WwiseItemRef = WaapiRootItem->WwiseItemRef;
 			}
 
@@ -566,29 +574,28 @@ void FWwiseBrowserDataSource::CreateUnifiedTree(const FWwiseTreeItemPtr& TreeIte
 	if (TreeItemRootSoundBank)
 	{
 		CreateProjectDBItem(TreeItemRootSoundBank, TreeItemRootDst);
+		if (TreeItemRootWaapi)
+		{
+			CreateWaapiItem(TreeItemRootWaapi, TreeItemRootDst);
+		}
 	}
-	if (TreeItemRootWaapi)
-	{
-		CreateWaapiItem(TreeItemRootWaapi, TreeItemRootDst);
-	}
-
 }
 
 void FWwiseBrowserDataSource::CreateProjectDBItem(const FWwiseTreeItemPtr& TreeItemRootSoundBank, FWwiseTreeItemPtr& TreeItemRootDst)
 {
 	FString DefaultAssetName = TreeItemRootSoundBank->GetDefaultAssetName();
-	TreeItemRootDst = MakeShared<FWwiseTreeItem>(TreeItemRootSoundBank->DisplayName, TreeItemRootSoundBank->FolderPath, nullptr, TreeItemRootSoundBank->ItemType, TreeItemRootSoundBank->ItemId);
+	TreeItemRootDst = MakeShared<FWwiseTreeItem>(TreeItemRootSoundBank->DisplayName, TreeItemRootSoundBank->FolderPath, nullptr, TreeItemRootSoundBank->ItemType, TreeItemRootSoundBank->ItemId, TreeItemRootSoundBank->ShortId);
 	if(TreeItemRootSoundBank->ShouldDisplayInfo())
 	{
 		TArray<FAssetData> Assets;
 		EWwiseItemType::Type Type;
 		FName UAssetName;
-		UAssetDataSource->GetAssetsInfo(TreeItemRootSoundBank->ItemId, TreeItemRootSoundBank->ShortId, DefaultAssetName, Type, UAssetName, Assets);
+		UAssetDataSource->GetAssetsInfo(TreeItemRootSoundBank->ItemId, TreeItemRootSoundBank->ShortId, DefaultAssetName, TreeItemRootSoundBank->GroupId, Type, UAssetName, Assets);
 		TreeItemRootDst->Assets = Assets;
 		TreeItemRootDst->UAssetName = UAssetName;
+		TreeItemRootDst->bIsInWrongLocation = IsMoved(TreeItemRootDst);
 	}
 	TreeItemRootDst->WwiseItemRef = TreeItemRootSoundBank->WwiseItemRef;
-	TreeItemRootDst->ShortId = TreeItemRootSoundBank->ShortId;
 	//State Groups have a None State that does not appear in Wwise. Set the Ref to true to avoid "Deleted in Wwise".
 	if(TreeItemRootDst->ItemType == EWwiseItemType::State && TreeItemRootDst->DisplayName == FString("None"))
 	{
@@ -604,18 +611,53 @@ void FWwiseBrowserDataSource::CreateProjectDBItem(const FWwiseTreeItemPtr& TreeI
 	TreeItemRootDst->SortChildren();
 }
 
+bool FWwiseBrowserDataSource::IsMoved(FWwiseTreeItemPtr CurrItem)
+{
+	if(!CurrItem->HasUniqueUAsset())
+	{
+		return false;
+	}
+	auto WwiseReconcile = IWwiseReconcile::Get();
+	auto ProjectDatabase = FWwiseProjectDatabase::Get();
+	if(UNLIKELY(!WwiseReconcile))
+	{
+		UE_LOG(LogAudiokineticTools, Error, TEXT("Could not load Wwise Reconcile Module."));
+		return false;
+	}
+	if (UNLIKELY(!ProjectDatabase))
+	{
+		UE_LOG(LogAudiokineticTools, Error, TEXT("Could not load project database"));
+		return false;
+	}
+	FString Out;
+	FWwiseDataStructureScopeLock DataStructure(*ProjectDatabase);
+	FWwiseAnyRef* Ref = nullptr;
+	TArray<FWwiseAnyRef> Refs;
+	DataStructure.GetCurrentPlatformData()->Guids.MultiFind(FWwiseDatabaseLocalizableGuidKey(CurrItem->ItemId, 0), Refs);
+	for(auto& InRef : Refs)
+	{
+		if(InRef.GetType() != EWwiseRefType::SoundBank)
+		{
+			Ref = &InRef;
+			break;
+		}
+	}
+	return  Ref && WwiseReconcile->Get()->ShouldMove(*Ref, CurrItem->Assets[0], Out);
+}
+
 void FWwiseBrowserDataSource::CreateWaapiExclusiveItem(const FWwiseTreeItemPtr& WaapiItem, FWwiseTreeItemPtr& TreeItemRootDst)
 {
-	FWwiseTreeItemPtr CurrItem = MakeShared<FWwiseTreeItem>(WaapiItem->DisplayName, WaapiItem->FolderPath, nullptr, WaapiItem->ItemType, WaapiItem->ItemId);
+	FWwiseTreeItemPtr CurrItem = MakeShared<FWwiseTreeItem>(WaapiItem->DisplayName, WaapiItem->FolderPath, nullptr, WaapiItem->ItemType, WaapiItem->ItemId, WaapiItem->ShortId);
 	if(WaapiItem->ShouldDisplayInfo())
 	{
 		FString DefaultAssetName = WaapiItem->GetDefaultAssetName();
 		TArray<FAssetData> Assets;
 		FName AssetName;
 		EWwiseItemType::Type ItemType;
-		UAssetDataSource->GetAssetsInfo(WaapiItem->ItemId, WaapiItem->ShortId, DefaultAssetName, ItemType, AssetName, Assets);
+		UAssetDataSource->GetAssetsInfo(WaapiItem->ItemId, WaapiItem->ShortId, DefaultAssetName, WaapiItem->GroupId, ItemType, AssetName, Assets);
 		CurrItem->UAssetName = AssetName;
 		CurrItem->Assets = Assets;
+		CurrItem->bIsInWrongLocation = IsMoved(CurrItem);
 	}
 	CurrItem->WaapiName = WaapiItem->DisplayName;
 	CurrItem->bWaapiRefExists = true;
@@ -641,7 +683,7 @@ void FWwiseBrowserDataSource::CreateWaapiItem(const FWwiseTreeItemPtr& TreeItemR
 		}
 		if (WaapiItem->IsFolder())
 		{
-			NewItem = MakeShared<FWwiseTreeItem>(WaapiItem->DisplayName, WaapiItem->FolderPath, nullptr, WaapiItem->ItemType, WaapiItem->ItemId);
+			NewItem = MakeShared<FWwiseTreeItem>(WaapiItem->DisplayName, WaapiItem->FolderPath, nullptr, WaapiItem->ItemType, WaapiItem->ItemId, WaapiItem->ShortId);
 			TreeItemRootDst->AddChild(NewItem);
 			continue;
 		}
@@ -680,14 +722,30 @@ void FWwiseBrowserDataSource::OnWaapiDataSourceRefreshed()
 {
 	SCOPED_AUDIOKINETICTOOLS_EVENT_3(TEXT("FWwiseBrowserDataSource::OnWaapiDataSourceRefreshed"))
 
-	MergeDataSources(false);
+	auto RefreshTask = [this]
+	{
+		if(ProjectDBDataSource->ConstructTree(false))
+		{
+			UAssetDataSource->ConstructItems();
+			MergeDataSources();
+		}
+	};
+
+	WwiseUnrealHelper::RunTaskInGameThread(RefreshTask);
 }
 
 void FWwiseBrowserDataSource::OnProjectDBDataSourceRefreshed()
 {
 	SCOPED_AUDIOKINETICTOOLS_EVENT_3(TEXT("FWwiseBrowserDataSource::OnProjectDBDataSourceRefreshed"))
 
-	MergeDataSources();
+	auto RefreshTask = [this]
+	{
+			UAssetDataSource->ConstructItems();
+			WaapiDataSource->ConstructTree(false);
+			MergeDataSources();
+	};
+
+	WwiseUnrealHelper::RunTaskInGameThread(RefreshTask);
 }
 
 void FWwiseBrowserDataSource::SetupAssetCallbacks()
@@ -706,6 +764,10 @@ void FWwiseBrowserDataSource::SetupAssetCallbacks()
 
 void FWwiseBrowserDataSource::OnFilesFullyLoaded()
 {
+	UE_LOG(LogAudiokineticTools, Log, TEXT("Asset registry files loaded"))
+	// Should only be called from the AssetRegistry on the GameThread
+	checkf(IsInGameThread(), TEXT("FWwiseBrowserDataSource::OnFilesFullyLoaded should only be called from the AssetRegistry on the GameThread"))
+
 	if (OnFilesLoaded.IsValid())
 	{
 		FAssetRegistryModule* AssetRegistryModule = &FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
@@ -716,16 +778,21 @@ void FWwiseBrowserDataSource::OnFilesFullyLoaded()
 		}
 	}
 	SetupAssetCallbacks();
+	UAssetDataSource->ConstructItems();
 	MergeDataSources();
 }
 
 void FWwiseBrowserDataSource::OnTimerTick(float DeltaSeconds)
 {
 	AssetUpdateTimer -= DeltaSeconds;
-	if(AssetUpdateTimer <= 0.f)
+	if (AssetUpdateTimer <= 0.f)
 	{
+		if(UAssetDataSource)
+		{
+			UAssetDataSource->ConstructItems();
+		}
 		MergeDataSources();
-		if(PostEditorTickHandle.IsValid())
+		if (PostEditorTickHandle.IsValid())
 		{
 			GEngine->OnPostEditorTick().Remove(PostEditorTickHandle);
 			PostEditorTickHandle.Reset();
@@ -735,26 +802,23 @@ void FWwiseBrowserDataSource::OnTimerTick(float DeltaSeconds)
 
 void FWwiseBrowserDataSource::OnUAssetSourceRefresh(const FAssetData& AssetData)
 {
-	if(AkUnrealAssetDataHelper::IsAssetAkAudioType(AssetData) && !AkUnrealAssetDataHelper::IsAssetTransient(AssetData))
+	if (AkUnrealAssetDataHelper::IsAssetAkAudioType(AssetData) && !AkUnrealAssetDataHelper::IsAssetTransient(AssetData))
 	{
-		if(!PostEditorTickHandle.IsValid())
+		checkf(IsInGameThread(), TEXT("FWwiseBrowserDataSource::OnUAsserSourceRefresh should only be called from the AssetRegistry on the GameThread"))
+
+		if (!PostEditorTickHandle.IsValid())
 		{
 			PostEditorTickHandle = GEngine->OnPostEditorTick().AddRaw(this, &FWwiseBrowserDataSource::OnTimerTick);
 		}
+
 		AssetUpdateTimer = AssetTimerRefresh;
 	}
 }
 
-void FWwiseBrowserDataSource::OnUAssetSourceRefresh(const FAssetData& AssetData, const FString& OldPath)
+// Required for handling Asset renaming
+void FWwiseBrowserDataSource::OnUAssetSourceRefresh(const FAssetData& AssetData, const FString& /*OldPath*/)
 {
-	if (AkUnrealAssetDataHelper::IsAssetAkAudioType(AssetData) && !AkUnrealAssetDataHelper::IsAssetTransient(AssetData))
-	{
-		if(!PostEditorTickHandle.IsValid())
-		{
-			PostEditorTickHandle = GEngine->OnPostEditorTick().AddRaw(this, &FWwiseBrowserDataSource::OnTimerTick);
-		}
-		AssetUpdateTimer = AssetTimerRefresh;
-	}
+	OnUAssetSourceRefresh(AssetData);
 }
 
 void FWwiseBrowserDataSource::OnWwiseSelectionChange(const TArray<TSharedPtr<FWwiseTreeItem>>& Items)

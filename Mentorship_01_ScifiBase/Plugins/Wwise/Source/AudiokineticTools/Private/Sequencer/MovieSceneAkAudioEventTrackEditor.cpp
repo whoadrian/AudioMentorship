@@ -23,7 +23,6 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "AkWaapiClient.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "Async/Async.h"
-#include "CommonMovieSceneTools.h"
 #include "ContentBrowserModule.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
@@ -41,6 +40,12 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "SequencerSectionPainter.h"
 #include "SequencerUtilities.h"
 #include "Slate/SlateTextures.h"
+#if UE_5_1_OR_LATER
+#include "TimeToPixel.h"
+#else
+#include "CommonMovieSceneTools.h"
+#endif
+
 #include "Textures/SlateTextureData.h"
 #include "Wwise/WwiseProjectDatabaseDelegates.h"
 

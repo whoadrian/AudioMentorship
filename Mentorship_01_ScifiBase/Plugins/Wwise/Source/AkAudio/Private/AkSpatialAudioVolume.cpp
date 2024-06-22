@@ -167,27 +167,38 @@ void AAkSpatialAudioVolume::FitRaycast()
 			AActor* HitActor = WwiseUnrealHelper::GetActorFromHitResult(res);
 			if (HitActor != nullptr)
 			{
-				UAkPortalComponent* PortalComponent = (UAkPortalComponent*)HitActor->FindComponentByClass(UAkPortalComponent::StaticClass());
-				if (PortalComponent != nullptr)
+				//Portals should be the direct child of their PrimitiveComponent
+				TArray<USceneComponent*> children;
+				res.GetComponent()->GetChildrenComponents(false, children);
+				UAkPortalComponent* PortalComponent = nullptr;
+				for (auto child : children)
 				{
-					// We hit a portal. The portals are a good reference point for the SAV, but we need to extend the ray to the center of the portal
-					FVector PortalNorm = PortalComponent->GetComponentTransform().GetRotation().RotateVector(FVector(0.f, 1.f, 0.f));
-					FVector PortalPos = PortalComponent->GetComponentLocation();
-					float d = FVector::DotProduct(PortalPos, PortalNorm);
-					FVector ab = to - res.ImpactPoint;
-					float t = (d - FVector::DotProduct(PortalNorm, res.ImpactPoint)) / FVector::DotProduct(PortalNorm, ab);
-
-					if (t >= 0.f && t < 1.0f)
+					if (child->IsA<UAkPortalComponent>())
 					{
-						FVector ImpactPointOnPoralPlane = res.ImpactPoint + t * ab;
-						FHitResult ModifiedHitResult = res;
-						ModifiedHitResult.ImpactPoint = ImpactPointOnPoralPlane;
-						ModifiedHitResult.ImpactNormal = PortalNorm;
-						if (FVector::DotProduct(PortalNorm, res.ImpactNormal) < 0.f)
-							ModifiedHitResult.ImpactNormal = -PortalNorm;
-						hits.Emplace(ModifiedHitResult);
+						PortalComponent = Cast<UAkPortalComponent>(child);
 						break;
 					}
+				}
+				
+				// Disregard collisions for rays that started inside the portal
+				if (PortalComponent != nullptr && !res.bStartPenetrating)
+				{
+					// We hit a portal. The portals are a good reference point for the SAV, but we need to extend the ray to the center of the portal
+					// This can be simplified by moving the point along the portal's normal vector instead of along the original ray axis
+					FVector PortalNorm = PortalComponent->GetComponentTransform().GetRotation().RotateVector(FVector(1.0f, 0.f, 0.f));
+					FVector PortalPos = PortalComponent->GetComponentLocation();
+					FVector PortalCenterToImpact = PortalPos - res.ImpactPoint;
+					float ProjectionLength = FVector::DotProduct(PortalCenterToImpact, PortalNorm);
+					FVector PortalDirection = PortalPos - RaycastOrigin;
+					FVector ImpactPointOnPortalPlane = res.ImpactPoint + ProjectionLength * PortalNorm;
+
+					FHitResult ModifiedHitResult = res;
+					ModifiedHitResult.ImpactPoint = ImpactPointOnPortalPlane;
+					ModifiedHitResult.ImpactNormal = PortalNorm;
+					if (FVector::DotProduct(PortalNorm, res.ImpactNormal) < 0.f)
+						ModifiedHitResult.ImpactNormal = -PortalNorm;
+					hits.Emplace(ModifiedHitResult);
+					break;
 				}
 
 				if (!res.bStartPenetrating &&

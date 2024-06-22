@@ -45,7 +45,7 @@ public:
 		const FWwiseLanguageCookedData& InLanguage, FLoadExternalSourceCallback&& InCallback) override;
 	virtual void UnloadExternalSource(const FWwiseExternalSourceCookedData& InExternalSourceCookedData, const FName& InRootPath,
 		const FWwiseLanguageCookedData& InLanguage, FUnloadExternalSourceCallback&& InCallback) override;
-	virtual void SetGranularity(AkUInt32 InStreamingGranularity) override;
+	virtual void SetGranularity(uint32 InStreamingGranularity) override;
 
 	IWwiseStreamingManagerHooks& GetStreamingHooks() override final { return *this; }
 
@@ -67,7 +67,7 @@ public:
 protected:
 	/**
 	 * @brief Lock on the Cookie to Media Table. Lock as "ReadOnly" for using the tables (Prepare), and as "Write" for modifying the tables.
-	*/
+	 */
 	FRWLock CookieToMediaLock;
 	TMap<uint32, FWwiseExternalSourceFileState*> CookieToMedia;
 

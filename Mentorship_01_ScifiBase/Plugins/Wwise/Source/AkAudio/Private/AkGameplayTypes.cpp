@@ -59,7 +59,6 @@ UAkCallbackInfo* AkCallbackTypeHelpers::GetBlueprintableCallbackInfo(EAkCallback
 	default: 
 		return nullptr;
 	}
-	return nullptr;
 }
 
 AkCallbackInfo* AkCallbackTypeHelpers::CopyWwiseCallbackInfo(AkCallbackType CallbackType, AkCallbackInfo* SourceCallbackInfo)
@@ -124,7 +123,6 @@ AkCallbackInfo* AkCallbackTypeHelpers::CopyWwiseCallbackInfo(AkCallbackType Call
 	default:
 		return nullptr;
 	}
-	return nullptr;
 }
 
 AkCallbackType AkCallbackTypeHelpers::GetCallbackMaskFromBlueprintMask(int32 BlueprintCallbackType)

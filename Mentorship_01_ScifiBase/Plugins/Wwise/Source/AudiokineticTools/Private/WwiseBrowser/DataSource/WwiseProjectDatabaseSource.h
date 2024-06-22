@@ -43,7 +43,7 @@ public:
 	// IWwiseBrowserDataSource
 
 	virtual bool Init() override;
-	virtual void ConstructTree(bool bShouldRefresh) override;
+	virtual bool ConstructTree(bool bShouldRefresh) override;
 	virtual FWwiseTreeItemPtr ConstructTreeRoot(EWwiseItemType::Type Type) override;
 	virtual int32 LoadChildren(const FGuid& InParentId, const FString& InParentPath, TArray<FWwiseTreeItemPtr>& OutChildren) override;
 	virtual int32 LoadChildren(FWwiseTreeItemPtr InParentItem) override;
@@ -74,7 +74,7 @@ private:
 
 	bool BuildFolderHierarchy(const FWwiseMetadataBasicReference& WwiseItem, EWwiseItemType::Type ItemType,
 		const FWwiseTreeItemPtr
-		CurrentRootFolder);
+		CurrentRootFolder, uint32 GroupId = 0);
 
 	void CopyTree(FWwiseTreeItemPtr SourceTreeItem, FWwiseTreeItemPtr DestTreeItem);
 

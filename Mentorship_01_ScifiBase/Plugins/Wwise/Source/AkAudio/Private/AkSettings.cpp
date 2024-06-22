@@ -32,6 +32,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "StringMatchAlgos/StringMatching.h"
 #include "UObject/UnrealType.h"
 #include "Widgets/Notifications/SNotificationList.h"
+#include "WwiseInitBankLoader/WwiseInitBankLoader.h"
 
 #if WITH_EDITOR
 #include "AkAudioStyle.h"
@@ -126,7 +127,7 @@ bool WAAPIGetObjectColorIndex(FGuid textureID, int& index)
 				auto jsonObj = returnJson[0]->AsObject();
 				if (jsonObj != nullptr)
 				{
-					index = (int)(jsonObj->GetNumberField("@Color"));
+					index = (int)(jsonObj->GetNumberField(TEXT("@Color")));
 					return true;
 				}
 			}
@@ -162,7 +163,7 @@ bool WAAPIGetObjectOverrideColor(FGuid textureID)
 				auto jsonObj = returnJson[0]->AsObject();
 				if (jsonObj != nullptr)
 				{
-					return jsonObj->GetBoolField("@OverrideColor");
+					return jsonObj->GetBoolField(TEXT("@OverrideColor"));
 				}
 			}
 		}
@@ -517,7 +518,11 @@ void UAkSettings::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedE
 	}
 	else if (MemberPropertyName == GET_MEMBER_NAME_CHECKED(UAkSettings, RootOutputPath))
 	{
-		UpdateGeneratedSoundBanksPath();
+		if(UpdateGeneratedSoundBanksPath() && AreSoundBanksGenerated())
+		{
+			FWwiseInitBankLoader::Get()->UpdateInitBankInSettings();
+			FAkAudioModule::AkAudioModuleInstance->ReloadWwiseAssetData();
+		}
 	}
 
 	Super::PostEditChangeProperty(PropertyChangedEvent);

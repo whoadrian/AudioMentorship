@@ -22,7 +22,6 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 class FReconcileOperationColumn : public IWwiseReconcileColumn
 {
-	FText GetOperationText(FWwiseReconcileItem TreeItem);
 public:
 	virtual ~FReconcileOperationColumn() {}
 

@@ -54,6 +54,14 @@ public:
 	virtual bool SplitAssetName(FString& OutGroupName, FString& OutValueName) const;
 #endif
 
+#if WITH_EDITOR
+#if UE_5_4_OR_LATER 
+	virtual void GetAssetRegistryTags(FAssetRegistryTagsContext Context) const override;
+#else
+	virtual void GetAssetRegistryTags(TArray<FAssetRegistryTag>& OutTags) const override;
+#endif // UE_5_4_OR_LATER
+#endif // WITH_EDITOR
+
 protected :
 	virtual void LoadGroupValue(){};
 	void UnloadGroupValue(bool bAsync);

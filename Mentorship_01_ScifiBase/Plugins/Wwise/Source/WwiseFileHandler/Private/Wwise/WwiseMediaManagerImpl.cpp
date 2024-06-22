@@ -17,7 +17,14 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #include "Wwise/WwiseMediaManagerImpl.h"
 #include "Wwise/WwiseMediaFileState.h"
+#include "Wwise/WwiseSoundEngineUtils.h"
+#include "Wwise/API/WwiseSoundEngineAPI.h"
 #include "Wwise/Stats/FileHandler.h"
+#include "Wwise/Stats/FileHandlerMemory.h"
+
+#include "Misc/ScopeExit.h"
+
+#include <inttypes.h>
 
 FWwiseMediaManagerImpl::FWwiseMediaManagerImpl()
 {
@@ -32,6 +39,7 @@ void FWwiseMediaManagerImpl::LoadMedia(const FWwiseMediaCookedData& InMediaCooke
 	SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseMediaManagerImpl::LoadMedia"));
 	IncrementFileStateUseAsync(InMediaCookedData.MediaId, EWwiseFileStateOperationOrigin::Loading, [this, InMediaCookedData, InRootPath]() mutable
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_FileHandler_Media);
 		return CreateOp(InMediaCookedData, InRootPath);
 	}, [InCallback = MoveTemp(InCallback)](const FWwiseFileStateSharedPtr, bool bInResult)
 	{
@@ -45,10 +53,102 @@ void FWwiseMediaManagerImpl::UnloadMedia(const FWwiseMediaCookedData& InMediaCoo
 	DecrementFileStateUseAsync(InMediaCookedData.MediaId, nullptr, EWwiseFileStateOperationOrigin::Loading, MoveTemp(InCallback));
 }
 
-void FWwiseMediaManagerImpl::SetGranularity(AkUInt32 InStreamingGranularity)
+void FWwiseMediaManagerImpl::SetGranularity(uint32 InStreamingGranularity)
 {
 	SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseMediaManagerImpl::SetGranularity"));
 	StreamingGranularity = InStreamingGranularity;
+}
+
+void FWwiseMediaManagerImpl::SetMedia(AkSourceSettings& InSource, FLoadMediaCallback&& InCallback)
+{
+	auto* BankExecutionQueue = GetBankExecutionQueue();
+	if (UNLIKELY(!BankExecutionQueue))
+	{
+		return InCallback(false);
+	}
+
+	FScopeLock Lock(&MediaOpCriticalSection);
+	++SetMediaCount;
+	BankExecutionQueue->Async(TEXT("FWwiseMediaManagerImpl::SetMedia"), [this, &InSource, InCallback = MoveTemp(InCallback)]() mutable 
+	{
+		if (SetMediaOps.Num() == 0)
+		{
+			auto* BankExecutionQueue = GetBankExecutionQueue();
+			if (UNLIKELY(!BankExecutionQueue))
+			{
+				InCallback(false);
+				return;
+			}
+
+			FScopeLock Lock(&MediaOpCriticalSection);
+			const auto FinalMediaCount = SetMediaCount;
+			SetMediaCount = 0;
+
+			SetMediaOps.Empty(FinalMediaCount);
+			SetMediaCallbacks.Empty(FinalMediaCount);
+
+			SetMediaOps.Emplace(InSource);
+			SetMediaCallbacks.Emplace(MoveTemp(InCallback));
+			
+			BankExecutionQueue->Async(TEXT("FWwiseMediaManagerImpl::DoSetMedia"), [this]() mutable
+			{
+				DoSetMedia();
+			});
+		}
+		else
+		{
+			UE_CLOG(UNLIKELY(SetMediaOps.GetSlack() == 0), LogWwiseFileHandler, Warning,
+				TEXT("FWwiseMediaManagerImpl::SetMedia: Emplacing supplemental operations without slack!"));
+			SetMediaOps.Emplace(InSource);
+			SetMediaCallbacks.Emplace(MoveTemp(InCallback));
+		}
+	});
+}
+
+void FWwiseMediaManagerImpl::UnsetMedia(AkSourceSettings& InSource, FLoadMediaCallback&& InCallback)
+{
+	auto* BankExecutionQueue = GetBankExecutionQueue();
+	if (UNLIKELY(!BankExecutionQueue))
+	{
+		return InCallback(true);
+	}
+
+	FScopeLock Lock(&MediaOpCriticalSection);
+	++UnsetMediaCount;
+	BankExecutionQueue->Async(TEXT("FWwiseMediaManagerImpl::UnsetMedia"), [this, &InSource, InCallback = MoveTemp(InCallback)]() mutable 
+	{
+		if (UnsetMediaOps.Num() == 0)
+		{
+			auto* BankExecutionQueue = GetBankExecutionQueue();
+			if (UNLIKELY(!BankExecutionQueue))
+			{
+				InCallback(true);
+				return;
+			}
+
+			FScopeLock Lock(&MediaOpCriticalSection);
+			const auto FinalMediaCount = UnsetMediaCount;
+			UnsetMediaCount = 0;
+
+			UnsetMediaOps.Empty(FinalMediaCount);
+			UnsetMediaCallbacks.Empty(FinalMediaCount);
+
+			UnsetMediaOps.Emplace(InSource);
+			UnsetMediaCallbacks.Emplace(MoveTemp(InCallback));
+			
+			BankExecutionQueue->Async(TEXT("FWwiseMediaManagerImpl::DoUnsetMedia"), [this]() mutable
+			{
+				DoUnsetMedia();
+			});
+		}
+		else
+		{
+			UE_CLOG(UNLIKELY(UnsetMediaOps.GetSlack() == 0), LogWwiseFileHandler, Warning,
+				TEXT("FWwiseMediaManagerImpl::UnsetMedia: Emplacing supplemental operations without slack!"));
+			UnsetMediaOps.Emplace(InSource);
+			UnsetMediaCallbacks.Emplace(MoveTemp(InCallback));
+		}
+	});
 }
 
 FWwiseFileStateSharedPtr FWwiseMediaManagerImpl::CreateOp(const FWwiseMediaCookedData& InMediaCookedData, const FString& InRootPath)
@@ -60,5 +160,88 @@ FWwiseFileStateSharedPtr FWwiseMediaManagerImpl::CreateOp(const FWwiseMediaCooke
 	else
 	{
 		return FWwiseFileStateSharedPtr(new FWwiseInMemoryMediaFileState(InMediaCookedData, InRootPath));
+	}
+}
+
+FWwiseExecutionQueue* FWwiseMediaManagerImpl::GetBankExecutionQueue()
+{
+	auto* FileHandlerModule = IWwiseFileHandlerModule::GetModule();
+	if (UNLIKELY(!FileHandlerModule))
+	{
+		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseMediaManagerImpl::GetBankExecutionQueue: WwiseFileHandlerModule is unloaded."));
+		return nullptr;
+	}
+	return FileHandlerModule->GetBankExecutionQueue();
+}
+
+void FWwiseMediaManagerImpl::DoSetMedia()
+{
+	bool bResult = false;
+	ON_SCOPE_EXIT
+	{
+		for (auto& Callback : SetMediaCallbacks)
+		{
+			Callback(bResult);
+		}
+		SetMediaOps.Empty();
+		SetMediaCallbacks.Empty();
+	};
+	
+	auto* SoundEngine = IWwiseSoundEngineAPI::Get();
+	if (UNLIKELY(!SoundEngine))
+	{
+		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseMediaManagerImpl::DoSetMedia: Failed loading %" PRIu32 " media without a SoundEngine."), SetMediaOps.Num());
+		return;
+	}
+
+	const auto SetMediaResult = SoundEngine->SetMedia(SetMediaOps.GetData(), SetMediaOps.Num());
+	if (LIKELY(SetMediaResult == AK_Success))
+	{
+		UE_LOG(LogWwiseFileHandler, Verbose, TEXT("FWwiseMediaManagerImpl::DoSetMedia: Loaded %" PRIu32 " media."), SetMediaOps.Num());
+		bResult = true;
+	}
+	else
+	{
+		UE_LOG(LogWwiseFileHandler, Error, TEXT("FWwiseMediaManagerImpl::DoSetMedia: Failed to load %" PRIu32 " media: %d (%s)."), SetMediaOps.Num(), SetMediaResult, WwiseUnrealHelper::GetResultString(SetMediaResult));
+	}
+}
+
+void FWwiseMediaManagerImpl::DoUnsetMedia()
+{
+	TArray<AKRESULT> Results;
+	Results.AddZeroed(UnsetMediaOps.Num());
+	ON_SCOPE_EXIT
+	{
+		for (int Iter = 0; Iter < UnsetMediaCallbacks.Num(); ++Iter)
+		{
+			auto& Callback { UnsetMediaCallbacks[Iter] };
+			const auto& Result { Results[Iter] };
+
+			Callback(Result != AK_ResourceInUse);
+		}
+		UnsetMediaOps.Empty();
+		UnsetMediaCallbacks.Empty();
+	};
+	
+	auto* SoundEngine = IWwiseSoundEngineAPI::Get();
+	if (UNLIKELY(!SoundEngine))
+	{
+		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseMediaManagerImpl::DoUnsetMedia: Failed unloading %" PRIu32 " media without a SoundEngine."), UnsetMediaOps.Num());
+		return;
+	}
+
+	const auto UnsetMediaResult = SoundEngine->TryUnsetMedia(UnsetMediaOps.GetData(), UnsetMediaOps.Num(), Results.GetData());
+	if (LIKELY(UnsetMediaResult == AK_Success))
+	{
+		UE_LOG(LogWwiseFileHandler, Verbose, TEXT("FWwiseMediaManagerImpl::DoUnsetMedia: Unloaded %" PRIu32 " media."), UnsetMediaOps.Num());
+	}
+	else
+	{
+		UE_CLOG(LIKELY(UnsetMediaResult == AK_ResourceInUse), LogWwiseFileHandler, Verbose,
+			TEXT("FWwiseMediaManagerImpl::DoUnsetMedia: Failed to unload %" PRIu32 " media: %d (%s)."),
+			UnsetMediaOps.Num(), UnsetMediaResult, WwiseUnrealHelper::GetResultString(UnsetMediaResult));
+		UE_CLOG(UNLIKELY(UnsetMediaResult != AK_ResourceInUse), LogWwiseFileHandler, Log,
+			TEXT("FWwiseMediaManagerImpl::DoUnsetMedia: Failed to unload %" PRIu32 " media: %d (%s)."),
+			UnsetMediaOps.Num(), UnsetMediaResult, WwiseUnrealHelper::GetResultString(UnsetMediaResult));
 	}
 }

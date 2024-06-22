@@ -32,11 +32,13 @@ public:
 	IWwiseExternalSourceManager* GetExternalSourceManager() override;
 	IWwiseMediaManager* GetMediaManager() override;
 	FWwiseFileCache* GetFileCache() override;
+	FWwiseExecutionQueue* GetBankExecutionQueue() override; 
 	FWwiseIOHook* InstantiateIOHook() override;
 	IWwiseSoundBankManager* InstantiateSoundBankManager() override;
 	IWwiseExternalSourceManager* InstantiateExternalSourceManager() override;
 	IWwiseMediaManager* InstantiateMediaManager() override;
 	FWwiseFileCache* InstantiateFileCache() override;
+	FWwiseExecutionQueue* InstantiateBankExecutionQueue() override; 
 
 	void StartupModule() override;
 	void ShutdownModule() override;
@@ -47,4 +49,5 @@ protected:
 	TUniquePtr<IWwiseMediaManager> MediaManager;
 	TUniquePtr<IWwiseSoundBankManager> SoundBankManager;
 	TUniquePtr<FWwiseFileCache> FileCache;
+	TUniquePtr<FWwiseExecutionQueue> BankExecutionQueue;
 };

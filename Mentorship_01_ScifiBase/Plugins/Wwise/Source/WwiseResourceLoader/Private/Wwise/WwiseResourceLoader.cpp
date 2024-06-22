@@ -334,6 +334,7 @@ FWwiseLoadedAuxBusFuture FWwiseResourceLoader::LoadAuxBusAsync(const FWwiseLocal
 	}
 	else
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_ResourceLoader_AuxBusses);
 		auto* AuxBusNode = ResourceLoaderImpl->CreateAuxBusNode(InAuxBusCookedData, InLanguageOverride);
 		if (UNLIKELY(!AuxBusNode))
 		{
@@ -438,6 +439,7 @@ FWwiseLoadedEventFuture FWwiseResourceLoader::LoadEventAsync(const FWwiseLocaliz
 	}
 	else
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_ResourceLoader_Events);
 		auto* EventNode = ResourceLoaderImpl->CreateEventNode(InEventCookedData, InLanguageOverride);
 		if (UNLIKELY(!EventNode))
 		{
@@ -542,6 +544,7 @@ FWwiseLoadedExternalSourceFuture FWwiseResourceLoader::LoadExternalSourceAsync(
 	}
 	else
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_ResourceLoader_ExternalSources);
 		auto* ExternalSourceNode = ResourceLoaderImpl->CreateExternalSourceNode(InExternalSourceCookedData);
 		if (UNLIKELY(!ExternalSourceNode))
 		{
@@ -645,6 +648,7 @@ FWwiseLoadedGroupValueFuture FWwiseResourceLoader::LoadGroupValueAsync(const FWw
 	}
 	else
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_ResourceLoader_GroupValues);
 		auto* GroupValueNode = ResourceLoaderImpl->CreateGroupValueNode(InGroupValueCookedData);
 		if (UNLIKELY(!GroupValueNode))
 		{
@@ -748,6 +752,7 @@ FWwiseLoadedInitBankFuture FWwiseResourceLoader::LoadInitBankAsync(const FWwiseI
 	}
 	else
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_ResourceLoader_InitBanks);
 		auto* InitBankNode = ResourceLoaderImpl->CreateInitBankNode(InInitBankCookedData);
 		if (UNLIKELY(!InitBankNode))
 		{
@@ -851,6 +856,7 @@ FWwiseLoadedMediaFuture FWwiseResourceLoader::LoadMediaAsync(const FWwiseMediaCo
 	}
 	else
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_ResourceLoader_Media);
 		auto* MediaNode = ResourceLoaderImpl->CreateMediaNode(InMediaCookedData);
 		if (UNLIKELY(!MediaNode))
 		{
@@ -955,6 +961,7 @@ FWwiseLoadedShareSetFuture FWwiseResourceLoader::LoadShareSetAsync(
 	}
 	else
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_ResourceLoader_ShareSets);
 		auto* ShareSetNode = ResourceLoaderImpl->CreateShareSetNode(InShareSetCookedData, InLanguageOverride);
 		if (UNLIKELY(!ShareSetNode))
 		{
@@ -1059,6 +1066,7 @@ FWwiseLoadedSoundBankFuture FWwiseResourceLoader::LoadSoundBankAsync(
 	}
 	else
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_ResourceLoader_SoundBanks);
 		auto* SoundBankNode = ResourceLoaderImpl->CreateSoundBankNode(InSoundBankCookedData, InLanguageOverride);
 		if (UNLIKELY(!SoundBankNode))
 		{

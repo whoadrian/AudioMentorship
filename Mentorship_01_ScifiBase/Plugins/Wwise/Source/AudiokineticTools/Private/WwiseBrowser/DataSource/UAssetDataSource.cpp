@@ -57,6 +57,9 @@ bool FUAssetDataSource::GuidExistsInProjectDatabase(const FGuid ItemId)
 void FUAssetDataSource::ConstructItems()
 {
 	SCOPED_AUDIOKINETICTOOLS_EVENT_2(TEXT("FUAssetDataSource::ConstructItems"))
+
+	checkf(IsInGameThread(), TEXT("ConstructItems needs to access the AssetDatabase, and must be called on the GameThread"))
+
 	UsedItems.Empty();
 	UAssetWithoutGuid.Empty();
 	UAssetWithoutShortId.Empty();
@@ -75,6 +78,7 @@ void FUAssetDataSource::ConstructItems()
 
 		auto GuidValue = Asset.TagsAndValues.FindTag(GET_MEMBER_NAME_CHECKED(FWwiseObjectInfo, WwiseGuid));
 		auto ShortIdValue = Asset.TagsAndValues.FindTag(GET_MEMBER_NAME_CHECKED(FWwiseObjectInfo, WwiseShortId));
+		auto GroupIdValue = Asset.TagsAndValues.FindTag(GET_MEMBER_NAME_CHECKED(FWwiseGroupValueInfo, GroupShortId));
 
 		UAssetDataSourceId Id;
 		Id.Name = Asset.AssetName;
@@ -90,10 +94,13 @@ void FUAssetDataSource::ConstructItems()
 		{
 			Id.ShortId = FCString::Strtoui64(*ShortIdValue.GetValue(), NULL, 10);
 		}
-		
-		// States always share a state called None, and therefore always share the same ShortId. Do not list by ShortId in that case.
-		bool bStoreByShortId = Id.ShortId != AK_INVALID_UNIQUE_ID &&
-							   !(AssetType == EWwiseItemType::State && Asset.AssetName.ToString().EndsWith("None"));
+
+		if (GroupIdValue.IsSet())
+		{
+			Id.GroupId = FCString::Strtoui64(*GroupIdValue.GetValue(), NULL, 10);
+		}
+
+		bool bInvalidGroup = (AssetType == EWwiseItemType::State || AssetType == EWwiseItemType::Switch) && Id.GroupId == AK_INVALID_UNIQUE_ID;
 
 		if (Id.ItemId.IsValid() && GuidExistsInProjectDatabase(Id.ItemId))
 		{
@@ -108,16 +115,17 @@ void FUAssetDataSource::ConstructItems()
 			}
 		}
 
-		else if (bStoreByShortId)
+		else if (Id.ShortId != AK_INVALID_UNIQUE_ID && !bInvalidGroup)
 		{
-			if (auto UAsset = UAssetWithoutGuid.Find(Id.ShortId))
+			auto Pair = TPair<uint32, uint32>(Id.ShortId, Id.GroupId);
+			if (auto UAsset = UAssetWithoutGuid.Find(Pair))
 			{
 				UAsset->AssetsData.Add(Asset);
 			}
 			else
 			{
 				auto AssetInfo = CreateUAssetInfo(Id, Asset);
-				UAssetWithoutGuid.Add(Id.ShortId, AssetInfo);
+				UAssetWithoutGuid.Add(Pair, AssetInfo);
 			}
 		}
 
@@ -136,12 +144,13 @@ void FUAssetDataSource::ConstructItems()
 	}
 }
 
-void FUAssetDataSource::GetAssetsInfo(FGuid ItemId, uint32 ShortId, FString Name, EWwiseItemType::Type& ItemType, FName& AssetName, TArray<FAssetData>& Assets)
+void FUAssetDataSource::GetAssetsInfo(FGuid ItemId, uint32 ShortId, FString Name, uint32 GroupId, EWwiseItemType::Type& ItemType, FName& AssetName, TArray<FAssetData>& Assets)
 {
 	SCOPED_AUDIOKINETICTOOLS_EVENT_2(TEXT("FUAssetDataSource::GetAssetsInfo"))
 	UAssetDataSourceId Id;
 	Id.ItemId = ItemId;
 	Id.ShortId = ShortId;
+	Id.GroupId = GroupId;
 	Id.Name = FName(*Name);
 
 	if (auto Item = UsedItems.Find(Id.ItemId))
@@ -151,7 +160,8 @@ void FUAssetDataSource::GetAssetsInfo(FGuid ItemId, uint32 ShortId, FString Name
 		AssetName = Item->AssetName;
 	}
 
-	if (auto Item = UAssetWithoutGuid.Find(Id.ShortId))
+	auto Pair = TPair<uint32, uint32>(Id.ShortId, Id.GroupId);
+	if (auto Item = UAssetWithoutGuid.Find(Pair))
 	{
 		auto GuidItem = UsedItems.Find(Id.ItemId);
 		for(auto Asset : Item->AssetsData)
@@ -171,7 +181,7 @@ void FUAssetDataSource::GetAssetsInfo(FGuid ItemId, uint32 ShortId, FString Name
 				GuidItem->AssetsData.Add(Asset);
 			}
 		}
-		UAssetWithoutGuid.Remove(ShortId);
+		UAssetWithoutGuid.Remove(Pair);
 	}
 
 	if (auto Item = UAssetWithoutShortId.Find(FName(*Name)))

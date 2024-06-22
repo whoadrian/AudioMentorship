@@ -214,7 +214,13 @@ Super(ObjectInitializer)
 	bVisualizeComponent = true;
 #endif
 
-	AttenuationScalingFactor = 1.0f;
+	
+	const UAkSettings* AkSettings = GetDefault<UAkSettings>();
+	if(LIKELY(AkSettings))
+	{
+		AttenuationScalingFactor = AkSettings->DefaultScalingFactor;	
+	}
+
 	bAutoDestroy = false;
 	bUseDefaultListeners = true;
 
@@ -630,7 +636,9 @@ void UAkComponent::SetAttenuationScalingFactor(float Value)
 	AttenuationScalingFactor = Value;
 	FAkAudioDevice* AudioDevice = FAkAudioDevice::Get();
 	if (AudioDevice)
+	{
 		AudioDevice->SetAttenuationScalingFactor(this, AttenuationScalingFactor);
+	}
 }
 
 void UAkComponent::OnUpdateTransform(EUpdateTransformFlags UpdateTransformFlags, ETeleportType Teleport)

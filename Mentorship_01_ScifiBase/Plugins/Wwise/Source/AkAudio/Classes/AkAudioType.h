@@ -22,6 +22,10 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "UObject/Object.h"
 #include "Wwise/Info/WwiseObjectInfo.h"
 #include "Wwise/WwiseResourceLoaderFuture.h"
+#include "WwiseUnrealDefines.h"
+#if UE_5_4_OR_LATER
+#include "UObject/AssetRegistryTagsContext.h"
+#endif
 
 #include "AkAudioType.generated.h"
 
@@ -118,8 +122,12 @@ public:
 
 #if WITH_EDITOR
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+#if UE_5_4_OR_LATER 
+	virtual void GetAssetRegistryTags(FAssetRegistryTagsContext Context) const override;
+#else
 	virtual void GetAssetRegistryTags(TArray<FAssetRegistryTag>& OutTags) const override;
-#endif
+#endif // UE_5_4_OR_LATER
+#endif // WITH_EDITOR
 
 protected:
 	FWwiseResourceUnloadFuture ResourceUnload;

@@ -248,7 +248,7 @@ FAssetData WwiseBrowserHelpers::CreateAssetInPackage(const FString& AssetName, c
 FAssetData WwiseBrowserHelpers::CreateAsset(const FString& AssetName, const FWwiseTreeItemPtr& WwiseTreeItem, UClass* AssetClass, UPackage* Pkg)
 {
 	// Verify the asset class
-	if (!ensureMsgf(AssetClass, TEXT("The new asset '%s' wasn't created due to a problem finding the appropriate class for the new asset.")))
+	if (!ensureMsgf(AssetClass, TEXT("The new asset '%s' wasn't created due to a problem finding the appropriate class for the new asset."), *AssetName))
 	{
 		return nullptr;
 	}

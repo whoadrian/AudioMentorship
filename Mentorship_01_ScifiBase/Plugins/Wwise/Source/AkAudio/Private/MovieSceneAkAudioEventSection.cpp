@@ -285,8 +285,8 @@ void UMovieSceneAkAudioEventSection::SubscribeToEventChildren()
 				for (int descendant = 0; descendant < returnJson.Num(); ++descendant)
 				{
 					auto pJsonObj = returnJson[descendant]->AsObject();
-					auto descendantID = pJsonObj->GetStringField("id");
-					auto descendantType = pJsonObj->GetStringField("type");
+					auto descendantID = pJsonObj->GetStringField(TEXT("id"));
+					auto descendantType = pJsonObj->GetStringField(TEXT("type"));
 
 					if (descendantType.Equals("Action", ESearchCase::IgnoreCase))
 					{
@@ -310,11 +310,11 @@ void UMovieSceneAkAudioEventSection::SubscribeToEventChildren()
 							{
 								TArray<TSharedPtr<FJsonValue>> descendantReturnJson = outJsonResult->GetArrayField(FAkWaapiClient::WAAPIStrings::RETURN);
 								auto pDescendantJsonObj = descendantReturnJson[0]->AsObject();
-								if (pDescendantJsonObj->HasField("@Target"))
+								if (pDescendantJsonObj->HasField(TEXT("@Target")))
 								{
 									/** Subscribe to child added and child removed for the target object. */
-									auto targetObj = pDescendantJsonObj->GetObjectField("@Target");
-									auto targetID = targetObj->GetStringField("id");
+									auto targetObj = pDescendantJsonObj->GetObjectField(TEXT("@Target"));
+									auto targetID = targetObj->GetStringField(TEXT("id"));
 
 									uint64 addedSubID = 0;
 									uint64 removedSubID = 0;

@@ -163,7 +163,7 @@ void FWwiseFileStateTools::UnmapHandle(IMappedFileHandle& InMappedHandle, const 
 
 void FWwiseFileStateTools::GetFileToPtr(TUniqueFunction<void(bool bResult, const uint8* Ptr, int64 Size)>&& InCallback,
 	const FString& InFilePathname, bool bInDeviceMemory, int32 InMemoryAlignment, bool bInEnforceMemoryRequirements,
-	const FName& InStat, const FName& InStatDevice,
+	const FName& InStat, const FName& InStatDevice, const FName& InLLM,
 	EAsyncIOPriorityAndFlags InPriority, int64 ReadFirstBytes)
 {
 	SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseFileStateTools::GetFileToPtr"));
@@ -182,8 +182,9 @@ void FWwiseFileStateTools::GetFileToPtr(TUniqueFunction<void(bool bResult, const
 		return InCallback(false, nullptr, 0);
 	}
 
+	LLM_SCOPE_BYNAME(InLLM);
 	FileCache->CreateFileCacheHandle(*HandlePtr, InFilePathname,
-	[HandlePtr, InCallback = MoveTemp(InCallback), InFilePathname, bInDeviceMemory, InMemoryAlignment, bInEnforceMemoryRequirements, InStat, InStatDevice, InPriority, ReadFirstBytes](bool bResult) mutable
+	[HandlePtr, InCallback = MoveTemp(InCallback), InFilePathname, bInDeviceMemory, InMemoryAlignment, bInEnforceMemoryRequirements, InStat, InStatDevice, InLLM, InPriority, ReadFirstBytes](bool bResult) mutable
 	{
 		SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseFileStateTools::GetFileToPtr Opened"));
 		auto* Handle = *HandlePtr;
@@ -220,7 +221,11 @@ void FWwiseFileStateTools::GetFileToPtr(TUniqueFunction<void(bool bResult, const
 			MemoryAlignment = 0;
 		}
 
-		uint8* Ptr = AllocateMemory(Size, bInDeviceMemory, MemoryAlignment, bInEnforceMemoryRequirements, InStat, InStatDevice);
+		uint8* Ptr;
+		{
+			LLM_SCOPE_BYNAME(InLLM);
+			Ptr = AllocateMemory(Size, bInDeviceMemory, MemoryAlignment, bInEnforceMemoryRequirements, InStat, InStatDevice);
+		}
 		if (UNLIKELY(!Ptr))
 		{
 			UE_LOG(LogWwiseFileHandler, Warning, TEXT("FWwiseFileStateTools::GetFileToPtr Could not Allocate %" PRIi64 " for %s"), Size, *InFilePathname);
@@ -252,10 +257,17 @@ void FWwiseFileStateTools::GetFileToPtr(TUniqueFunction<void(bool bResult, const
 				DeallocateMemory(Ptr, Size, bInDeviceMemory, InMemoryAlignment, bInEnforceMemoryRequirements, InStat, InStatDevice);
 			}
 
-			LaunchWwiseTask(WWISEFILEHANDLER_ASYNC_NAME("FWwiseFileStateTools::GetFileToPtr Callback"), [InCallback = MoveTemp(InCallback), bResult, Ptr, Size]
+			if (FPlatformProcess::SupportsMultithreading())
+			{
+				LaunchWwiseTask(WWISEFILEHANDLER_ASYNC_NAME("FWwiseFileStateTools::GetFileToPtr Callback"), [InCallback = MoveTemp(InCallback), bResult, Ptr, Size]
+				{
+					InCallback(bResult, Ptr, Size);
+				});
+			}
+			else
 			{
 				InCallback(bResult, Ptr, Size);
-			});
+			}
 			
 			Handle->CloseAndDelete();
 		});

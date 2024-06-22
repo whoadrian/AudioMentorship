@@ -48,6 +48,7 @@ public:
 	FGuid ItemId;
 	/** ShortId of the item*/
 	uint32 ShortId = 0;
+	uint32 GroupId = 0;
 
 	/** The children of this tree item */
 	const TArray< TSharedPtr<FWwiseTreeItem> > GetChildren() { return m_Children;  }
@@ -86,6 +87,8 @@ public:
 	bool bSameLocation = true;
 
 	bool IsExpanded = false;
+
+	bool bIsInWrongLocation = false;
 
 	bool UEAssetExists() const;
 
@@ -140,11 +143,12 @@ public:
 	const FString GetDefaultAssetName() const;
 
 	/** Constructor */
-	FWwiseTreeItem(FString InDisplayName, FString InFolderPath, TSharedPtr<FWwiseTreeItem> InParent, EWwiseItemType::Type InItemType, const FGuid& InItemId)
+	FWwiseTreeItem(FString InDisplayName, FString InFolderPath, TSharedPtr<FWwiseTreeItem> InParent, EWwiseItemType::Type InItemType, const FGuid& InItemId, uint32 InShortId = AK_INVALID_UNIQUE_ID)
 		: DisplayName(MoveTemp(InDisplayName))
 		, FolderPath(MoveTemp(InFolderPath))
 		, ItemType(MoveTemp(InItemType))
 		, ItemId(InItemId)
+		, ShortId(InShortId)
 		, ChildCountInWwise(m_Children.Num())
 		, Parent(MoveTemp(InParent))
 	{
@@ -160,6 +164,7 @@ public:
 		ItemId = WwiseItemRef->GUID;
 		DisplayName = WwiseItemRef->Name.ToString();
 		FolderPath = WwiseItemRef->ObjectPath.ToString();
+		ShortId = ItemRef.Id;
 	}
 #endif
 

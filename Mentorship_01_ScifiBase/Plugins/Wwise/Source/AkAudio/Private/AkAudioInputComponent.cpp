@@ -69,7 +69,27 @@ void UAkAudioInputComponent::PostUnregisterGameObject()
 		for (int i = 0; i < CurrentlyPlayingIDs.Num(); ++i)
 		{
 			Device->StopPlayingID(CurrentlyPlayingIDs[i]);
+			FAkAudioInputManager::Stop(CurrentlyPlayingIDs[i]);
 		}
 	}
 	CurrentlyPlayingIDs.Empty();
+}
+
+void UAkAudioInputComponent::Stop()
+{
+	Super::Stop();
+	for(auto& CurrentlyPlayingID : CurrentlyPlayingIDs)
+	{
+		FAkAudioInputManager::Stop(CurrentlyPlayingID);
+	}
+	CurrentlyPlayingIDs.Empty();
+	if (AudioInputDelegate.IsBound())
+	{
+		AudioInputDelegate.Unbind();
+	}
+
+	if (AudioFormatDelegate.IsBound())
+	{
+		AudioFormatDelegate.Unbind();
+	}
 }

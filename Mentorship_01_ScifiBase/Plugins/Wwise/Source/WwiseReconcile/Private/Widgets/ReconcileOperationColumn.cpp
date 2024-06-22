@@ -25,28 +25,6 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #define LOCTEXT_NAMESPACE "AkAudio"
 
-FText FReconcileOperationColumn::GetOperationText(FWwiseReconcileItem TreeItem)
-{
-	
-	if (EnumHasAllFlags(TreeItem.OperationRequired, 
-		EWwiseReconcileOperationFlags::UpdateExisting | EWwiseReconcileOperationFlags::RenameExisting))
-	{
-		return LOCTEXT("WwiseReconcileUpdateRename", "Update and Rename");
-	}
-	switch (TreeItem.OperationRequired)
-	{
-	case EWwiseReconcileOperationFlags::Create:
-		return LOCTEXT("WwiseReconcileCreate", "Create");
-	case EWwiseReconcileOperationFlags::UpdateExisting:
-		return LOCTEXT("WwiseReconcileUpdate", "Update");
-	case EWwiseReconcileOperationFlags::RenameExisting:
-		return LOCTEXT("WwiseReconcileRename", "Rename");
-	case EWwiseReconcileOperationFlags::Delete:
-		return LOCTEXT("WwiseReconcileDelete", "Delete");
-	}
-	return LOCTEXT("WwiseReconcileEmpty", "");
-}
-
 FName FReconcileOperationColumn::GetColumnId()
 {
 	return FName("ReconcileOperations");
@@ -61,7 +39,7 @@ const TSharedRef<SWidget> FReconcileOperationColumn::ConstructRowWidget(FWwiseRe
 		.VAlign(VAlign_Center)
 		[
 			SNew(STextBlock)
-			.Text(GetOperationText(TreeItem))
+			.Text(TreeItem.GetOperationText())
 		];
 }
 

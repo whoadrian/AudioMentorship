@@ -17,12 +17,12 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #include "Wwise/WwiseExternalSourceManagerImpl.h"
 #include "Wwise/API/WwiseSoundEngineAPI.h"
-#include "Wwise/Stats/AsyncStats.h"
 #include "Wwise/Stats/FileHandler.h"
 
 #include <inttypes.h>
 
 #include "Wwise/WwiseExternalSourceFileState.h"
+#include "Wwise/Stats/FileHandlerMemory.h"
 
 FWwiseExternalSourceState::FWwiseExternalSourceState(const FWwiseExternalSourceCookedData& InCookedData) :
 	FWwiseExternalSourceCookedData(InCookedData),
@@ -78,6 +78,7 @@ void FWwiseExternalSourceManagerImpl::LoadExternalSource(
 	SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseExternalSourceManagerImpl::LoadExternalSource"));
 	FileHandlerExecutionQueue.Async(WWISEFILEHANDLER_ASYNC_NAME("FWwiseExternalSourceManagerImpl::LoadExternalSource"), [this, InExternalSourceCookedData, InRootPath, InLanguage, InCallback = MoveTemp(InCallback)]() mutable
 	{
+		LLM_SCOPE_BYTAG(Audio_Wwise_FileHandler_ExternalSources);
 		LoadExternalSourceImpl(InExternalSourceCookedData, InRootPath, InLanguage, MoveTemp(InCallback));
 	});
 }
@@ -93,7 +94,7 @@ void FWwiseExternalSourceManagerImpl::UnloadExternalSource(
 	});
 }
 
-void FWwiseExternalSourceManagerImpl::SetGranularity(AkUInt32 InStreamingGranularity)
+void FWwiseExternalSourceManagerImpl::SetGranularity(uint32 InStreamingGranularity)
 {
 	SCOPED_WWISEFILEHANDLER_EVENT_4(TEXT("FWwiseExternalSourceManagerImpl::SetGranularity"));
 	StreamingGranularity = InStreamingGranularity;
@@ -112,6 +113,8 @@ TArray<uint32> FWwiseExternalSourceManagerImpl::PrepareExternalSourceInfos(TArra
 	}
 
 	UE_LOG(LogWwiseFileHandler, VeryVerbose, TEXT("GetExternalSourceInfos: Preparing %d external sources."), InCookedData.Num());
+	LLM_SCOPE_BYTAG(Audio_Wwise_FileHandler_ExternalSources);
+
 	TArray<uint32> Result;
 	OutInfo.Reset();
 	OutInfo.Reserve(InCookedData.Num());
@@ -239,6 +242,8 @@ void FWwiseExternalSourceManagerImpl::UnloadExternalSourceMedia(const uint32 InE
 uint32 FWwiseExternalSourceManagerImpl::PrepareExternalSourceInfo(AkExternalSourceInfo& OutInfo,
                                                                   const FWwiseExternalSourceCookedData& InCookedData)
 {
+	FRWScopeLock Lock(CookieToMediaLock, FRWScopeLockType::SLT_ReadOnly);
+	
 	const auto* ExternalSourceFileStatePtr = CookieToMedia.Find(InCookedData.Cookie);
 	if (UNLIKELY(!ExternalSourceFileStatePtr))
 	{

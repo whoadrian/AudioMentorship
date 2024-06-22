@@ -16,5 +16,5 @@ Copyright (c) 2024 Audiokinetic Inc.
 *******************************************************************************/
 
 #if PLATFORM_IOS
-#include <AK/Plugin/AkConvolutionReverbFXFactory.h>
+
 #endif

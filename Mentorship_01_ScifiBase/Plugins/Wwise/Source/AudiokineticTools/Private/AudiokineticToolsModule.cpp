@@ -232,7 +232,7 @@ void FAudiokineticToolsModule::RegisterWwiseMenus()
 		WwiseBuildSection.AddMenuEntry(
 			NAME_None,
 			LOCTEXT("RefreshWwiseProject", "Refresh Project Database"),
-			LOCTEXT("RefreshWwiseProjectTooltip", "Reparse the the Wwise Project in GeneratedSoundBanks and reload Wwise assets."),
+			LOCTEXT("RefreshWwiseProjectTooltip", "Reparse the contents of the GeneratedSoundBanks folder and reload Wwise assets."),
 			FSlateIcon(),
 			RefreshProjectUIAction
 		);

@@ -32,7 +32,7 @@ the specific language governing permissions and limitations under the License.
 	#include <AK/SoundEngine/Platforms/Windows/AkAtomic.h>
 #elif defined( __EMSCRIPTEN__ )
 	#include <AK/SoundEngine/Platforms/Emscripten/AkAtomic.h>
-#elif defined(NN_NINTENDO_SDK)
+#elif defined(AK_NX)
 	#include <AK/SoundEngine/Platforms/NX/AkAtomic.h>
 #elif defined(AK_PS4)
 	#include <AK/SoundEngine/Platforms/PS4/AkAtomic.h>

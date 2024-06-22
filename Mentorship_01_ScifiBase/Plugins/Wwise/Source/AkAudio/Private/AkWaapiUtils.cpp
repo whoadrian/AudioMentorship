@@ -152,7 +152,9 @@ bool SubscribeToPropertyStateChange(const FString& ItemID, const FString& ItemPr
 {
 	auto* waapiClient = FAkWaapiClient::Get();
 	if (!waapiClient)
+	{
 		return false;
+	}
 
 #if AK_SUPPORT_WAAPI
 	TSharedRef<FJsonObject> options = MakeShareable(new FJsonObject());
@@ -160,8 +162,9 @@ bool SubscribeToPropertyStateChange(const FString& ItemID, const FString& ItemPr
 	options->SetStringField(WwiseWaapiHelper::PROPERTY, ItemProperty);
 
 	return waapiClient->Subscribe(ak::wwise::core::object::propertyChanged, options, CallBack, SubscriptionId, outJsonResult);
-#endif
+#else
 	return false;
+#endif
 }
 
 #undef LOCTEXT_NAMESPACE

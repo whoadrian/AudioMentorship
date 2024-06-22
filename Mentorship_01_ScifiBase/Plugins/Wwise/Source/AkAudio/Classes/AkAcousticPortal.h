@@ -141,6 +141,7 @@ public:
 
 	const TWeakObjectPtr<UAkRoomComponent> GetFrontRoomComponent() const { return FrontRoom; }
 	const TWeakObjectPtr<UAkRoomComponent> GetBackRoomComponent() const { return BackRoom; }
+	const TWeakObjectPtr<UAkRoomComponent> GetOppositeRoomComponent(const UAkRoomComponent* pRoomComponent) const;
 
 	virtual void BeginPlay() override;
 #if WITH_EDITOR

@@ -107,6 +107,21 @@ bool IWwiseReconcile::ReconcileAssets(EWwiseReconcileOperationFlags OperationFla
 		}
 	}
 
+	if(AssetsToMove.Num() != 0)
+	{
+		int NumberOfAssetsMoved = MoveAssets(ReconcileTask);
+		NumberOfOperationsCompleted += NumberOfAssetsMoved;
+		if (NumberOfAssetsMoved > 0 && !ReconcileTask.ShouldCancel())
+		{
+			UE_LOG(LogWwiseReconcile, Display, TEXT("Created %i assets out of %i."), NumberOfAssetsMoved, AssetsToMove.Num());
+		}
+		else if(!ReconcileTask.ShouldCancel())
+		{
+			UE_LOG(LogWwiseReconcile, Warning, TEXT("No assets moved"));
+			bSucceeded = false;
+		}
+	}
+
 	if(ReconcileTask.ShouldCancel())
 	{
 		UE_LOG(LogWwiseReconcile, Log, TEXT("Reconcile Operation was cancelled by user."));

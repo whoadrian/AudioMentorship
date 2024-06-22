@@ -140,9 +140,10 @@ public:
 	void CreateProjectDBItem(const FWwiseTreeItemPtr& TreeItemRootSoundBank, FWwiseTreeItemPtr& TreeItemRootDst);
 	void CreateWaapiExclusiveItem(const FWwiseTreeItemPtr& WaapiItem, FWwiseTreeItemPtr& TreeItemRootDst);
 	void CreateWaapiItem(const FWwiseTreeItemPtr& TreeItemRootWwise, FWwiseTreeItemPtr& TreeItemRootDst);
+	bool IsMoved(FWwiseTreeItemPtr CurrItem);
 private:
 
-	void MergeDataSources(bool bGenerateUAssetsInfo = true);
+	void MergeDataSources();
 
 	bool bIsDirty = false;
 
@@ -179,8 +180,9 @@ private:
 
 	void SetupAssetCallbacks();
 	void OnFilesFullyLoaded();
+	// Timer to debounce updates from the Asset Registry
 	void OnTimerTick(float DeltaSeconds);
-	
+
 	void OnUAssetSourceRefresh(const FAssetData& RemovedAssetData);
 
 	void OnUAssetSourceRefresh(const FAssetData& RemovedAssetData, const FString& OldPath);

@@ -231,6 +231,11 @@ bool AkSoundBankGenerationManager::WwiseConsoleGenerate()
 		WwiseConsoleArguments += FString::Printf(TEXT(" --root-output-path \"%s\""), *RootOutputPath);
 	}
 
+	if(InitParameters.bUserOverride)
+	{
+		WwiseConsoleArguments += FString::Printf(TEXT(" --use-user-overrides"));
+	}
+
 	if (InitParameters.Platforms.Num() > 0)
 	{
 		WwiseConsoleArguments += FString::Printf(TEXT(" --platform"));
@@ -240,7 +245,7 @@ bool AkSoundBankGenerationManager::WwiseConsoleGenerate()
 		}
 	}
 
-	if (InitParameters.SkipLanguages)
+	if (InitParameters.bSkipLanguages)
 	{
 		WwiseConsoleArguments += TEXT(" --skip-languages");
 	}
@@ -367,7 +372,7 @@ bool AkSoundBankGenerationManager::WAAPIGenerate()
 		args->SetArrayField(WwiseWaapiHelper::LANGUAGES, LanguageJsonArray);
 	}
 
-	args->SetBoolField(WwiseWaapiHelper::SKIP_LANGUAGES, InitParameters.SkipLanguages);
+	args->SetBoolField(WwiseWaapiHelper::SKIP_LANGUAGES, InitParameters.bSkipLanguages);
 	args->SetBoolField(WwiseWaapiHelper::WRITE_TO_DISK, true);
 
 	// do we always want to rebuild init bank now?

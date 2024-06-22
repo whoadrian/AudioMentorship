@@ -17,7 +17,6 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #pragma once
 
-#include "AkInclude.h"
 #include "WwiseMockFileState.h"
 #include "Wwise/WwiseExternalSourceManager.h"
 #include "Wwise/WwiseFileHandlerBase.h"
@@ -53,7 +52,7 @@ public:
 		DecrementFileStateUseAsync(InExternalSourceCookedData.Cookie, nullptr, EWwiseFileStateOperationOrigin::Loading, MoveTemp(InCallback));
 	}
 	
-	virtual void SetGranularity(AkUInt32 InStreamingGranularity) override {}
+	virtual void SetGranularity(uint32 InStreamingGranularity) override {}
 
 	IWwiseStreamingManagerHooks& GetStreamingHooks() override final { return *this; }
 

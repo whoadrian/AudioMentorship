@@ -20,10 +20,11 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
+#if UE_5_0_OR_LATER
+using EpicGames.Core;
 #if UE_5_3_OR_LATER
 using Microsoft.Extensions.Logging;
-#elif UE_5_0_OR_LATER
-using EpicGames.Core;
+#endif
 #else
 using Tools.DotNETCommon;
 #endif
@@ -48,25 +49,40 @@ public abstract class WwiseUEPlatform
         var platformPath = Path.Combine(ThirdPartyFolder, AkPlatformLibDir);
         var hasPlatform = Directory.Exists(platformPath);
         var supportedTargetType = Target.Type != TargetRules.TargetType.Server && Target.Type != TargetRules.TargetType.Program;
+
+        var cmdLineArgs = new CommandLineArguments(Environment.GetCommandLineArgs());
+        bool NullSoundEngineAsError = cmdLineArgs.HasOption("-nullSoundEngineAsError");
+        string logFormat = string.Empty;
+        string logArgument = string.Empty;
+
+        if (!supportedTargetType)
+        {
+	        logFormat = "Wwise SoundEngine is disabled: Using the null SoundEngine instead. Unsupported {0} target type for Wwise SoundEngine";
+	        logArgument = Target.Type.ToString();
+        }
+        else if (!hasPlatform)
+        {
+	        logFormat = "Wwise SoundEngine is disabled: Using the null SoundEngine instead. Could not find the {0} platform folder in ThirdParty";
+	        logArgument = AkPlatformLibDir.ToString();
+        }
+
+        if (!supportedTargetType || !hasPlatform)
+        {
 #if UE_5_3_OR_LATER
-        if (!supportedTargetType)
-        {
-	        Logger.LogInformation("Wwise SoundEngine is disabled: Using the null SoundEngine instead. Unsupported {Target} target type for Wwise SoundEngine", Target.Type.ToString());
-        }
-        else if (!hasPlatform)
-        {
-	        Logger.LogInformation("Wwise SoundEngine is disabled: Using the null SoundEngine instead. Could not find the {Platform} platform folder in ThirdParty", AkPlatformLibDir.ToString());
-        }
+			var logLevel = NullSoundEngineAsError ? LogLevel.Error : LogLevel.Information;
+	        Logger.Log(logLevel, logFormat, logArgument);
 #else
-        if (!supportedTargetType)
-        {
-	        Log.TraceInformation("Wwise SoundEngine is disabled: Using the null SoundEngine instead. Unsupported {0} target type for Wwise SoundEngine", Target.Type.ToString());
+	        if (NullSoundEngineAsError)
+	        {
+		        Log.TraceError(logFormat, logArgument);
+	        }
+	        else
+	        {
+		        Log.TraceInformation(logFormat, logArgument);
+	        }
+#endif        
         }
-        else if (!hasPlatform)
-        {
-	        Log.TraceInformation("Wwise SoundEngine is disabled: Using the null SoundEngine instead. Could not find the {0} platform folder in ThirdParty", AkPlatformLibDir.ToString());
-        }
-#endif
+
         return hasPlatform && supportedTargetType;
     }
 

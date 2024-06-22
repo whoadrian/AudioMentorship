@@ -26,7 +26,6 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "Async/Async.h"
 #include "AkSettingsPerUser.h"
 #include "DesktopPlatformModule.h"
-#include "Async/Async.h"
 #include "EditorDirectories.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Framework/Commands/GenericCommands.h"
@@ -184,7 +183,7 @@ namespace FilterMenuTitles
 			return LOCTEXT("States", "States");
 		case Switch:
 			return LOCTEXT("Switches", "Switches");
-		case Trigger:			
+		case Trigger:
 			return LOCTEXT("Triggers", "Triggers");
 		}
 		return FText();
@@ -218,6 +217,7 @@ namespace FilterMenuTitles
 SWwiseBrowser::SWwiseBrowser(): CommandList(MakeShared<FUICommandList>())
 {
 	AllowTreeViewDelegates = true;
+	bIsRefreshing = false;
 	DataSource = MakeUnique<FWwiseBrowserDataSource>();
 	Transport = MakeUnique<WaapiPlaybackTransport>();
 
@@ -460,7 +460,7 @@ void SWwiseBrowser::HandleFindInContentBrowserCommandExecute()
 
 void SWwiseBrowser::HandleRefreshWwiseBrowserCommandExecute()
 {
-	DataSource->ConstructTree();
+	OnRefreshClicked();
 }
 
 SWwiseBrowser::~SWwiseBrowser()
@@ -510,6 +510,7 @@ void SWwiseBrowser::Construct(const FArguments& InArgs)
 		.VAlign(VAlign_Fill)
 		[
 			SNew(SVerticalBox)
+			.IsEnabled_Lambda([this]{return !IsRefreshing();})
 
 		// Search
 		+ SVerticalBox::Slot()
@@ -587,7 +588,7 @@ void SWwiseBrowser::Construct(const FArguments& InArgs)
 					.Text(FEditorFontGlyphs::Repeat)
 					.ColorAndOpacity(FLinearColor::White)
 #endif
-				]	
+				]
 			]
 		]
 
@@ -613,7 +614,6 @@ void SWwiseBrowser::Construct(const FArguments& InArgs)
 				.Image(FAkAppStyle::Get().GetBrush("Graph.Node.Loop"))
 			]
 		]
-		
 	]
 
 	// Tree
@@ -942,25 +942,31 @@ void SWwiseBrowser::UAssetNotUpToDateExecute()
 
 void SWwiseBrowser::ForceRefresh()
 {
-	if(!GetProjectName().IsEmpty())
+	if (!IsRefreshing())
 	{
-		DataSource->ConstructTree();
+		bIsRefreshing = true;
+		UE_LOG(LogAudiokineticTools, Verbose, TEXT("SWwiseBrowser::ForceRefresh: Reloading project data."));
+		// This forces a refresh of the ProjectDatabase, which will cascade updates to the Browser DataSources
+		FFunctionGraphTask::CreateAndDispatchWhenReady([SharedThis = this]
+			{
+				FModuleManager::Get().GetModuleChecked<IAudiokineticTools>(FName("AudiokineticTools")).
+									  RefreshWwiseProject();
+				SharedThis->bIsRefreshing = false;
+			});
 	}
 }
 
 void SWwiseBrowser::InitialParse()
 {
-	if(!GetProjectName().IsEmpty())
-	{
-		DataSource->ConstructTree();
-		ConstructTree();
-		TreeViewPtr->RequestTreeRefresh();
-		ExpandFirstLevel();
-	}
+	DataSource->ConstructTree();
 }
 
 FText SWwiseBrowser::GetProjectName() const
 {
+	if (IsRefreshing())
+	{
+		return LOCTEXT("BrowserRefreshingProjectName", "Refreshing Project...");
+	}
 	return DataSource->GetProjectName();
 }
 
@@ -983,6 +989,11 @@ EVisibility SWwiseBrowser::IsWarningVisible() const
 EVisibility SWwiseBrowser::IsWarningNotVisible() const
 {
 	return GetProjectName().IsEmpty() ? EVisibility::Hidden : EVisibility::Visible;
+}
+
+bool SWwiseBrowser::IsRefreshing() const
+{
+	return bIsRefreshing;
 }
 
 EVisibility SWwiseBrowser::IsItemPlaying(FGuid ItemId) const
@@ -1048,11 +1059,6 @@ FReply SWwiseBrowser::OnOpenSettingsClicked()
 
 FReply SWwiseBrowser::OnRefreshClicked()
 {
-	if (FModuleManager::Get().IsModuleLoaded("AudiokineticTools"))
-	{
-		UE_LOG(LogAudiokineticTools, Verbose, TEXT("SWwiseBrowser::OnRefreshClicked: Reloading project data."));
-		FModuleManager::Get().GetModuleChecked<IAudiokineticTools>(FName("AudiokineticTools")).RefreshWwiseProject();
-	}
 	ForceRefresh();
 	return FReply::Handled();
 }
@@ -1103,10 +1109,11 @@ void SWwiseBrowser::ConstructTree()
 		FWwiseTreeItemPtr NewRoot = DataSource->GetTreeRootForType(static_cast<EWwiseItemType::Type>(i));
 
 		RootItems.Add(NewRoot);
-	}		
+	}
 
-	RestoreTreeExpansion(RootItems);
 	TreeViewPtr->RequestTreeRefresh();
+	bIsRefreshing = false;
+	ExpandFirstLevel();
 }
 
 void SWwiseBrowser::ExpandFirstLevel()
@@ -1143,18 +1150,11 @@ void SWwiseBrowser::GetChildrenForTree(FWwiseTreeItemPtr TreeItem, TArray< FWwis
 {
 	if (TreeItem)
 	{
-		if(TreeItem->ChildCountInWwise)
+		if(TreeItem->IsFolder())
 		{
 			if (!LastExpandedPaths.Contains(TreeItem->FolderPath))
 			{
 				DataSource->ClearEmptyChildren(TreeItem);
-				// We add a placeholder item if the children exist, but are not loaded (e.g. for WAAPI). This should never be visible
-				if (!TreeItem->GetChildren().Num())
-				{
-					FWwiseTreeItemPtr EmptyTreeItem = MakeShared<FWwiseTreeItem>(FString::Format(TEXT("Expansion placeholder for {0} "), { TreeItem->FolderPath }), "", nullptr, EWwiseItemType::None, FGuid());
-					EmptyTreeItem->Parent = TreeItem;
-					TreeItem->AddChild(EmptyTreeItem);
-				}
 			}
 			else
 			{
@@ -1224,12 +1224,12 @@ void SWwiseBrowser::ImportWwiseAssets(const TArray<FWwiseTreeItemPtr>& SelectedI
 	TSet<FGuid> SeenGuids;
 	for(auto WwiseTreeItem: SelectedItems)
 	{
-		WwiseBrowserHelpers::FindOrCreateAssetsRecursive(WwiseTreeItem, AssetsToImport, SeenGuids, 
+		WwiseBrowserHelpers::FindOrCreateAssetsRecursive(WwiseTreeItem, AssetsToImport, SeenGuids,
 			WwiseBrowserHelpers::EAssetCreationMode::InPackage, PackagePath);
 
 	}
 
-	WwiseBrowserHelpers::SaveSelectedAssets(AssetsToImport, PackagePath, 
+	WwiseBrowserHelpers::SaveSelectedAssets(AssetsToImport, PackagePath,
 			WwiseBrowserHelpers::EAssetCreationMode::InPackage, WwiseBrowserHelpers::EAssetDuplicationMode::DoDuplication);
 }
 
@@ -1295,23 +1295,6 @@ void SWwiseBrowser::SetItemVisibility(FWwiseTreeItemPtr Item, bool IsVisible)
 }
 
 void SWwiseBrowser::SaveCurrentTreeExpansion()
-{
-	TSet<FWwiseTreeItemPtr> ExpandedItemSet;
-	TreeViewPtr->GetExpandedItems(ExpandedItemSet);
-
-	LastExpandedPaths.Empty();
-
-	for (const auto& Item : ExpandedItemSet)
-	{
-		if (Item.IsValid())
-		{
-			// Keep track of the last paths that we broadcasted for expansion reasons when filtering
-			LastExpandedPaths.Add(Item->FolderPath);
-		}
-	}
-}
-
-void SWwiseBrowser::RestoreTreeExpansion(const TArray< FWwiseTreeItemPtr >& Items)
 {
 	TSet<FWwiseTreeItemPtr> ExpandedItemSet;
 	TreeViewPtr->GetExpandedItems(ExpandedItemSet);
@@ -1438,7 +1421,7 @@ void SWwiseBrowser::UpdateWaapiSelection(const TArray<TSharedPtr<FWwiseTreeItem>
 	TreeViewPtr->RequestTreeRefresh();
 	if (TreeItems.Num() > 0)
 	{
-		
+
 		TreeViewPtr->ClearSelection();
 		TreeViewPtr->SetSelectedItems(TreeItems);
 		TreeViewPtr->RequestScrollIntoView(TreeItems[0]);
@@ -1589,10 +1572,12 @@ void SWwiseBrowser::CreateReconcileTab() const
 {
 	auto SelectedItems = TreeViewPtr->GetSelectedItems();
 
+	bool bShouldReconcileAllItems = false;
 	//Nothing items are selected, Select everything
 	if(SelectedItems.Num() == 0)
 	{
 		SelectedItems = RootItems;
+		bShouldReconcileAllItems = true;
 	}
 	TArray<FWwiseReconcileItem> ReconcileItems;
 	if (auto WwiseReconcile = IWwiseReconcile::Get())
@@ -1600,7 +1585,14 @@ void SWwiseBrowser::CreateReconcileTab() const
 		WwiseReconcile->ConvertWwiseItemTypeToReconcileItem(SelectedItems, ReconcileItems);
 		if (ReconcileItems.Num() == 0)
 		{
-			FMessageDialog::Open(EAppMsgType::Ok, LOCTEXT("NoReconcile", "Selected Items do not need to be reconciled."));
+			if(bShouldReconcileAllItems)
+			{
+				FMessageDialog::Open(EAppMsgType::Ok, LOCTEXT("NoReconcileAll", "Items do not need to be reconciled."));				
+			}
+			else
+			{
+				FMessageDialog::Open(EAppMsgType::Ok, LOCTEXT("NoReconcile", "Selected Items do not need to be reconciled."));
+			}
 			return;
 		}
 

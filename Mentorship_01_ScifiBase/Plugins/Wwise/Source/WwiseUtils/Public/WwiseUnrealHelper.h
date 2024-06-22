@@ -33,6 +33,7 @@ namespace WwiseUnrealHelper
 	WWISEUTILS_API FString GetWwisePluginDirectory();
 	WWISEUTILS_API FString GetWwiseProjectPath();
 	WWISEUTILS_API FString GetSoundBankDirectory();
+	WWISEUTILS_API FString GetSoundBankProjectMetadataFile();
 
 	WWISEUTILS_API void TrimPath(FString& Path);
 
@@ -45,6 +46,8 @@ namespace WwiseUnrealHelper
 	WWISEUTILS_API FString GetWwiseSoundBankInfoCachePath();
 	WWISEUTILS_API FString FormatFolderPath(FString folderPath);
 	WWISEUTILS_API bool MakePathRelativeToWwiseProject(FString& AbsolutePath);
+
+	WWISEUTILS_API void RunTaskInGameThread(TFunction<void()> Function);
 
 	extern WWISEUTILS_API const TCHAR* MediaFolderName;
 

@@ -51,12 +51,12 @@ AKRESULT FWwiseFileLocationResolver::Open(AkFileID in_fileID, AkOpenMode in_eOpe
 				auto RemoveCount = OpenFileIDMap.Remove(in_fileID, Data);
 				if (UNLIKELY(RemoveCount != 1))
 				{
-					UE_LOG(LogWwiseSoundEngine, Error, TEXT("FWwiseDefaultIOHook::Open Removed %" PRIi32 " OpenFileNameMap Bridges for file ID %" PRIu32), in_fileID);
+					UE_LOG(LogWwiseSoundEngine, Error, TEXT("FWwiseDefaultIOHook::Open Removed %d OpenFileNameMap Bridges for file ID %d"), RemoveCount, in_fileID);
 				}
 
 				if (UNLIKELY(!Data))
 				{
-					UE_LOG(LogWwiseSoundEngine, Error, TEXT("FWwiseDefaultIOHook::Open Empty Bridge for file ID %" PRIu32), in_fileID);
+					UE_LOG(LogWwiseSoundEngine, Error, TEXT("FWwiseDefaultIOHook::Open Empty Bridge for file ID %d"), in_fileID);
 					return AK_FileNotFound;
 				}
 			}
@@ -65,7 +65,7 @@ AKRESULT FWwiseFileLocationResolver::Open(AkFileID in_fileID, AkOpenMode in_eOpe
 				if (in_eOpenMode != AkOpenMode::AK_OpenModeRead)
 				{
 					Lock.Unlock();
-					UE_LOG(LogWwiseSoundEngine, VeryVerbose, TEXT("FWwiseDefaultIOHook::Open Bridge not yet created. Synchronous write file open of File ID %" PRIu32), in_fileID);
+					UE_LOG(LogWwiseSoundEngine, VeryVerbose, TEXT("FWwiseDefaultIOHook::Open Bridge not yet created. Synchronous write file open of File ID %d"), in_fileID);
 					bool bSyncOpen = false;
 					auto Result = Open(in_fileID, in_eOpenMode, in_pFlags, bSyncOpen, io_fileDesc);
 					if (Result != AK_Success)
@@ -78,7 +78,7 @@ AKRESULT FWwiseFileLocationResolver::Open(AkFileID in_fileID, AkOpenMode in_eOpe
 				}
 
 				// Synchronous loading. Can happen in offline rendering mode
-				UE_LOG(LogWwiseSoundEngine, VeryVerbose, TEXT("FWwiseDefaultIOHook::Open Creating Synchronous Bridge for file %" PRIu32), in_fileID);
+				UE_LOG(LogWwiseSoundEngine, VeryVerbose, TEXT("FWwiseDefaultIOHook::Open Creating Synchronous Bridge for file %d"), in_fileID);
 				Data = new FileOpenDataBridge;
 				Data->pszFileName = nullptr;
 				Data->fileID = in_fileID;
@@ -101,13 +101,13 @@ AKRESULT FWwiseFileLocationResolver::Open(AkFileID in_fileID, AkOpenMode in_eOpe
 		io_fileDesc.pCustomParam = Data->pFileDesc;
 		auto Result = Data->Result;
 		delete Data;
-		UE_LOG(LogWwiseSoundEngine, Verbose, TEXT("FWwiseDefaultIOHook::Opened file ID %" PRIu32 ": (%" PRIu32 ") %s"), in_fileID, Result, WwiseUnrealHelper::GetResultString(Result));
+		UE_LOG(LogWwiseSoundEngine, Verbose, TEXT("FWwiseDefaultIOHook::Opened file ID %d: (%d) %s"), in_fileID, Result, WwiseUnrealHelper::GetResultString(Result));
 		return Result;
 	}
 	else
 	{
 		SCOPED_WWISESOUNDENGINE_EVENT_2(TEXT("FWwiseDefaultIOHook::Open Async Init"));
-		UE_LOG(LogWwiseSoundEngine, VeryVerbose, TEXT("FWwiseDefaultIOHook::Open Creating Bridge for file %" PRIu32), in_fileID);
+		UE_LOG(LogWwiseSoundEngine, VeryVerbose, TEXT("FWwiseDefaultIOHook::Open Creating Bridge for file %d"), in_fileID);
 		auto Data = new FileOpenDataBridge;
 		Data->pszFileName = nullptr;
 		Data->fileID = in_fileID;
@@ -143,7 +143,7 @@ AKRESULT FWwiseFileLocationResolver::Open(const AkOSChar* in_pszFileName, AkOpen
 				auto RemoveCount = OpenFileNameMap.Remove(Filename, Data);
 				if (UNLIKELY(RemoveCount != 1))
 				{
-					UE_LOG(LogWwiseSoundEngine, Error, TEXT("FWwiseDefaultIOHook::Open Removed %" PRIi32 " OpenFileNameMap Bridges for file %s"), *Filename);
+					UE_LOG(LogWwiseSoundEngine, Error, TEXT("FWwiseDefaultIOHook::Open Removed %d OpenFileNameMap Bridges for file %s"), RemoveCount, *Filename);
 				}
 				if (UNLIKELY(!Data))
 				{
@@ -192,7 +192,7 @@ AKRESULT FWwiseFileLocationResolver::Open(const AkOSChar* in_pszFileName, AkOpen
 		io_fileDesc.pCustomParam = Data->pFileDesc;
 		auto Result = Data->Result;
 		delete Data;
-		UE_LOG(LogWwiseSoundEngine, Verbose, TEXT("FWwiseDefaultIOHook::Opened file %s: (%" PRIu32 ") %s"), *Filename, Result, WwiseUnrealHelper::GetResultString(Result));
+		UE_LOG(LogWwiseSoundEngine, Verbose, TEXT("FWwiseDefaultIOHook::Opened file %s: (%d) %s"), *Filename, Result, WwiseUnrealHelper::GetResultString(Result));
 		return Result;
 	}
 	else

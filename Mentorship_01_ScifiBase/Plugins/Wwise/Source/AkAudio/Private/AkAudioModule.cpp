@@ -130,12 +130,13 @@ namespace WwiseUnrealHelper
 			return Settings->WwiseStagingDirectory.Path;
 		}
 		return TEXT("WwiseAudio");
-#endif
+#else
 		if (Settings && !Settings->WwiseStagingDirectory.Path.IsEmpty())
 		{
 			return FPaths::ProjectContentDir() / Settings->WwiseStagingDirectory.Path;
 		}
 		return FPaths::ProjectContentDir() / TEXT("WwiseAudio");
+#endif
 	}
 }
 
@@ -319,14 +320,6 @@ void FAkAudioModule::UpdateWwiseResourceLoaderSettings()
 void FAkAudioModule::ParseGeneratedSoundBankData()
 {
 	SCOPED_AKAUDIO_EVENT(TEXT("ParseGeneratedSoundBankData"));
-	if (auto* AkSettings = GetDefault<UAkSettings>())
-	{
-		if (!AkSettings->AreSoundBanksGenerated())
-		{
-			UE_LOG(LogAkAudio, Warning, TEXT("FAkAudioModule::ParseGeneratedSoundBankData: SoundBanks are not yet generated, nothing to parse.\nCurrent Generated SoundBanks path is: %s"), *WwiseUnrealHelper::GetSoundBankDirectory());
-			return;
-		}
-	}
 	UE_LOG(LogAkAudio, Log, TEXT("FAkAudioModule::ParseGeneratedSoundBankData : Parsing Wwise project data."));
 	auto* ProjectDatabase = FWwiseProjectDatabase::Get();
 	if (UNLIKELY(!ProjectDatabase))

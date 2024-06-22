@@ -30,14 +30,7 @@ namespace WwiseUnrealHelper
 	{
 		static FORCEINLINE uint32 GetKeyHash(AkGameObjectID Key)
 		{
-			if (sizeof(Key) <= 4)
-			{
-				return (uint32)Key;
-			}
-			else
-			{
-				return GetTypeHash((uint64)Key);
-			}
+			return GetTypeHash((uint64)Key);
 		}
 	};
 

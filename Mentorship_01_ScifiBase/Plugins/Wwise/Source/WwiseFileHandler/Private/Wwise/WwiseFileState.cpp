@@ -20,6 +20,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #include <inttypes.h>
 
+#include "Wwise/WwiseFileHandlerModule.h"
 #include "Wwise/WwiseGlobalCallbacks.h"
 #include "Wwise/WwiseStreamableFileStateInfo.h"
 
@@ -30,6 +31,17 @@ FWwiseFileState::~FWwiseFileState()
 	UE_CLOG(FileStateExecutionQueue, LogWwiseFileHandler, Error, TEXT("Dtor FWwiseFileState %p without closing the execution queue!"), this);
 	UE_CLOG(LoadCount > 0, LogWwiseFileHandler, Error, TEXT("Dtor FWwiseFileState %p with LoadCount still active!"), this);
 	UE_CLOG(State != EState::Closed, LogWwiseFileHandler, Error, TEXT("Dtor FWwiseFileState %p with State %s not closed!"), this, GetStateName());
+}
+
+FWwiseExecutionQueue* FWwiseFileState::GetBankExecutionQueue()
+{
+	auto* FileHandlerModule = IWwiseFileHandlerModule::GetModule();
+	if (UNLIKELY(!FileHandlerModule))
+	{
+		UE_LOG(LogWwiseFileHandler, Log, TEXT("FWwiseFileState::GetBankExecutionQueue: WwiseFileHandlerModule is unloaded."));
+		return nullptr;
+	}
+	return FileHandlerModule->GetBankExecutionQueue();
 }
 
 const TCHAR* FWwiseFileState::GetStateNameFor(EState State)

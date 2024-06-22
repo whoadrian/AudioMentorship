@@ -104,7 +104,13 @@ const TSharedRef<SWidget> FProjectedResultColumn::ConstructRowWidget(FWwiseRecon
 			];
 	}
 
-	if(EnumHasAnyFlags(TreeItem.OperationRequired, EWwiseReconcileOperationFlags::Create | EWwiseReconcileOperationFlags::RenameExisting))
+	FString DisplayedAssetPath = AssetPackagePath / AkUnrealAssetDataHelper::GetAssetDefaultName(WwiseRef).ToString();
+	if(EnumHasAnyFlags(TreeItem.OperationRequired, EWwiseReconcileOperationFlags::Move))
+	{
+		DisplayedAssetPath = TreeItem.MovedPath / AkUnrealAssetDataHelper::GetAssetDefaultName(WwiseRef).ToString();
+	}
+	
+	if(EnumHasAnyFlags(TreeItem.OperationRequired, EWwiseReconcileOperationFlags::Create | EWwiseReconcileOperationFlags::RenameExisting | EWwiseReconcileOperationFlags::Move))
 	{
 		FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>(TEXT("AssetRegistry"));
 #if UE_5_1_OR_LATER
@@ -115,7 +121,6 @@ const TSharedRef<SWidget> FProjectedResultColumn::ConstructRowWidget(FWwiseRecon
 #endif
 		if(Asset.IsValid())
 		{
-			FString DisplayedAssetPath = AssetPackagePath / AkUnrealAssetDataHelper::GetAssetDefaultName(WwiseRef).ToString();
 			return SNew(SHorizontalBox)
 				+ SHorizontalBox::Slot()
 				.AutoWidth().
@@ -142,7 +147,7 @@ const TSharedRef<SWidget> FProjectedResultColumn::ConstructRowWidget(FWwiseRecon
 		VAlign(VAlign_Center)
 		[
 			SNew(STextBlock)
-			.Text(FText::FromString(AssetPackagePath / AssetName.ToString()))
+			.Text(FText::FromString(DisplayedAssetPath))
 		];
 }
 

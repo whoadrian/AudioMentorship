@@ -234,8 +234,9 @@ bool SWaapiPicker::CallWaapiGetInfoFrom(const FString& inFromField, const FStrin
 	// Request data from Wwise using WAAPI
 
 	return waapiClient->Call(ak::wwise::core::object::get, Args, Options, outJsonResult);
-#endif
+#else
 	return false;
+#endif
 }
 
 TSharedPtr<FWwiseTreeItem> SWaapiPicker::ConstructWwiseTreeItem(const TSharedPtr<FJsonValue>& InJsonItem)

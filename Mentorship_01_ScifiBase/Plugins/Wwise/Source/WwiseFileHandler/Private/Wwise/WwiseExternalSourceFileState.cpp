@@ -114,7 +114,7 @@ void FWwiseInMemoryExternalSourceFileState::OpenFile(FOpenFileCallback&& InCallb
 		}
 	},
 		FullPathName, bDeviceMemory, MemoryAlignment, true,
-		STAT_WwiseMemoryExtSrc_FName, STAT_WwiseMemoryExtSrcDevice_FName);
+		STAT_WwiseMemoryExtSrc_FName, STAT_WwiseMemoryExtSrcDevice_FName, WWISE_LLM_GET_NAME(Audio_Wwise_FileHandler_ExternalSources));
 }
 
 void FWwiseInMemoryExternalSourceFileState::LoadInSoundEngine(FLoadInSoundEngineCallback&& InCallback)
@@ -216,7 +216,7 @@ void FWwiseStreamedExternalSourceFileState::OpenFile(FOpenFileCallback&& InCallb
 		return OpenFileSucceeded(MoveTemp(InCallback));
 	},
 		FullPathName, false, 0, false,
-		STAT_WwiseMemoryExtSrcPrefetch_FName, STAT_WwiseMemoryExtSrcPrefetchDevice_FName,
+		STAT_WwiseMemoryExtSrcPrefetch_FName, STAT_WwiseMemoryExtSrcPrefetchDevice_FName, WWISE_LLM_GET_NAME(Audio_Wwise_FileHandler_ExternalSources),
 		AIOP_Normal, PrefetchWithGranularity);
 }
 
@@ -236,6 +236,8 @@ void FWwiseStreamedExternalSourceFileState::LoadInSoundEngine(FLoadInSoundEngine
 		return LoadInSoundEngineFailed(MoveTemp(InCallback));
 	}
 
+	LLM_SCOPE_BYTAG(Audio_Wwise_FileHandler_ExternalSources);
+
 	const auto FullPathName = RootPath.ToString() / MediaPathName.ToString();
 
 	UE_LOG(LogWwiseFileHandler, VeryVerbose, TEXT("FWwiseStreamedExternalSourceFileState::LoadInSoundEngine %" PRIu32 " (%s): Opening file"), MediaId, *MediaPathName.ToString());
@@ -244,10 +246,7 @@ void FWwiseStreamedExternalSourceFileState::LoadInSoundEngine(FLoadInSoundEngine
 		if (UNLIKELY(!bResult))
 		{
 			UE_LOG(LogWwiseFileHandler, Error, TEXT("FWwiseStreamedExternalSourceFileState::LoadInSoundEngine %" PRIu32 ": Failed to load Streaming ExternalSource (%s)."), MediaId, *MediaPathName.ToString());
-			LaunchWwiseTask(WWISEFILEHANDLER_ASYNC_NAME("FWwiseStreamedExternalSourceFileState::LoadInSoundEngine delete"), [StreamedFile = StreamedFile]
-			{
-				delete StreamedFile;
-			});
+			if (StreamedFile) StreamedFile->CloseAndDelete();
 			StreamedFile = nullptr;
 			return LoadInSoundEngineFailed(MoveTemp(Callback));
 		}
@@ -264,11 +263,12 @@ void FWwiseStreamedExternalSourceFileState::UnloadFromSoundEngine(FUnloadFromSou
 	SCOPED_WWISEFILEHANDLER_EVENT_3(TEXT("FWwiseStreamedExternalSourceFileState::UnloadFromSoundEngine"));
 	UE_LOG(LogWwiseFileHandler, Verbose, TEXT("FWwiseStreamedExternalSourceFileState::UnloadFromSoundEngine %" PRIu32 " (%s)"), MediaId, *MediaPathName.ToString());
 
-	const auto* StreamedFileToDelete = StreamedFile;
-	StreamedFile = nullptr;
+	if (StreamedFile)
+	{
+		StreamedFile->CloseAndDelete();
+		StreamedFile = nullptr;
+	}
 	iFileSize = 0;
-
-	delete StreamedFileToDelete;
 
 	DEC_DWORD_STAT(STAT_WwiseFileHandlerLoadedExternalSourceMedia);
 	UnloadFromSoundEngineDone(MoveTemp(InCallback));

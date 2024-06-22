@@ -28,14 +28,14 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "CoreGlobals.h"
 #include "UObject/UObjectGlobals.h"
 
-#if WITH_ENGINE
+#if WITH_ENGINE && !UE_5_4_OR_LATER
 #include "AudioPluginUtilities.h"
 #include "OpusAudioInfo.h"
 #include "VorbisAudioInfo.h"
 #include "ADPCMAudioInfo.h"
 #endif // WITH_ENGINE
 
-#if UE_5_0_OR_LATER
+#if UE_5_0_OR_LATER && !UE_5_4_OR_LATER
 #include "BinkAudioInfo.h"
 #endif
 
@@ -43,9 +43,11 @@ Copyright (c) 2024 Audiokinetic Inc.
 DECLARE_LOG_CATEGORY_EXTERN(LogAkAudioMixer, Log, All);
 DEFINE_LOG_CATEGORY(LogAkAudioMixer);
 
+#if !UE_5_4_OR_LATER
 FName FAkMixerPlatform::NAME_OGG(TEXT("OGG"));
 FName FAkMixerPlatform::NAME_OPUS(TEXT("OPUS"));
 FName FAkMixerPlatform::NAME_ADPCM(TEXT("ADPCM"));
+#endif
 
 
 FAkMixerPlatform::FAkMixerPlatform() :
@@ -56,7 +58,7 @@ FAkMixerPlatform::FAkMixerPlatform() :
 	OutputBuffer(nullptr),
 	OutputBufferByteLength(0)
 {
-#if !WITH_EDITOR
+#if !WITH_EDITOR && !UE_5_4_OR_LATER
 	LoadVorbisLibraries();
 #endif
 }
@@ -436,6 +438,8 @@ void FAkMixerPlatform::SubmitBuffer(const uint8* Buffer)
 	}
 }
 
+#if !UE_5_4_OR_LATER
+
 #if UE_5_0_OR_LATER
 FName FAkMixerPlatform::GetRuntimeFormat(const USoundWave* InSoundWave) const
 {
@@ -462,7 +466,7 @@ FName FAkMixerPlatform::GetRuntimeFormat(const USoundWave* InSoundWave) const
 			return Audio::NAME_OPUS;
 		}
 		return Audio::NAME_OGG;
-#endif
+#endif // defined(PLATFORM_PS5) && PLATFORM_PS5
 	}
 	return RuntimeFormat;
 }
@@ -520,7 +524,7 @@ FName FAkMixerPlatform::GetRuntimeFormat(USoundWave* InSoundWave)
 		return NAME_OPUS;
 	}
 	return NAME_OGG;
-#endif
+#endif // defined(PLATFORM_PS5) && PLATFORM_PS5
 #else
 	checkNoEntry();
 	return FName();
@@ -562,13 +566,15 @@ ICompressedAudioInfo* FAkMixerPlatform::CreateCompressedAudioInfo(USoundWave* In
 	}
 
 	return new FADPCMAudioInfo();
-#endif
+#endif // defined(PLATFORM_PS5) && PLATFORM_PS5
 #else
 	checkNoEntry();
 	return nullptr;
 #endif // WITH_ENGINE
 }
-#endif
+#endif // UE_5_0_OR_LATER
+
+#endif // !UE_5_4_OR_LATER
 
 FString FAkMixerPlatform::GetDefaultDeviceName() {
 	static FString DefaultName(TEXT("Wwise Audio Mixer Device."));

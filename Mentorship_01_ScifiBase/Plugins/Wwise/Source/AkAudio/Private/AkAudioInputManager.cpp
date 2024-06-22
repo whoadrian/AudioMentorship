@@ -377,3 +377,8 @@ AkPlayingID FAkAudioInputManager::PostAudioInputEvent(UAkAudioEvent* Event,
 		return Result;
 	}, AudioSamplesDelegate, AudioFormatDelegate);
 }
+
+void FAkAudioInputManager::Stop(uint32 PlayingId)
+{
+	FAkAudioInputHelpers::AudioInputDelegates.Remove(PlayingId);
+}

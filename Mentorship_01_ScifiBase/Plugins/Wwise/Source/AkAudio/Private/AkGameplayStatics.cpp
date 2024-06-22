@@ -536,7 +536,7 @@ void UAkGameplayStatics::AddOutput(const FAkOutputSettings& in_Settings, FAkOutp
 	AkUInt32 ShortID = SoundEngine->GetIDFromString(TCHAR_TO_ANSI(*in_Settings.AudioDeviceShareSetName));
 	if (UNLIKELY(ShortID == AK_INVALID_UNIQUE_ID))
 	{
-		UE_LOG(LogAkAudio, Warning, TEXT("UAkGameplayStatics::AddOutput: Short ID for %s is invalid, new output will not be added."));
+		UE_LOG(LogAkAudio, Warning, TEXT("UAkGameplayStatics::AddOutput: Short ID for %s is invalid, new output will not be added."), *in_Settings.AudioDeviceShareSetName);
 		return;
 	}
 	AkOutputSettings OutSettings;
@@ -562,7 +562,7 @@ void UAkGameplayStatics::AddOutput(const FAkOutputSettings& in_Settings, FAkOutp
 	}
 	if (result != AK_Success)
 	{
-		UE_LOG(LogAkAudio, Warning, TEXT("UAkGameplayStatics::AddOutput: AddOuput has failed, new output will not be added. AkResult: %s"), result);
+		UE_LOG(LogAkAudio, Warning, TEXT("UAkGameplayStatics::AddOutput: AddOuput has failed, new output will not be added. AkResult: %s"), WwiseUnrealHelper::GetResultString(result));
 	}
 
 	out_DeviceID.UInt64Value = outputDeviceID;

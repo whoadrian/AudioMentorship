@@ -136,21 +136,15 @@ public:
 
 		return Result;
 	}
-
 	/**
-		Add a Component to the spatial index.
-	*/
-	void Add(USceneComponent* EnvironmentToAdd);
-	
+	 * Add or update a component in the spatial index. Must be called if the transform of the component changes.
+	 */
+	void Update(USceneComponent* EnvironmentToUpdate);
+
 	/**
 	 * Remove a Component from the spatial index.
 	 */
 	bool Remove(USceneComponent* EnvironmentToRemove);
-
-	/**
-	 * Update the bounds of a component that is already indexed. Must be called if the transform of the component changes.
-	 */
-	void Update(USceneComponent* EnvironmentToUpdate);
 
 	/**
 	 * Clear all components in the given World.
@@ -161,6 +155,13 @@ public:
 	 * Is the index empty for the given World.
 	 */
 	bool IsEmpty(const UWorld* World);
+
+protected:
+	/**
+		Add a Component to the spatial index. 
+		Calling Add twice in a row is dangerous, use Update to ensure that the component is removed first.
+	*/
+	void Add(USceneComponent* EnvironmentToAdd);
 
 private:
 	TMap<UWorld*, TUniquePtr<UAkEnvironmentOctree> > Map;

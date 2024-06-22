@@ -88,14 +88,14 @@ bool FWaapiDataSource::TearDown()
 	return true;
 }
 
-void FWaapiDataSource::ConstructTree(bool bShouldRefresh)
+bool FWaapiDataSource::ConstructTree(bool bShouldRefresh)
 {
 	SCOPED_AUDIOKINETICTOOLS_EVENT_2(TEXT("FWaapiDataSource::ConstructTree"))
 
 	if (IsProjectLoaded() != EWwiseConnectionStatus::Connected)
 	{
 		UE_LOG(LogAudiokineticTools, Log, TEXT("Failed to construct Waapi Tree. The Wwise project is not connected."));
-		return;
+		return false;
 	}
 	{
 		FScopeLock AutoLock(&WaapiRootItemsLock);
@@ -119,6 +119,7 @@ void FWaapiDataSource::ConstructTree(bool bShouldRefresh)
 	{
 		WaapiDataSourceRefreshed.ExecuteIfBound();
 	}
+	return true;
 }
 
 FWwiseTreeItemPtr FWaapiDataSource::ConstructTreeRoot(EWwiseItemType::Type Type)
@@ -156,8 +157,7 @@ FWwiseTreeItemPtr FWaapiDataSource::ConstructTreeRoot(EWwiseItemType::Type Type)
 	}
 
 	// Create the new tree item
-	FWwiseTreeItemPtr NewRootParent = MakeShared<FWwiseTreeItem>(EWwiseItemType::BrowserDisplayNames[static_cast<int>(Type)], Path, nullptr, EWwiseItemType::Folder, InItemGuid);
-	NewRootParent->ShortId = ShortId;
+	FWwiseTreeItemPtr NewRootParent = MakeShared<FWwiseTreeItem>(EWwiseItemType::BrowserDisplayNames[static_cast<int>(Type)], Path, nullptr, EWwiseItemType::Folder, InItemGuid, ShortId);
 	NewRootParent->bWaapiRefExists = true;
 	NewRootParent->ChildCountInWwise = ItemChildrenCount;
 
@@ -1179,8 +1179,9 @@ bool FWaapiDataSource::CallWaapiGetInfoFrom(const FString& inFromField, const FS
 	// Request data from Wwise using WAAPI
 
 	return waapiClient->Call(ak::wwise::core::object::get, Args, Options, outJsonResult);
-#endif
+#else
 	return false;
+#endif
 }
 
 void FWaapiDataSource::UnsubscribeWaapiCallbacks()

@@ -38,6 +38,7 @@ the specific language governing permissions and limitations under the License.
 
 #include <AK/SoundEngine/Common/AkTypes.h>
 #include <AK/SoundEngine/Platforms/Generic/AkSpeakerVolumes.h>
+#include <AK/Tools/Common/AkAssert.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h>
 
 namespace AK

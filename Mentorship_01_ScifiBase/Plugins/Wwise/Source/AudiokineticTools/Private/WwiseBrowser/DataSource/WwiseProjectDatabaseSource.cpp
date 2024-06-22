@@ -71,7 +71,7 @@ bool FWwiseProjectDatabaseDataSource::Init()
 	return true;
 }
 
-void FWwiseProjectDatabaseDataSource::ConstructTree(bool bShouldRefresh)
+bool FWwiseProjectDatabaseDataSource::ConstructTree(bool bShouldRefresh)
 {
 	SCOPED_AUDIOKINETICTOOLS_EVENT_2(TEXT("FWwiseProjectDatabaseDataSource::ConstructTree"))
 
@@ -81,7 +81,7 @@ void FWwiseProjectDatabaseDataSource::ConstructTree(bool bShouldRefresh)
 	if (UNLIKELY(!ProjectDatabase))
 	{
 		UE_LOG(LogAudiokineticTools, Error, TEXT("ConstructTree: ProjectDatabase not loaded"));
-		return;
+		return false;
 	}
 
 	AllValidTreeItemsByGuid.Empty();
@@ -98,7 +98,7 @@ void FWwiseProjectDatabaseDataSource::ConstructTree(bool bShouldRefresh)
 		const FWwiseDataStructureScopeLock DataStructure(*ProjectDatabase);
 		if (DataStructure.GetCurrentPlatformData() == nullptr)
 		{
-			return;
+			return false;
 		}
 		const WwiseEventGlobalIdsMap& Events = DataStructure.GetEvents();
 		const WwiseBusGlobalIdsMap& Busses = DataStructure.GetBusses();
@@ -129,6 +129,7 @@ void FWwiseProjectDatabaseDataSource::ConstructTree(bool bShouldRefresh)
 	{
 		ProjectDatabaseDataSourceRefreshed.ExecuteIfBound();
 	}
+	return true;
 }
 
 FWwiseTreeItemPtr FWwiseProjectDatabaseDataSource::ConstructTreeRoot(EWwiseItemType::Type Type)
@@ -211,7 +212,7 @@ FWwiseTreeItemPtr FWwiseProjectDatabaseDataSource::LoadFilteredRootItem(EWwiseIt
 		if (!CurrentFilterText.IsEmpty() && CurrentTreeRootItem.IsValid())
 		{
 			FWwiseTreeItemPtr FilteredTreeRootItem = MakeShared<FWwiseTreeItem>(EWwiseItemType::BrowserDisplayNames[ItemType],
-				CurrentTreeRootItem->FolderPath, nullptr, EWwiseItemType::Folder, FGuid(CurrentTreeRootItem->ItemId));
+				CurrentTreeRootItem->FolderPath, nullptr, EWwiseItemType::Folder, FGuid(CurrentTreeRootItem->ItemId), CurrentTreeRootItem->ShortId);
 			FilteredTreeRootItem->ChildCountInWwise = CurrentTreeRootItem->ChildCountInWwise;
 
 			if (!OldFilterText.IsEmpty() && CurrentFilterText.StartsWith(OldFilterText))
@@ -415,7 +416,7 @@ void FWwiseProjectDatabaseDataSource::BuildStates(const WwiseStateGlobalIdsMap& 
 	{
 		const auto& WwiseItem = State.Value.GetState();
 
-		if (!BuildFolderHierarchy(*WwiseItem, EWwiseItemType::State, StateGroupFolderItem))
+		if (!BuildFolderHierarchy(*WwiseItem, EWwiseItemType::State, StateGroupFolderItem, State.Value.GetStateGroup()->Id))
 		{
 			UE_LOG(LogAudiokineticTools, Error, TEXT("Failed to place %s in the Wwise Browser"), *WwiseItem->ObjectPath.ToString());
 		}
@@ -463,7 +464,7 @@ void FWwiseProjectDatabaseDataSource::BuildSwitches(const WwiseSwitchGlobalIdsMa
 	{
 		const auto& WwiseItem = Switch.Value.GetSwitch();
 
-		if (!BuildFolderHierarchy(*WwiseItem, EWwiseItemType::Switch, SwitchGroupFolderItem))
+		if (!BuildFolderHierarchy(*WwiseItem, EWwiseItemType::Switch, SwitchGroupFolderItem, Switch.Value.GetSwitchGroup()->Id))
 		{
 			UE_LOG(LogAudiokineticTools, Error, TEXT("Failed to place %s in the Wwise Browser"), *WwiseItem->ObjectPath.ToString());
 		}
@@ -579,7 +580,7 @@ bool FWwiseProjectDatabaseDataSource::IsContainer(EWwiseItemType::Type ItemType)
 
 bool FWwiseProjectDatabaseDataSource::BuildFolderHierarchy(
 	const FWwiseMetadataBasicReference& WwiseItem, EWwiseItemType::Type
-	ItemType, const FWwiseTreeItemPtr CurrentRootFolder)
+	ItemType, const FWwiseTreeItemPtr CurrentRootFolder, uint32 GroupId)
 {
 	const FString ItemPath = WwiseItem.ObjectPath.ToString();
 	WwiseItemTreePath TreePath;
@@ -623,11 +624,13 @@ bool FWwiseProjectDatabaseDataSource::BuildFolderHierarchy(
 				TreeItem->ItemType = ItemType;
 				TreeItem->ItemId = WwiseItem.GUID;
 				TreeItem->ShortId = WwiseItem.Id;
+				TreeItem->GroupId = GroupId;
 			}
 			else
 			{
 				const auto& NewWwiseTreeItem = MakeShared<FWwiseTreeItem>(WwiseItem, ParentItem, ItemType);
 				NewWwiseTreeItem->ShortId = WwiseItem.Id;
+				NewWwiseTreeItem->GroupId = GroupId;
 				ParentItem->AddChild(NewWwiseTreeItem);
 				AllValidTreeItemsByGuid.Add(NewWwiseTreeItem->ItemId, NewWwiseTreeItem);
 
@@ -647,7 +650,7 @@ void FWwiseProjectDatabaseDataSource::CopyTree(FWwiseTreeItemPtr SourceTreeItem,
 {
 	for (auto& CurrItem: SourceTreeItem->GetChildren())
 	{
-		FWwiseTreeItemPtr NewItem = MakeShared<FWwiseTreeItem>(CurrItem->DisplayName, CurrItem->FolderPath, CurrItem->Parent.Pin(), CurrItem->ItemType, CurrItem->ItemId);
+		FWwiseTreeItemPtr NewItem = MakeShared<FWwiseTreeItem>(CurrItem->DisplayName, CurrItem->FolderPath, CurrItem->Parent.Pin(), CurrItem->ItemType, CurrItem->ItemId, CurrItem->ShortId);
 		NewItem->WwiseItemRef = CurrItem->WwiseItemRef;
 		DestTreeItem->AddChild(NewItem);
 		DestTreeItem->ChildCountInWwise = SourceTreeItem->ChildCountInWwise;

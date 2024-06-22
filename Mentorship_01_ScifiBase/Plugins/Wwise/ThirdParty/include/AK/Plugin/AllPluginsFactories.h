@@ -63,7 +63,7 @@ the specific language governing permissions and limitations under the License.
 // Required by codecs plug-ins
 #include <AK/Plugin/AkVorbisDecoderFactory.h>
 #include <AK/Plugin/AkOpusDecoderFactory.h>
-#ifdef AK_NX
+#ifdef AK_NINTENDO
 	#include <AK/Plugin/AkOpusNXFactory.h>		// Note: Useable only on NX. Ok to include it on other platforms as long as it is not referenced.
 #endif	
 

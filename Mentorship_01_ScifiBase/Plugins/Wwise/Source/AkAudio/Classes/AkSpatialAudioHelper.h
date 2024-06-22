@@ -34,6 +34,11 @@ namespace AkSpatialAudioHelper
 	bool IsAkSpatialAudioActorClass(const AActor* Actor);
 
 #if WITH_EDITOR
+#if UE_5_0_OR_LATER
+	FCoreUObjectDelegates::FOnObjectsReplaced* GetObjectReplacedEvent();
+#else
 	UEditorEngine::FObjectsReplacedEvent* GetObjectReplacedEvent();
-#endif
+#endif // UE_5_0_OR_LATER
+#endif // WITH_EDITOR
+
 }

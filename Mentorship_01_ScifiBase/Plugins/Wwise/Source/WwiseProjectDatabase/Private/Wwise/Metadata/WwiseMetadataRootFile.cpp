@@ -18,6 +18,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "Wwise/Metadata/WwiseMetadataRootFile.h"
 
 #include "Async/AsyncWork.h"
+#include "Async/ParallelFor.h"
 #include "Misc/FileHelper.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
@@ -155,39 +156,15 @@ WwiseMetadataFileMap FWwiseMetadataRootFile::LoadFiles(const TArray<FString>& Fi
 		Tasks.Emplace(Elem.Value, Elem.Key);
 	}
 
-	if (Result.Num() > 1)
+	ParallelFor(Tasks.Num(), [&Tasks](int32 Num)
 	{
-		// Create a temporary Thread Pool to fully load the file paths with a large Stack size.
-		// We typically use way less than that, but some functions are recursive, and Json parsing can be memory intensive.
-		const auto WorkersToSpawn = FMath::Min(FPlatformMisc::NumberOfWorkerThreadsToSpawn(), Result.Num());
-		static constexpr int32 StackSize = 2 * 1024 * 1024;
-		const auto MetadataLoadingThreadPool = FQueuedThreadPool::Allocate();
-		verify(MetadataLoadingThreadPool->Create(WorkersToSpawn, StackSize, TPri_BelowNormal, TEXT("Wwise ProjectDatabase Loading Pool")));
+		auto& Task { Tasks[Num] };
+		Task.StartSynchronousTask();
+	}, EParallelForFlags::BackgroundPriority);
 
-		for (auto& Task : Tasks)
-		{
-			Task.StartBackgroundTask(MetadataLoadingThreadPool);
-		}
-
-		for (auto& Task : Tasks)
-		{
-			Task.EnsureCompletion();
-		}
-
-		delete MetadataLoadingThreadPool;
-	}
-	else
+	for (auto& Task : Tasks)
 	{
-		// We have only one (or zero) task. Do it synchronously.
-		for (auto& Task : Tasks)
-		{
-			Task.StartSynchronousTask();
-		}
-
-		for (auto& Task : Tasks)
-		{
-			Task.EnsureCompletion();
-		}
+		Task.EnsureCompletion();
 	}
 
 	return Result;

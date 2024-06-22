@@ -23,7 +23,7 @@ Copyright (c) 2024 Audiokinetic Inc.
 #include "Containers/Ticker.h"
 
 // Styling naming changed between UE4 and UE5.
-#if WITH_EDITOR
+#if WITH_EDITOR && defined(COREUOBJECT_API)
 #if UE_5_0_OR_LATER
 #include "Styling/AppStyle.h"
 using FAkAppStyle = FAppStyle;

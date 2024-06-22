@@ -364,27 +364,6 @@ namespace AKPLATFORM
 		usleep( in_ulMilliseconds * 1000 );
     }
 
-	// Optimized memory functions
-	// --------------------------------------------------------------------
-
-	/// Platform Independent Helper
-	inline void AkMemCpy( void * pDest, const void * pSrc, AkUInt32 uSize )
-	{
-		memcpy( pDest, pSrc, uSize );
-	}
-
-	/// Platform Independent Helper
-	inline void AkMemMove( void* pDest, const void* pSrc, AkUInt32 uSize )
-	{
-		memmove( pDest, pSrc, uSize );
-	}
-
-	/// Platform Independent Helper
-	inline void AkMemSet( void * pDest, AkInt32 iVal, AkUInt32 uSize )
-	{
-		memset( pDest, iVal, uSize );
-	}
-
 	/// Platform Independent Helper
     inline void UpdatePerformanceFrequency()
 	{

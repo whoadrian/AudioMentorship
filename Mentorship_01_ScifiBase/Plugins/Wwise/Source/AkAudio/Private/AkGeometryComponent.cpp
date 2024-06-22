@@ -446,8 +446,13 @@ void UAkGeometryComponent::ConvertStaticMesh(UStaticMeshComponent* StaticMeshCom
 #endif
 
 	const FStaticMeshLODResources& RenderMesh = mesh->GetLODForExport(LOD);
-	FIndexArrayView RawIndices = RenderMesh.IndexBuffer.GetArrayView();
+	if (RenderMesh.IndexBuffer.GetAllowCPUAccess() == false)
+	{
+		UE_LOG(LogAkAudio, Warning, TEXT("%s: UAkGeometryComponent::ConvertStaticMesh: Static Mesh in %s does not allow CPU access. The static mesh's geometry data cannot be retrived unless CPU access is allowed. No Geometry will be set in Spatial Audio for this static mesh."), *GetName(), *GetOwner()->GetName());
+		return;
+	}
 
+	FIndexArrayView RawIndices = RenderMesh.IndexBuffer.GetArrayView();
 	if (RawIndices.Num() == 0)
 		return;
 

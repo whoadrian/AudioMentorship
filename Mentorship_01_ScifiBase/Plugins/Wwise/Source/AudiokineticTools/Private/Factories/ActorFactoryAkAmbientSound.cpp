@@ -83,6 +83,7 @@ UObject* UActorFactoryAkAmbientSound::GetAssetFromActorInstance(AActor* Instance
 	return SoundActor->AkComponent->AkAudioEvent;
 }
 
+#if !UE_5_4_OR_LATER
 void UActorFactoryAkAmbientSound::PostCreateBlueprint( UObject* Asset, AActor* CDO )
 {
 	UAkAudioEvent* AmbientSound = Cast<UAkAudioEvent>( Asset );
@@ -94,5 +95,6 @@ void UActorFactoryAkAmbientSound::PostCreateBlueprint( UObject* Asset, AActor* C
 		AmbientSound->LoadData();
 	}
 }
+#endif
 
 #undef LOCTEXT_NAMESPACE

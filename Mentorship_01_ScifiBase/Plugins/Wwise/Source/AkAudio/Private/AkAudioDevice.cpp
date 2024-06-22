@@ -286,7 +286,7 @@ static bool GetInfoErrorMessageTranslatorFunction(IWwiseSoundEngineAPI::TagInfor
 				const auto NewName = RefGameParameter.GameParameterName().ToString();
 				if (UNLIKELY(!FoundName.IsEmpty() && NewName != FoundName))
 				{
-					UE_LOG(LogAkAudio, Warning, TEXT("Found two different names for the same object ID %" PRIu32 ": %s %s and GameParameter %s. Ignoring."), FoundType, *FoundName, *NewName);
+					UE_LOG(LogAkAudio, Warning, TEXT("Found two different names for the same object ID %" PRIu32 ": %s %s and GameParameter %s. Ignoring."), ID, FoundType, *FoundName, *NewName);
 					continue;
 				}
 				FoundType = TEXT("GameParameter");
@@ -299,7 +299,7 @@ static bool GetInfoErrorMessageTranslatorFunction(IWwiseSoundEngineAPI::TagInfor
 				const auto NewName = RefShareSet.PluginShareSetName().ToString();
 				if (UNLIKELY(!FoundName.IsEmpty() && NewName != FoundName))
 				{
-					UE_LOG(LogAkAudio, Warning, TEXT("Found two different names for the same object ID %" PRIu32 ": %s %s and ShareSet %s. Ignoring."), FoundType, *FoundName, *NewName);
+					UE_LOG(LogAkAudio, Warning, TEXT("Found two different names for the same object ID %" PRIu32 ": %s %s and ShareSet %s. Ignoring."), ID, FoundType, *FoundName, *NewName);
 					continue;
 				}
 				FoundType = TEXT("ShareSet");
@@ -312,7 +312,7 @@ static bool GetInfoErrorMessageTranslatorFunction(IWwiseSoundEngineAPI::TagInfor
 				const auto NewName = RefBus.BusName().ToString();
 				if (UNLIKELY(!FoundName.IsEmpty() && NewName != FoundName))
 				{
-					UE_LOG(LogAkAudio, Warning, TEXT("Found two different names for the same object ID %" PRIu32 ": %s %s and Bus %s. Ignoring."), FoundType, *FoundName, *NewName);
+					UE_LOG(LogAkAudio, Warning, TEXT("Found two different names for the same object ID %" PRIu32 ": %s %s and Bus %s. Ignoring."), ID, FoundType, *FoundName, *NewName);
 					continue;
 				}
 				FoundType = TEXT("Bus");
@@ -325,7 +325,7 @@ static bool GetInfoErrorMessageTranslatorFunction(IWwiseSoundEngineAPI::TagInfor
 				const auto NewName = RefAuxBus.AuxBusName().ToString();
 				if (UNLIKELY(!FoundName.IsEmpty() && NewName != FoundName))
 				{
-					UE_LOG(LogAkAudio, Warning, TEXT("Found two different names for the same object ID %" PRIu32 ": %s %s and AuxBus %s. Ignoring."), FoundType, *FoundName, *NewName);
+					UE_LOG(LogAkAudio, Warning, TEXT("Found two different names for the same object ID %" PRIu32 ": %s %s and AuxBus %s. Ignoring."), ID, FoundType, *FoundName, *NewName);
 					continue;
 				}
 				FoundType = TEXT("AuxBus");
@@ -767,8 +767,31 @@ bool FAkAudioDevice::Init()
 }
 
 #if WITH_EDITORONLY_DATA
+void FAkAudioDevice::CleanDefaultListeners()
+{
+	auto ListenerArray = m_defaultListeners.Array();
+	for(int i = 0; i < ListenerArray.Num();)
+	{
+		if(ListenerArray[i] == NULL || ListenerArray[i].IsStale())
+		{
+			ListenerArray.RemoveAt(i);
+		}
+		else
+		{
+			i++;
+		}
+	}
+	m_defaultListeners.Empty();
+	for(auto Listener : ListenerArray)
+	{
+		m_defaultListeners.Add(Listener);
+	}
+}
+
 void FAkAudioDevice::BeginPIE(const bool bIsSimulating)
 {
+	CleanDefaultListeners();
+
 	if (!bIsSimulating && EditorListener != nullptr)
 	{
 		RemoveDefaultListener(EditorListener);
@@ -1750,7 +1773,7 @@ TArray<class UAkLateReverbComponent*> FAkAudioDevice::FindLateReverbComponentsAt
 void FAkAudioDevice::IndexLateReverb(class UAkLateReverbComponent* ComponentToAdd)
 {
 	check(!ComponentToAdd->IsIndexed);
-	LateReverbIndex.Add(ComponentToAdd);
+	LateReverbIndex.Update(ComponentToAdd);
 	SAComponentAddedRemoved(ComponentToAdd->GetWorld());
 	ComponentToAdd->IsIndexed = true;
 }
@@ -1787,7 +1810,7 @@ TArray<class UAkRoomComponent*> FAkAudioDevice::FindRoomComponentsAtLocation(con
 /** Add a UAkRoomComponent to the linked list. */
 void FAkAudioDevice::IndexRoom(class UAkRoomComponent* ComponentToAdd)
 {
-	RoomIndex.Add(ComponentToAdd);
+	RoomIndex.Update(ComponentToAdd);
 	SAComponentAddedRemoved(ComponentToAdd->GetWorld());
 }
 
@@ -3092,15 +3115,22 @@ void FAkAudioDevice::UnregisterComponent( UAkComponent * in_pComponent )
 		}
 	}
 
-	if (m_defaultListeners.Contains(in_pComponent))
+#if WITH_EDITORONLY_DATA
+	CleanDefaultListeners();
+#endif
+	if(IsValid(in_pComponent))
 	{
-		RemoveDefaultListener(in_pComponent);
+		if (m_defaultListeners.Contains(in_pComponent))
+		{
+			RemoveDefaultListener(in_pComponent);
+		}
+		check(!m_defaultListeners.Contains(in_pComponent));
 	}
 
-	check(!m_defaultListeners.Contains(in_pComponent));
-
 	if (m_SpatialAudioListener == in_pComponent)
+	{
 		m_SpatialAudioListener = nullptr;
+	}
 }
 
 void FAkAudioDevice::UnregisterComponent( AkGameObjectID GameObjectId )
@@ -3821,6 +3851,9 @@ bool FAkAudioDevice::EnsureInitialized()
 		ResourceLoader->Disable();
 		return false;
 	}
+
+	UE_CLOG(!FPlatformProcess::SupportsMultithreading(),
+		LogAkAudio, Display, TEXT("Wwise SoundEngine still requires threads in single-threaded Unreal Engine."));
 
 	// From this point on, if we get an error, we can try initializing later
 	if (UNLIKELY(!FAkSoundEngineInitialization::Initialize(IOHook)))

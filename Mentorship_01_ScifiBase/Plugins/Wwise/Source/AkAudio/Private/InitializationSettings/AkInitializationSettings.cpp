@@ -49,7 +49,7 @@ namespace AkInitializationSettings_Helpers
 	void* AkMemAllocVM(size_t size, size_t* /*extra*/)
 	{
 		ASYNC_INC_MEMORY_STAT_BY(STAT_WwiseMemorySoundEngineVM, size);
-		LLM_SCOPE_BYTAG(Wwise_SoundEngineMalloc);
+		LLM_SCOPE_BYTAG(Audio_Wwise_SoundEngine);
 		return FMemory::Malloc(size, kAkVmPageSize);
 	}
 
@@ -331,7 +331,7 @@ void FAkAdvancedInitializationSettingsWithMultiCoreRendering::FillInitialization
 {
 	Super::FillInitializationStructure(InitializationStructure);
 
-	if (EnableMultiCoreRendering)
+	if (FPlatformProcess::SupportsMultithreading() && EnableMultiCoreRendering)
 	{
 		FAkAudioDevice* pDevice = FAkAudioDevice::Get();
 		check(pDevice != nullptr);

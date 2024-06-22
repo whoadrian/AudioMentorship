@@ -29,20 +29,27 @@ AkSubmixInputComponent.h:
 #endif
 #include "AkSubmixInputComponent.generated.h"
 
+struct FAkSubmixBufferListener : public ISubmixBufferListener
+{
+	int32 NumChannels = 0;
+	int32 SampleRate = 0;
+	int32 BufferLength = 0;
+	Audio::TCircularAudioBuffer<float> SampleBuffer;
+	TArray<float> PoppedSamples;
+	virtual void OnNewSubmixBuffer(const USoundSubmix* OwningSubmix, float* AudioData, int32 NumSamples, int32 NumChannels, const int32 SampleRate, double AudioClock) override;
+	virtual ~FAkSubmixBufferListener() {}
+};
 
 /*------------------------------------------------------------------------------------
 UAkSubmixInputComponent
 ------------------------------------------------------------------------------------*/
 UCLASS(ClassGroup = Audiokinetic, BlueprintType, hidecategories = (Transform, Rendering, Mobility, LOD, Component, Activation), meta = (BlueprintSpawnableComponent))
 class AKAUDIO_API UAkSubmixInputComponent 
-	: public UAkAudioInputComponent 
-	, public ISubmixBufferListener
+	: public UAkAudioInputComponent
 {
     GENERATED_BODY()
 public:
 	UAkSubmixInputComponent(const class FObjectInitializer& ObjectInitializer);
-
-	virtual void OnNewSubmixBuffer(const USoundSubmix* OwningSubmix, float* AudioData, int32 NumSamples, int32 NumChannels, const int32 SampleRate, double AudioClock) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SubmixInput")
 	USoundSubmix* SubmixToRecord = nullptr;
@@ -59,12 +66,8 @@ protected:
 	virtual void GetChannelConfig(AkAudioFormat& AudioFormat) override;
 
 private:
-	int32 NumChannels;
-	int32 SampleRate;
-	int32 BufferLength;
-	Audio::TCircularAudioBuffer<float> SampleBuffer;
-	TArray<float> PoppedSamples;
 
+	TSharedRef<FAkSubmixBufferListener> SubmixListener;
 	Audio::FMixerDevice* GetAudioMixerDevice();
 	int32 PlayingID = AK_INVALID_PLAYING_ID;
 };

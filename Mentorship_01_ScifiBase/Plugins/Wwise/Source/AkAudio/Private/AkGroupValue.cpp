@@ -124,3 +124,19 @@ bool UAkGroupValue::SplitAssetName(FString& OutGroupName, FString& OutValueName)
 }
 
 #endif
+
+#if WITH_EDITOR
+#if UE_5_4_OR_LATER
+	void UAkGroupValue::GetAssetRegistryTags(FAssetRegistryTagsContext Context) const
+	{
+		Super::GetAssetRegistryTags(Context);
+		Context.AddTag(FAssetRegistryTag(GET_MEMBER_NAME_CHECKED(FWwiseGroupValueInfo, GroupShortId), FString::FromInt(GroupValueInfo.GroupShortId), FAssetRegistryTag::ETagType::TT_Hidden));
+	}
+#else
+	void UAkGroupValue::GetAssetRegistryTags(TArray<FAssetRegistryTag>& OutTags) const
+	{
+		Super::GetAssetRegistryTags(OutTags);
+		OutTags.Add(FAssetRegistryTag(GET_MEMBER_NAME_CHECKED(FWwiseGroupValueInfo, GroupShortId), FString::FromInt(GroupValueInfo.GroupShortId), FAssetRegistryTag::ETagType::TT_Hidden));
+	}
+#endif // UE_5_4_OR_LATER
+#endif // WITH_EDITOR

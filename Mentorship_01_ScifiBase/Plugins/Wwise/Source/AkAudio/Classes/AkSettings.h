@@ -343,6 +343,10 @@ public:
 	UPROPERTY(Config, EditAnywhere, Category = "Initialization", meta=(ConfigRestartRequired=true, EditCondition="AudioRouting == EAkUnrealAudioRouting::Custom"))
 	bool bAkAudioMixerEnabled = false;
 
+	// The default value of the "Attenuation Scaling Factor" when an AkComponent is created.
+	UPROPERTY(Config, EditAnywhere, Category = "Initialization", meta = (ClampMin = "0.0"))
+	float DefaultScalingFactor = 1.0f;
+
 	UPROPERTY(Config)
 	bool AskedToUseNewAssetManagement_DEPRECATED = false;
 

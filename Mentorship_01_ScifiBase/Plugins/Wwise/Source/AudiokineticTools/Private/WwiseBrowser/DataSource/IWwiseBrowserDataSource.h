@@ -30,7 +30,7 @@ public:
 
 	virtual bool Init() = 0;
 
-	virtual void ConstructTree(bool bShouldRefresh) = 0;
+	virtual bool ConstructTree(bool bShouldRefresh) = 0;
 
 	// Constructs the top-level root for the given type, along with its direct children
 	virtual FWwiseTreeItemPtr ConstructTreeRoot(EWwiseItemType::Type Type) = 0;

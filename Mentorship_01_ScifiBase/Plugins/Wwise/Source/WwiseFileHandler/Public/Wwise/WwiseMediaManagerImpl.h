@@ -17,7 +17,6 @@ Copyright (c) 2024 Audiokinetic Inc.
 
 #pragma once
 
-#include "AkInclude.h"
 #include "Wwise/WwiseMediaManager.h"
 #include "Wwise/WwiseFileHandlerBase.h"
 
@@ -32,11 +31,27 @@ public:
 	void LoadMedia(const FWwiseMediaCookedData& InMediaCookedData, const FString& InRootPath, FLoadMediaCallback&& InCallback) override;
 	void UnloadMedia(const FWwiseMediaCookedData& InMediaCookedData, const FString& InRootPath, FUnloadMediaCallback&& InCallback) override;
 	void SetGranularity(AkUInt32 InStreamingGranularity) override;
+	
+	virtual void SetMedia(AkSourceSettings& InSource, FLoadMediaCallback&& InCallback) override;
+	virtual void UnsetMedia(AkSourceSettings& InSource, FLoadMediaCallback&& InCallback) override;
 
 	IWwiseStreamingManagerHooks& GetStreamingHooks() final { return *this; }
 
 protected:
 	uint32 StreamingGranularity;
 
+	FCriticalSection MediaOpCriticalSection;
+	uint32 SetMediaCount { 0 };
+	TArray<AkSourceSettings> SetMediaOps;
+	TArray<FLoadMediaCallback> SetMediaCallbacks;
+
+	uint32 UnsetMediaCount { 0 };
+	TArray<AkSourceSettings> UnsetMediaOps;
+	TArray<FLoadMediaCallback> UnsetMediaCallbacks;
+
 	virtual FWwiseFileStateSharedPtr CreateOp(const FWwiseMediaCookedData& InMediaCookedData, const FString& InRootPath);
+	
+	static FWwiseExecutionQueue* GetBankExecutionQueue();
+	virtual void DoSetMedia();
+	virtual void DoUnsetMedia();
 };

@@ -50,6 +50,6 @@ protected:
 
 	static void GetFileToPtr(TUniqueFunction<void(bool bResult, const uint8* Ptr, int64 Size)>&& InCallback,
 		const FString& InFilePathname, bool bInDeviceMemory, int32 InMemoryAlignment, bool bInEnforceMemoryRequirements,
-		const FName& InStat, const FName& InStatDevice,
+		const FName& InStat, const FName& InStatDevice, const FName& InLLM,
 		EAsyncIOPriorityAndFlags InPriority = AIOP_Normal, int64 ReadFirstBytes = -1);
 };

@@ -240,11 +240,16 @@ FReply SGenerateSoundBanks::OnGenerateButtonClicked()
 		}
 	}
 
-	InitParameters.SkipLanguages = SkipLanguagesCheckBox->IsChecked();
+	InitParameters.bSkipLanguages = SkipLanguagesCheckBox->IsChecked();
+	const UAkSettingsPerUser* AkSettingsPerUser = GetDefault<UAkSettingsPerUser>();
+	if(AkSettingsPerUser)
+	{
+		InitParameters.bUserOverride = !AkSettingsPerUser->RootOutputPathOverride.Path.IsEmpty();
+	}
 
 	if (auto* akSettingsPerUser = GetMutableDefault<UAkSettingsPerUser>())
 	{
-		akSettingsPerUser->SoundDataGenerationSkipLanguage = InitParameters.SkipLanguages;
+		akSettingsPerUser->SoundDataGenerationSkipLanguage = InitParameters.bSkipLanguages;
 		akSettingsPerUser->SaveConfig();
 	}
 

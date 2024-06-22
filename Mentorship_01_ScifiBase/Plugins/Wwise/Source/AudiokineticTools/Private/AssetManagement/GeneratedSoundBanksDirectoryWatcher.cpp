@@ -216,8 +216,10 @@ void GeneratedSoundBanksDirectoryWatcher::OnGeneratedSoundBanksChanged(const TAr
 
 bool GeneratedSoundBanksDirectoryWatcher::ShouldRestartWatchers()
 {
-	const bool bCacheWatcherNeedsRestart = DoesWwiseProjectExist() && (!bCacheFolderExists || !CacheChangedHandle.IsValid());
-	const bool bGeneratedSoundBanksWatcherNeedsRestart = !bGeneratedSoundBanksFolderExists || !GeneratedSoundBanksHandle.IsValid();
+	const bool bGeneratedSoundBanksFolderDiff = bGeneratedSoundBanksFolderExists != FPaths::DirectoryExists(WwiseUnrealHelper::GetSoundBankDirectory());
+	const bool bCacheFolderDiff = CachePath.IsEmpty() || bCacheFolderExists != FPaths::DirectoryExists(CachePath);
+	const bool bCacheWatcherNeedsRestart = DoesWwiseProjectExist() && (bCacheFolderDiff || !CacheChangedHandle.IsValid());
+	const bool bGeneratedSoundBanksWatcherNeedsRestart = bGeneratedSoundBanksFolderDiff || !GeneratedSoundBanksHandle.IsValid();
 	return  bCacheWatcherNeedsRestart || bGeneratedSoundBanksWatcherNeedsRestart;
 }
 
@@ -225,7 +227,7 @@ void GeneratedSoundBanksDirectoryWatcher::TimerTick(float DeltaSeconds)
 {
 	if (ParseTimer < 0 && bParseTimerRunning)
 	{
-		UE_LOG(LogAudiokineticTools, Verbose, TEXT("GeneratedSoundBanksDirectoryWatcher: No files have changed in the last %d seconds."), ParseDelaySeconds);
+		UE_LOG(LogAudiokineticTools, Verbose, TEXT("GeneratedSoundBanksDirectoryWatcher: No files have changed in the last %f seconds."), ParseDelaySeconds);
 		OnSoundBankGenerationDone();
 		EndParseTimer();
 	}
