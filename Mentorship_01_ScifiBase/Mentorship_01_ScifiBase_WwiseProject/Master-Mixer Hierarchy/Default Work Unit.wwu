@@ -42,7 +42,15 @@
 								</Bus>
 							</ChildrenList>
 						</Bus>
-						<Bus Name="CINE" ID="{E324315A-AB72-458A-B25B-CA1E428AC09E}"/>
+						<Bus Name="CINE" ID="{E324315A-AB72-458A-B25B-CA1E428AC09E}">
+							<PropertyList>
+								<Property Name="BusVolume" Type="Real64">
+									<ValueList>
+										<Value>-2</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+						</Bus>
 						<Bus Name="VO" ID="{61FE6949-D42F-4C03-90A0-07B257479139}"/>
 						<Bus Name="REVERBS" ID="{FEBE5916-5210-4B07-B41D-639A1AC5950B}">
 							<PropertyList>
