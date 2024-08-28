@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{E360F01A-7E7C-42E5-B973-8452440D0DAF}" SchemaVersion="119">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{E360F01A-7E7C-42E5-B973-8452440D0DAF}" PersistMode="Standalone">
+			<ChildrenList>
+				<ActorMixer Name="Character" ID="{D00A8DDC-6436-47BE-B848-DDDE2FC9F768}" ShortID="567527703">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E717B93F-5B6B-4E0A-9564-47C3666E0CBC}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{5AFC16EA-118E-4D1A-AD4E-A3C74D027CBF}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<SwitchContainer Name="BotFootsteps" ID="{80C832DD-577F-468C-BE99-ADD930464E37}" ShortID="111995663">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E717B93F-5B6B-4E0A-9564-47C3666E0CBC}"/>
+								</Reference>
+								<Reference Name="DefaultSwitchOrState">
+									<ObjectRef Name="SurfaceA" ID="{D6948929-BA83-4681-9E35-D20E0A8669E9}" WorkUnitID="{01569553-58C4-4948-90FC-20111309C957}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{5AFC16EA-118E-4D1A-AD4E-A3C74D027CBF}"/>
+								</Reference>
+								<Reference Name="SwitchGroupOrStateGroup">
+									<ObjectRef Name="BotFootsteps" ID="{0E217FD0-1C8C-428F-B73A-FA82702C18A1}" WorkUnitID="{01569553-58C4-4948-90FC-20111309C957}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="FootstepSurfaceA" ID="{B408DB10-9BB5-4ECB-AEC2-CF5CEF01C3D0}" ShortID="238231883">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E717B93F-5B6B-4E0A-9564-47C3666E0CBC}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{5AFC16EA-118E-4D1A-AD4E-A3C74D027CBF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<SourcePlugin Name="Sine" ID="{FEE658C4-9966-4E20-90F0-F41BDA08D426}" ShortID="329766196" PluginName="Wwise Sine" CompanyID="0" PluginID="100">
+											<PropertyList>
+												<Property Name="SineDuration" Type="Real32" Value="0.25"/>
+												<Property Name="SineFrequency" Type="Real32" Value="600"/>
+												<Property Name="SineGain" Type="Real32" Value="-20"/>
+											</PropertyList>
+											<Language>SFX</Language>
+										</SourcePlugin>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Sine" ID="{FEE658C4-9966-4E20-90F0-F41BDA08D426}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="FootstepSurfaceB" ID="{B06B6115-6FCC-4157-8672-C5E1B7B08732}" ShortID="887308346">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E717B93F-5B6B-4E0A-9564-47C3666E0CBC}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{5AFC16EA-118E-4D1A-AD4E-A3C74D027CBF}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<SourcePlugin Name="Sine" ID="{77DDE4CF-CC6F-4D32-A356-9F5627C1330C}" ShortID="511598355" PluginName="Wwise Sine" CompanyID="0" PluginID="100">
+											<PropertyList>
+												<Property Name="SineDuration" Type="Real32" Value="0.25"/>
+												<Property Name="SineFrequency" Type="Real32" Value="300"/>
+												<Property Name="SineGain" Type="Real32" Value="-20"/>
+											</PropertyList>
+											<Language>SFX</Language>
+										</SourcePlugin>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="Sine" ID="{77DDE4CF-CC6F-4D32-A356-9F5627C1330C}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+							<GroupingInfo>
+								<GroupingBehaviorList>
+									<GroupingBehavior>
+										<ItemRef Name="FootstepSurfaceA" ID="{B408DB10-9BB5-4ECB-AEC2-CF5CEF01C3D0}"/>
+									</GroupingBehavior>
+									<GroupingBehavior>
+										<ItemRef Name="FootstepSurfaceB" ID="{B06B6115-6FCC-4157-8672-C5E1B7B08732}"/>
+									</GroupingBehavior>
+								</GroupingBehaviorList>
+								<GroupingList>
+									<Grouping>
+										<SwitchRef Name="SurfaceA" ID="{D6948929-BA83-4681-9E35-D20E0A8669E9}"/>
+										<ItemList>
+											<ItemRef Name="FootstepSurfaceA" ID="{B408DB10-9BB5-4ECB-AEC2-CF5CEF01C3D0}"/>
+										</ItemList>
+									</Grouping>
+									<Grouping>
+										<SwitchRef Name="SurfaceB" ID="{8F712765-2413-45F3-B6DC-24DF92C4AFE0}"/>
+										<ItemList>
+											<ItemRef Name="FootstepSurfaceB" ID="{B06B6115-6FCC-4157-8672-C5E1B7B08732}"/>
+										</ItemList>
+									</Grouping>
+								</GroupingList>
+							</GroupingInfo>
+						</SwitchContainer>
+					</ChildrenList>
+				</ActorMixer>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

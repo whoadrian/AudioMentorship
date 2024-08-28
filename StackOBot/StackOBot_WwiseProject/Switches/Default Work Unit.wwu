@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{01569553-58C4-4948-90FC-20111309C957}" SchemaVersion="119">
+	<Switches>
+		<WorkUnit Name="Default Work Unit" ID="{01569553-58C4-4948-90FC-20111309C957}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="BotFootsteps" ID="{0E217FD0-1C8C-428F-B73A-FA82702C18A1}">
+					<ChildrenList>
+						<Switch Name="SurfaceA" ID="{D6948929-BA83-4681-9E35-D20E0A8669E9}"/>
+						<Switch Name="SurfaceB" ID="{8F712765-2413-45F3-B6DC-24DF92C4AFE0}"/>
+					</ChildrenList>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</Switches>
+</WwiseDocument>

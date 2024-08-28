@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{9E85B177-E348-456F-A613-224B0B7FF8EC}" SchemaVersion="119">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{9E85B177-E348-456F-A613-224B0B7FF8EC}" PersistMode="Standalone">
+			<ChildrenList>
+				<Folder Name="BotFootsteps" ID="{20184804-BE3B-425D-989A-B8AF60AFF551}" ShortID="250440180">
+					<ChildrenList>
+						<Event Name="Play_BotFootsteps" ID="{21F62EE9-DBA8-43D2-912B-BA9B276D5AAC}">
+							<ChildrenList>
+								<Action Name="" ID="{CD3398BF-9B9C-4E00-AD05-36EA216CE4FC}" ShortID="285773233">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="BotFootsteps" ID="{80C832DD-577F-468C-BE99-ADD930464E37}" WorkUnitID="{E360F01A-7E7C-42E5-B973-8452440D0DAF}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

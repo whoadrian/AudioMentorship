@@ -1,0 +1,14 @@
+Event	ID	Name			Wwise Object Path	Notes
+	462624270	Play_BotFootsteps			\Default Work Unit\BotFootsteps\Play_BotFootsteps	
+
+Switch Group	ID	Name			Wwise Object Path	Notes
+	1205241913	BotFootsteps			\Default Work Unit\BotFootsteps	
+
+Switch	ID	Name	Switch Group			Notes
+	3714303096	SurfaceB	BotFootsteps			
+	3714303099	SurfaceA	BotFootsteps			
+
+Source plug-ins	ID	Name	Type		Wwise Object Path	Notes
+	329766196	Sine	Wwise Sine		\Actor-Mixer Hierarchy\Default Work Unit\Character\BotFootsteps\FootstepSurfaceA\Sine	
+	511598355	Sine	Wwise Sine		\Actor-Mixer Hierarchy\Default Work Unit\Character\BotFootsteps\FootstepSurfaceB\Sine	
+

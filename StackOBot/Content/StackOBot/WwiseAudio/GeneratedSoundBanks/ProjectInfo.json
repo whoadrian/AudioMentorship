@@ -1,0 +1,29 @@
+{
+ "ProjectInfo": {
+  "Project": {
+   "Name": "StackOBot_WwiseProject",
+   "GUID": "{F0041E7D-962F-4875-AF2F-9958A6212DBD}",
+   "Generator": "2023.1.6.8555"
+  },
+  "CacheRoot": "../../../../StackOBot_WwiseProject/.cache",
+  "Platforms": [
+   {
+    "Name": "Windows",
+    "GUID": "{56FC577B-1479-4491-8805-4911F371EB0A}",
+    "BasePlatform": "Windows",
+    "BasePlatformGUID": "{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}",
+    "Path": "."
+   }
+  ],
+  "Languages": [
+   {
+    "Name": "English(US)",
+    "Id": "684519430",
+    "GUID": "{ECAAFA5C-8B61-4264-92F7-092BF11914BC}",
+    "Default": "true",
+    "UseAsStandIn": "true"
+   }
+  ],
+  "FileHash": "{334AC102-5C51-E4D8-AB3B-C2F3C8AB5125}"
+ }
+}

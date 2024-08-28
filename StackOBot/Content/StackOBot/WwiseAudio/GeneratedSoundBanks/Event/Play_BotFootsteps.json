@@ -1,0 +1,107 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "462624270",
+    "Type": "Event",
+    "GUID": "{21F62EE9-DBA8-43D2-912B-BA9B276D5AAC}",
+    "Language": "SFX",
+    "Hash": "{43024586-252C-8A57-69D8-C0F6881ECF6F}",
+    "ObjectPath": "Play_BotFootsteps",
+    "ShortName": "Play_BotFootsteps",
+    "Path": "Event/Play_BotFootsteps.bnk",
+    "Plugins": {
+     "Custom": [
+      {
+       "Id": "329766196",
+       "Name": "Sine",
+       "ObjectPath": "\\Actor-Mixer Hierarchy\\Default Work Unit\\Character\\BotFootsteps\\FootstepSurfaceA\\Sine",
+       "GUID": "{FEE658C4-9966-4E20-90F0-F41BDA08D426}",
+       "LibName": "Wwise Sine",
+       "LibId": "6553602"
+      },
+      {
+       "Id": "511598355",
+       "Name": "Sine",
+       "ObjectPath": "\\Actor-Mixer Hierarchy\\Default Work Unit\\Character\\BotFootsteps\\FootstepSurfaceB\\Sine",
+       "GUID": "{77DDE4CF-CC6F-4D32-A356-9F5627C1330C}",
+       "LibName": "Wwise Sine",
+       "LibId": "6553602"
+      }
+     ]
+    },
+    "Events": [
+     {
+      "Id": "462624270",
+      "Name": "Play_BotFootsteps",
+      "ObjectPath": "\\Events\\Default Work Unit\\BotFootsteps\\Play_BotFootsteps",
+      "GUID": "{21F62EE9-DBA8-43D2-912B-BA9B276D5AAC}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.25",
+      "DurationMax": "0.25",
+      "SwitchContainers": [
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "1205241913",
+         "Id": "3714303099",
+         "GUID": "{D6948929-BA83-4681-9E35-D20E0A8669E9}",
+         "Default": "true"
+        },
+        "PluginRefs": {
+         "Custom": [
+          {
+           "Id": "329766196"
+          }
+         ]
+        }
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "1205241913",
+         "Id": "3714303096",
+         "GUID": "{8F712765-2413-45F3-B6DC-24DF92C4AFE0}"
+        },
+        "PluginRefs": {
+         "Custom": [
+          {
+           "Id": "511598355"
+          }
+         ]
+        }
+       }
+      ]
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "1205241913",
+      "Name": "BotFootsteps",
+      "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps",
+      "GUID": "{0E217FD0-1C8C-428F-B73A-FA82702C18A1}",
+      "Switches": [
+       {
+        "Id": "3714303096",
+        "Name": "SurfaceB",
+        "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps\\SurfaceB",
+        "GUID": "{8F712765-2413-45F3-B6DC-24DF92C4AFE0}"
+       },
+       {
+        "Id": "3714303099",
+        "Name": "SurfaceA",
+        "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps\\SurfaceA",
+        "GUID": "{D6948929-BA83-4681-9E35-D20E0A8669E9}"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{2A74BA4C-92C5-6764-FD97-A23232DD4F50}"
+ }
+}

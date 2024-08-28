@@ -1,0 +1,71 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "150",
+  "SoundBanks": [
+   {
+    "Id": "1355168291",
+    "Type": "User",
+    "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
+    "Language": "SFX",
+    "Hash": "{A4D27D51-2748-CD49-38E2-EA04AFF6CEFB}",
+    "ObjectPath": "Init",
+    "ShortName": "Init",
+    "Path": "Init.bnk",
+    "Plugins": {
+     "AudioDevices": [
+      {
+       "Id": "2317455096",
+       "Name": "No_Output",
+       "ObjectPath": "\\Audio Devices\\Default Work Unit\\No_Output",
+       "GUID": "{ED94FDD2-7695-4E8F-B669-33657EBEFF61}",
+       "LibName": "No Output",
+       "LibId": "11862023"
+      },
+      {
+       "Id": "3859886410",
+       "Name": "System",
+       "ObjectPath": "\\Audio Devices\\Default Work Unit\\System",
+       "GUID": "{7F342015-0AC6-42F3-9FC0-5A9233F9D287}",
+       "LibName": "System",
+       "LibId": "11403271"
+      }
+     ]
+    },
+    "Busses": [
+     {
+      "Id": "3803692087",
+      "Name": "Master Audio Bus",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus",
+      "GUID": "{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "1205241913",
+      "Name": "BotFootsteps",
+      "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps",
+      "GUID": "{0E217FD0-1C8C-428F-B73A-FA82702C18A1}",
+      "Switches": [
+       {
+        "Id": "3714303096",
+        "Name": "SurfaceB",
+        "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps\\SurfaceB",
+        "GUID": "{8F712765-2413-45F3-B6DC-24DF92C4AFE0}"
+       },
+       {
+        "Id": "3714303099",
+        "Name": "SurfaceA",
+        "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps\\SurfaceA",
+        "GUID": "{D6948929-BA83-4681-9E35-D20E0A8669E9}"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{58FEEE10-9C79-6A7E-A406-EA69150F245C}"
+ }
+}
