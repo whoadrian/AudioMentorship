@@ -10,12 +10,20 @@
     "Type": "Event",
     "GUID": "{21F62EE9-DBA8-43D2-912B-BA9B276D5AAC}",
     "Language": "SFX",
-    "Hash": "{43024586-252C-8A57-69D8-C0F6881ECF6F}",
+    "Hash": "{4868026B-B779-AC06-D58A-8A741755E9D0}",
     "ObjectPath": "Play_BotFootsteps",
     "ShortName": "Play_BotFootsteps",
     "Path": "Event/Play_BotFootsteps.bnk",
     "Plugins": {
      "Custom": [
+      {
+       "Id": "266509015",
+       "Name": "Sine",
+       "ObjectPath": "\\Actor-Mixer Hierarchy\\Default Work Unit\\Character\\BotFootsteps\\FootstepSurfaceC\\Sine",
+       "GUID": "{7732F905-5CD2-414F-83DE-2F66DC89B9C9}",
+       "LibName": "Wwise Sine",
+       "LibId": "6553602"
+      },
       {
        "Id": "329766196",
        "Name": "Sine",
@@ -74,6 +82,21 @@
           }
          ]
         }
+       },
+       {
+        "SwitchValue": {
+         "GroupType": "Switch",
+         "GroupId": "1205241913",
+         "Id": "3714303097",
+         "GUID": "{0147BC85-74DB-46B1-853C-8BE5AE7D189E}"
+        },
+        "PluginRefs": {
+         "Custom": [
+          {
+           "Id": "266509015"
+          }
+         ]
+        }
        }
       ]
      }
@@ -92,6 +115,12 @@
         "GUID": "{8F712765-2413-45F3-B6DC-24DF92C4AFE0}"
        },
        {
+        "Id": "3714303097",
+        "Name": "SurfaceC",
+        "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps\\SurfaceC",
+        "GUID": "{0147BC85-74DB-46B1-853C-8BE5AE7D189E}"
+       },
+       {
         "Id": "3714303099",
         "Name": "SurfaceA",
         "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps\\SurfaceA",
@@ -102,6 +131,6 @@
     ]
    }
   ],
-  "FileHash": "{2A74BA4C-92C5-6764-FD97-A23232DD4F50}"
+  "FileHash": "{92917E7A-DD46-4AEF-4FB7-D3EBE9884DA1}"
  }
 }

@@ -7,6 +7,7 @@
 					<ChildrenList>
 						<Switch Name="SurfaceA" ID="{D6948929-BA83-4681-9E35-D20E0A8669E9}"/>
 						<Switch Name="SurfaceB" ID="{8F712765-2413-45F3-B6DC-24DF92C4AFE0}"/>
+						<Switch Name="SurfaceC" ID="{0147BC85-74DB-46B1-853C-8BE5AE7D189E}"/>
 					</ChildrenList>
 				</SwitchGroup>
 			</ChildrenList>

@@ -56,6 +56,12 @@
         "GUID": "{8F712765-2413-45F3-B6DC-24DF92C4AFE0}"
        },
        {
+        "Id": "3714303097",
+        "Name": "SurfaceC",
+        "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps\\SurfaceC",
+        "GUID": "{0147BC85-74DB-46B1-853C-8BE5AE7D189E}"
+       },
+       {
         "Id": "3714303099",
         "Name": "SurfaceA",
         "ObjectPath": "\\Switches\\Default Work Unit\\BotFootsteps\\SurfaceA",
@@ -66,6 +72,6 @@
     ]
    }
   ],
-  "FileHash": "{58FEEE10-9C79-6A7E-A406-EA69150F245C}"
+  "FileHash": "{C5E1CFB5-4BFB-F59F-7999-BAF14FECC548}"
  }
 }
